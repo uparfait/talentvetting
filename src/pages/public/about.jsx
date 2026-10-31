@@ -1,6 +1,6 @@
 /* pages/public/about.jsx: About us, for job seekers: one About section (the template's: a heading, three points, cartoons and a count)
    and the footer. */
-import { open_jobs } from '../../api/index.js';
+import { use_data } from '../../net/index.js';
 import { ic } from '../../icons/index.js';
 import { Public_page, sec_head, go_btn } from '../../shell/public_page.jsx';
 
@@ -9,7 +9,7 @@ const POINTS = [['shield', 'One verified profile', 'Register with your ID and a 
   ['tasks', 'Every step in view', 'Apply only where you qualify, take tests online and follow each application from screening to selection.']];
 
 export default function About() {
-  const n = open_jobs().length;
+  const n = use_data('/public/jobs').data?.jobs.length ?? 0;
   return <Public_page><section className="wrap section grid items-center gap-14 lg:grid-cols-2" aria-label="About us">
     <div>{sec_head('About us', 'A fair chance at every job you apply for',
       'TalentVetting reads every application, not just the first few. Your verified skills speak for you, and you always know where you stand.')}

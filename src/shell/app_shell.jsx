@@ -3,15 +3,16 @@
    header with the menu button and the tools (the bell and the account menu) in a link group, then the page. */
 import { useState } from 'react';
 import { use_path } from '../router/index.js';
-import { me, db } from '../store/index.js';
+import { use_session } from '../net/index.js';
+import { use_pref } from '../lib/prefs.js';
 import { ic } from '../icons/index.js';
 import { Sidebar } from './sidebar.jsx';
 import { Notice_bell } from './notice_bell.jsx';
 import { Account_menu } from './account_menu.jsx';
 
 export function App_shell({ children }) {
-  const path = use_path(), u = me(), [open, set_open] = useState(false), min = !!db.get('side_min');
-  const close = () => set_open(false), fold = v => db.set('side_min', v), desk_min = min && innerWidth >= 1024;
+  const path = use_path(), u = use_session(), [open, set_open] = useState(false), [side_min, fold] = use_pref('side_min', false), min = !!side_min;
+  const close = () => set_open(false), desk_min = min && innerWidth >= 1024;
   return <div className="flex min-h-[100dvh]">
     <div className={`scrim fixed inset-0 z-40 bg-ink/50 lg:hidden ${open ? 'on' : ''}`} onClick={close} aria-hidden="true"></div>
     <aside id="sidebar" className="side fixed inset-y-0 left-0 z-50 flex w-72 shrink-0 -translate-x-full flex-col border-r border-line bg-bg lg:sticky lg:top-0 lg:z-0 lg:h-[100dvh] lg:translate-x-0 lg:border-0"

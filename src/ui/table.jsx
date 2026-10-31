@@ -5,17 +5,16 @@
    tools, empty_title, empty_text, empty_action, select: { on: Set, set, label(row) } }): select adds a tick per row and a
    tick for the page (table_pick.jsx). Rows per page and hidden columns are remembered per table (id). */
 import { useEffect, useMemo, useState } from 'react';
-import { db } from '../store/index.js';
+import { use_pref } from '../lib/prefs.js';
 import { empty } from './bits.jsx';
 import { cell_text, export_rows } from './table_export.js';
 import { Table_settings, Export_menu, full_btn, col_head, pager } from './table_parts.jsx';
 import { pick_head, pick_cell } from './table_pick.jsx';
 
 const text = (c, r) => String(cell_text(c, r));
-const views = () => db.get('table_view') || {};
 export function Data_table({ id, title, label, cols, rows, on_row, acts, tools = null, empty_title, empty_text = 'Nothing here yet.', empty_action = null, select = null }) {
   const name = title || label || 'Rows', key = id || name, [q, set_q] = useState({}), [st, set_st] = useState(null), [pg, set_pg] = useState(1), [full, set_full] = useState(false);
-  const view = { per: 10, hide: [], ...views()[key] }, set_view = v => db.set('table_view', { ...views(), [key]: { ...view, ...v } });
+  const [views, set_views] = use_pref('table_view', {}), view = { per: 10, hide: [], ...views[key] }, set_view = v => set_views({ ...views, [key]: { ...view, ...v } });
   const shown_cols = cols.filter(c => !view.hide.includes(c.k)), filtered = Object.values(q).some(Boolean);
   const hit = useMemo(() => { const list = rows.filter(r => cols.every(c => { const v = (q[c.k] || '').toLowerCase(); if (!v) return true;
       const t = text(c, r).toLowerCase(); return c.filter === 'select' ? t === v : t.includes(v); }));

@@ -1,13 +1,12 @@
-/* api: everything that will call a server. Each module names its future endpoints (docs/backend.md).
+/* api: every change sent to the server, one module per area (reads go through use_data in net/data.js).
    import { sign_in, save_job, verify } from '../api/index.js' */
-export { categories, add_category, read_skills } from './catalog.js';
-export { sign_in, register, check_details, update_account, change_password } from './auth.js';
-export { notice, my_notices, mark_read } from './notices.js';
-export { my_jobs, open_jobs, get_job, apps_of, save_job, set_status, remove_job, suggestions } from './jobs.js';
-export { get_profile, save_profile, verify } from './profiles.js';
-export { my_apps, app_for, check, apply, withdraw, submit_test } from './applications.js';
-export { final_of, combined_of, ranked, fallback_scored, screen, rescore, to_score, restart_screening, set_weight, set_psych_on } from './pipeline.js';
-export { shortlist, shortlist_ids, to_best, select_ids, set_path, best, publish } from './shortlist.js';
-export { queue_score, score_due, scoring_now } from './auto_score.js';
-export { exam_items, to_mark, mark_exam } from './exams.js';
-export { is_email } from './net.js';
+export { sign_in, register, check_details, load_me, update_account, change_password } from './auth.js';
+export { add_category, read_skills } from './catalog.js';
+export { save_job, set_status, set_psych, invite, remove_job } from './jobs.js';
+export { score_app, restart, shortlist, set_path, save_exam, to_best, select_ids, publish } from './pipeline.js';
+export { import_exam, exam_rules, save_marks } from './exams.js';
+export { save_profile, add_work, remove_work, add_education, remove_education, add_link, remove_link, verify } from './profiles.js';
+export { check, apply, withdraw } from './applications.js';
+export { start_test, test_event, test_frame, submit_test } from './tests.js';
+export { liveness, face_check } from './vision.js';
+export { mark_read } from './notices.js';

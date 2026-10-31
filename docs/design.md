@@ -18,7 +18,7 @@ the cartoons (public pages only). Only what the app uses was copied.
 
 ## Speed
 - Lazy pages, React in its own cached chunk, CSS split per chunk.
-- face-api.js and its models load only where faces are checked.
+- No face or AI library in the browser: those run on the server, so pages stay small.
 - Static assets with long cache headers; fonts preloaded; no third party font service.
 - Small files (60 lines at most) keep chunks small and diffs readable.
 

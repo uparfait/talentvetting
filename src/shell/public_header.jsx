@@ -2,7 +2,7 @@
    current one in the brand colour with a dot under it), Sign in and a dark Get started for job seekers (or Dashboard).
    Fixed and the same on every page; its content keeps the page's contained width. On phones a menu button opens the links. */
 import { useState } from 'react';
-import { me } from '../store/index.js';
+import { use_session } from '../net/index.js';
 import { use_path } from '../router/index.js';
 import { logo } from '../ui/index.js';
 import { ic } from '../icons/index.js';
@@ -12,7 +12,7 @@ const on = (p, h) => (h === '/' ? p === '/' : p === h || p.startsWith(h + '/'));
 const link = (p, [h, l], cls) => <li key={h}><a href={h} className={`${cls} ${on(p, h) ? 'active' : ''}`} aria-current={on(p, h) ? 'page' : undefined}>{l}</a></li>;
 
 export const Public_header = () => {
-  const u = me(), p = use_path().split('?')[0], [open, set_open] = useState(false);
+  const u = use_session(), p = use_path().split('?')[0], [open, set_open] = useState(false);
   return <header className="tv_pub_head"><div className="wrap"><nav className="tv_pub_nav" aria-label="Main">
     <a href="/" aria-label="TalentVetting, home" className="min-w-0">{logo()}</a>
     <ul className="mx-auto hidden items-center gap-1 md:flex">{LINKS.map(x => link(p, x, 'pub_link'))}</ul>

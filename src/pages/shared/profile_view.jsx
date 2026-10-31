@@ -7,9 +7,9 @@ import { fmt_dt } from '../../lib/index.js';
 
 const tag = v => <span className={`src_tag ${v ? 'ok' : 'no'}`}>{ic(v ? 'check' : 'alert', 'h-3 w-3')}{v ? 'verified' : 'unverified'}</span>;
 export const Summary_items = ({ p }) => !p.summary ? <p className="text-sm text-muted">No summary yet: the profile has not been verified.</p>
-  : <div className="grid gap-1"><p className="mb-2 text-xs text-muted">{p.summary.items.length} items, {p.summary.words} words . {p.summary.model} . prompt v{p.summary.prompt_v} . {fmt_dt(p.summary.at)}</p>
+  : <div className="grid gap-1"><p className="mb-2 text-xs text-muted">{p.summary.items.length} items, {p.summary.words} words . {p.summary.model} . {fmt_dt(p.summary.at)}</p>
     {p.summary.items.map((i, n) => <div key={n} className="agent_row items-start"><span className="min-w-0 flex-1">{i.text}<span className="mt-1 block text-xs text-muted">{i.source}</span></span>{tag(i.verified)}</div>)}</div>;
-const DOC = { verified: ['Document checked', 'ok'], flagged: ['Document flagged', 'bad'], pending: ['Not checked yet', 'warn'] };
+const DOC = { verified: ['Document checked', 'ok'], flagged: ['Document flagged', 'bad'], review: ['Under review', 'warn'], pending: ['Not checked yet', 'warn'] };
 /* on_remove (the owner's page) adds a remove button to each row, in this list and the two below */
 export const Education_list = ({ p, on_remove }) => <ul className="grid gap-3">{(p.education || []).map(e => <li key={e.id} className="flex flex-wrap items-start gap-3">
   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand/15 text-brand">{ic('cap')}</span>

@@ -1,15 +1,11 @@
 /* pages/public/jobs.jsx: the public Jobs page: every open job, for anyone, signed in or not, to search and filter by
-   category; a card opens the full job */
-import { useState } from 'react';
-import { use_store } from '../../store/index.js';
-import { open_jobs } from '../../api/index.js';
+   category (the server finds the matches); a card opens the full job */
 import { Public_page, Page_hero } from '../../shell/public_page.jsx';
-import { job_cards, job_match, job_tools } from '../shared/job_cards.jsx';
+import { use_jobs, job_tools, found } from '../shared/job_cards.jsx';
 
 export default function Jobs_public() {
-  use_store();
-  const [q, set_q] = useState(''), [cat, set_cat] = useState(''), all = open_jobs();
-  return <Public_page><Page_hero trail={[['/', 'Home'], [null, 'Jobs']]} title="Find your next job" lead={`${all.length} open ${all.length === 1 ? 'job' : 'jobs'}. Read any of them; sign in when you are ready to apply.`} />
-    <section className="wrap py-10 sm:py-14">{job_tools(all, q, set_q, cat, set_cat)}
-      {job_cards(all.filter(j => job_match(j, q, cat)), j => `/jobs/${j.id}`)}</section></Public_page>;
+  const s = use_jobs(), n = s.all.data?.jobs.length;
+  return <Public_page><Page_hero trail={[['/', 'Home'], [null, 'Jobs']]} title="Find your next job"
+    lead={n == null ? 'Read any open job; sign in when you are ready to apply.' : `${n} open ${n === 1 ? 'job' : 'jobs'}. Read any of them; sign in when you are ready to apply.`} />
+    <section className="wrap py-10 sm:py-14">{job_tools(s)}{found(s, j => `/jobs/${j.id}`)}</section></Public_page>;
 }

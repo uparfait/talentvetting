@@ -1,19 +1,20 @@
 /* pages/app/account.jsx: My account, for everyone signed in: who you are (photo, name, email, role), your details to
    edit (name, phone, and the company for a recruiter) and your password. A job seeker's education and skills are on
-   My profile. */
+   My profile. The details come from GET /me; the server checks every change. */
 import { useState } from 'react';
-import { me } from '../../store/index.js';
+import { use_session, use_data, refresh, tone } from '../../net/index.js';
 import { update_account, change_password } from '../../api/index.js';
 import { Field, form_values, notify, avatar, chip, Password } from '../../ui/index.js';
 import { fmt_date } from '../../lib/index.js';
 import { page_head } from '../shared/kpi.jsx';
 
 const run = fn => async e => { e.preventDefault(); const f = e.currentTarget;
-  try { await fn(form_values(f), f); } catch (er) { notify(er.message, er.level === 'warning' ? 'warn' : 'bad', 'Not saved'); } };
+  try { await fn(form_values(f), f); } catch (er) { notify(er.message, tone(er), 'Not saved'); } };
 
 export default function Account() {
-  const u = me(), seeker = u.role === 'seeker', [pk, set_pk] = useState(0);
-  const save = run(async v => { await update_account(v); notify('Your details are up to date.', 'ok', 'Saved'); });
+  const kept = use_session(), u = use_data('/me').data || kept, seeker = u.role === 'seeker', [pk, set_pk] = useState(0);
+  const save = run(async v => { await update_account(seeker ? { name: v.name, phone: v.phone } : { name: v.name, phone: v.phone, company: v.company });
+    await refresh('/me'); notify('Your details are up to date.', 'ok', 'Saved'); });
   const pass = run(async (v, f) => { await change_password(v.old, v.next); set_pk(pk + 1); notify('Use the new password next time you sign in.', 'ok', 'Password changed'); });
   return <>{page_head('My account', seeker ? <a href="/app/profile" className="btn btn_outline btn_sm">My profile</a> : null, 'Your details and your password.')}
     <div className="grid gap-5 lg:grid-cols-[20rem_minmax(0,1fr)]">

@@ -1,46 +1,38 @@
 # TalentVetting
 
-AI powered recruitment, as a frontend demo: recruiters post jobs and vet candidates through six stages; job seekers build
-verified profiles and apply. Everything that needs a server (accounts, database, files, queues, AI models, crawling,
-email) is simulated in the browser behind the same functions a backend will answer, so integration swaps modules, not
-screens.
+AI powered recruitment: recruiters post jobs and vet candidates through six stages; job seekers build verified
+profiles and apply. This is the web app. It shows data and sends input; the API in `backend/` makes every decision
+(scores, qualification, AI, face checks, timing and marking).
 
 ## Run
 ```
 npm install
-npm run dev        # http://localhost:5173
+npm run dev        # http://localhost:5173, using the API at http://localhost:5000/api
 npm run build      # into dist/, served as a single page app (vercel.json)
 ```
-
-## Demo accounts (password demo1234)
-| Role | Email |
-|---|---|
-| Recruiter (Technology) | recruiter@talentvetting.demo |
-| Recruiter (Finance) | finance.recruiter@talentvetting.demo |
-| Job seeker | seeker@talentvetting.demo |
-| Shortlisted job seeker | diane@talentvetting.demo |
-
-Data lives in this browser (localStorage). Account menu, Reset demo data, starts over.
+Set `VITE_API_URL` at build time to use another API; deployed builds use https://talentvetting-backend.vercel.app/api.
+Start the API first (`backend/README.md`). The database starts empty: register a recruiter and a job seeker.
 
 ## What works
 - Registration: recruiters with a business category; job seekers with a national ID, date of birth and a live photo
-  checked by head turns (face-api.js in the browser)
-- Profiles: education with documents, skills, hobbies, links; Verify runs the agents into a Grand Profile Summary
+  checked by head turns on the server
+- Profiles: work, education with documents, skills, hobbies, links; Verify has the server check documents, read links
+  and write a Grand Profile Summary
 - Public site for job seekers: Home (hero, partners), About us, Jobs (search, category) and each job; Apply sends a
   signed out visitor to sign in and back to the job, which checks at once whether they qualify
-- Jobs: a Word-like description (the skills are read from it), any category (or a new one), experience, education,
+- Jobs: a Word-like description (the server reads its skills), any category (or a new one), experience, education,
   places, psychometric test and its weight; top 10 suggested candidates before anyone applies
 - Pipeline: qualification check, proctored psychometric test, automatic AI scoring with reasons and evidence, weight
   changes without AI calls, shortlist the applicants you tick with an exam (drag and drop builder, preview) or a message,
-  choices marked by themselves and written answers by you, best performers, published results, notifications
-- AI gateway: providers, key pool, cooldown, failover, schema checks and a log of every call
+  choices marked by the server and written answers by you, best performers, published results, notifications
+- AI activity: every AI call made about your jobs, with provider, model and result
 
 ## Docs
 | | |
 |---|---|
-| [Architecture](docs/architecture.md) | [Data model](docs/data_model.md) |
-| [Backend integration](docs/backend.md) | [AI gateway](docs/ai_gateway.md) |
-| [Agents](docs/agents.md) | [Vision in the browser](docs/vision.md) |
+| [Architecture](docs/architecture.md) | [Data the app reads](docs/data_model.md) |
+| [The API](docs/backend.md) | [AI gateway](docs/ai_gateway.md) |
+| [Agents](docs/agents.md) | [Camera and screen](docs/vision.md) |
 | [Exams](docs/exams.md) | [Pipeline and scores](docs/pipeline.md) |
 | [Design, speed and access](docs/design.md) | |
 

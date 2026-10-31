@@ -1,41 +1,34 @@
-# Backend integration
+# The API
 
-Every simulated part sits behind a function in `src/api` or `src/ai`. Replace each body with a call; screens stay.
+## Address
+`src/net/config.js`: `VITE_API_URL` when it is set at build time; else `http://localhost:5000/api` while the app runs
+on localhost; else `https://talentvetting-backend.vercel.app/api`. The API allows the app's origins (CORS).
 
-## Endpoints (Next.js route handlers on Vercel, or Vercel Functions)
-| Function | Method and path | Notes |
+## Replies
+Success: `{ ok: true, data }` (200, 201 on create). Error: `{ ok: false, level: 'info' | 'warning' | 'error', message }`
+with 400, 401, 403, 404, 409, 413, 429 or 500. The app shows `message` as it is.
+
+## What each screen calls
+| Screen | Reads | Changes |
 |---|---|---|
-| `register`, `sign_in` | POST /api/auth/register, /api/auth/sign-in | Auth.js or Supabase Auth, session cookie |
-| `save_job`, `remove_job`, `set_status` | POST, PATCH, DELETE /api/jobs/:id | owner only |
-| `suggestions(job)` | GET /api/jobs/:id/suggestions | pgvector nearest 10 not applied |
-| `save_profile` | PATCH /api/profile | marks the summary stale, queues verification |
-| `verify` | POST /api/profile/verify | enqueues Document, Crawler, Summarizer, Synthesizer |
-| `check(job)` | POST /api/jobs/:id/qualify | QualificationAgent |
-| `apply(job)` | POST /api/applications | rejects if not qualified |
-| `submit_test` | POST /api/applications/:id/tests | text event log plus answers |
-| `screen`, `rescore` | POST /api/jobs/:id/screen | enqueues one scoring message per applicant |
-| `set_weight` | PATCH /api/jobs/:id | no AI: finals are computed from stored scores |
-| `shortlist`, `set_path`, `best`, `publish` | POST /api/jobs/:id/(shortlist, path, best, publish) | notifies |
-| `notice`, `my_notices`, `mark_read` | GET, PATCH /api/notices | plus email with Resend |
-
-Replies: `{ level: 'info' | 'warning' | 'error' | 'success', message, data }`, as `api/net.js` simulates.
+| Sign in, register | GET /categories | POST /auth/sign-in, /auth/check, /auth/register, /vision/liveness |
+| Public jobs, a job | GET /public/jobs?q=&category=, /public/jobs/:id | GET /applications/check/:job, POST /applications |
+| Dashboard | GET /jobs, or GET /profile and /applications | |
+| Notifications, bell | GET /notices | POST /notices/read |
+| My account | GET /me | PATCH /me, POST /me/password |
+| Post a job | GET /categories | POST /categories, /skills/read, /jobs |
+| Job page | GET /jobs/:id, /jobs/:id/applications, /jobs/:id/suggestions | PATCH status and psych, DELETE, invite, restart, score, shortlist, path, best, select, publish |
+| Exam builder | GET /jobs/:id | POST /exams/import, GET /exams/rules, PUT /jobs/:id/exam, POST /jobs/:id/path |
+| Exam review | GET /applications/:id/review | POST /applications/:id/marks |
+| Candidate | GET /candidates/:user?job= | |
+| AI activity | GET /ai-log | |
+| My profile, summary | GET /profile | PATCH /profile, POST and DELETE work, education, links, POST /profile/verify |
+| My applications | GET /applications | DELETE /applications/:id |
+| Exam room | GET /applications | POST /vision/check, /tests/:app/start, /tests/:test/events, frame, submit |
 
 ## Files
-Document uploads go straight from the browser to Vercel Blob or Supabase Storage with a signed URL; the profile stores
-the URL. The demo keeps only the name, type and size.
-
-## Queues (Upstash QStash)
-Each AI or crawl task is one message and one short function: a document, a link, an applicant to score. Long jobs such
-as scoring 500 applicants become 500 messages. Results write to the database and notify the screen.
-
-## Key pool (Upstash Redis)
-`GEMINI_KEYS`, `GROQ_KEYS`, `OPENROUTER_KEYS` hold comma separated keys. A failing key gets `cool:<key>` with a TTL;
-the gateway skips cooled keys (docs/ai_gateway.md). Keys never reach the browser.
+A degree document is read in the browser and sent with the degree as `{ name, type, data }` (base64). The server
+checks its type and size and stores it.
 
 ## Environment
-`DATABASE_URL, AUTH_SECRET, BLOB_READ_WRITE_TOKEN, QSTASH_TOKEN, UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN,
-RESEND_API_KEY, GEMINI_KEYS, GROQ_KEYS, OPENROUTER_KEYS`
-
-## Order of work
-1. Auth and users  2. Jobs and profiles with storage  3. Gateway and agents with QStash  4. Applications and pipeline
-5. Embeddings and suggestions  6. Notifications and email. Each step keeps the demo running for the rest.
+`VITE_API_URL` (optional, at build time). Nothing secret lives in the web app.

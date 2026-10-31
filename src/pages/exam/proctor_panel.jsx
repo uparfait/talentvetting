@@ -1,5 +1,5 @@
-/* pages/exam/proctor_panel.jsx: the monitoring panel: the camera (mirrored), whether monitoring is on, and the text log
-   of what happened (tab hidden, focus lost, faces). Only this text is ever sent for the integrity report. */
+/* pages/exam/proctor_panel.jsx: the monitoring panel: the camera (mirrored), whether monitoring is on, and the log of
+   what happened (tab hidden, focus lost, what the server saw in the camera pictures). */
 import { chip } from '../../ui/index.js';
 
 const TONE = { many: 'bad', mismatch: 'bad', share_end: 'bad', no_face: 'warn', tab: 'warn', blur: 'warn', fullscreen: 'warn' };
@@ -9,4 +9,4 @@ export const Proctor_panel = ({ video, events, live }) => <section className="ca
   <div className="flex items-center justify-between"><b>Integrity log</b>{chip(live ? 'On' : 'Not started', live ? 'ok' : 'muted')}</div>
   <ul className="ev_log" aria-live="polite">{events.length ? events.slice(-40).reverse().map((e, i) => <li key={i} className={TONE[e.kind]}>{clock(e.at)} {e.text}</li>)
     : <li>Nothing logged{live ? ' so far' : ''}</li>}</ul>
-  <p className="text-xs text-muted">No video or picture leaves your browser: only this log is read.</p></section>;
+  <p className="text-xs text-muted">A camera picture goes to the server every few seconds to check who is in view; with this log it makes the integrity report.</p></section>;

@@ -1,40 +1,34 @@
-# Data model
+# Data the web app reads
 
-The demo keeps collections in localStorage (`tv:v1:c:<name>`). The same shapes become Postgres tables (Neon or
-Supabase), with `pgvector` for matching.
+The server keeps the data (MongoDB); the app only reads these shapes from the API and sends input back.
 
-## users
-`id, role ('recruiter' | 'seeker'), name, email (unique), pass (hash), phone, created`
-- recruiter: `company, category`
-- seeker: `id_number (unique, 16 digits), dob, photo (file url), descriptor (128 floats), face_check ('live' | 'simulated')`
+## user (GET /me, sign in)
+`id, role ('recruiter' | 'seeker'), name, email, phone, company, category, id_number, dob, photo, created`
 
-## profiles (one per seeker, id = user id)
-`headline, about, years, skills[], hobbies[], summary_stale`
-- `education[]`: `id, level, degree, field, school, year, doc { name, type, size, status, flags[], text, model }`
-- `location`: `city, district, country`; `work[]`: `id, position, company, start, end, current` (the experience is worked
-  out from these, overlaps counted once; there is no overall number of years)
-- `links[]`: `id, name, desc, url, status ('new' | 'read' | 'skipped'), host, summary`
-- `summary`: `items[] { text, source, verified }, words, at, model, prompt_v`
-- production adds `embedding vector(768)` for matching
+## profile view (GET /profile, and every profile change)
+`{ profile, experience { months, text }, completeness { pct, missing [{ label, section }] } }`
+- `profile`: `headline, about, location { city, district, country }, work [], skills [], hobbies [], education [],
+  links [], summary, stale, updated`
+- `education[]`: `id, level, degree, field, school, year, doc { name, type, size, status, flags, summary, model }`
+  (status pending, verified, flagged or review)
+- `links[]`: `id, name, url, desc, status ('new' | 'read' | 'skipped'), host, title, summary`
+- `summary`: `items [{ text, source, verified }], words, at, model`
 
-## jobs
-`id, owner, title, category, details (HTML from the document editor; older ones Markdown), skills[] (read from the details), years, level, expected, psych { enabled, weight },
-status ('open' | 'closed'), shortlist_n, path ('exam' | 'message'), exam_md, message, best_done, published`
-- production adds `embedding vector(768)`
+## job (GET /jobs/:id; a list row has counts instead of details)
+`id, title, category, years, level, expected, details (HTML), skills, psych { enabled, weight }, status, path,
+exam { questions, secs }, message, best_done, published, created, counts { applied, scored, shortlisted, best, selected }`
 
-## applications
-`id, job, user, created, stage, qual, psych, score, exam { src, answers, marks, score, report, at }`
-- `stage`: psych, screening, scored, shortlisted, not_shortlisted, selected, not_selected
-- `qual`: `qualified, matched[], gaps[], model, prompt_v`
-- `psych` and `exam`: `score, at, events[], report { verdict, integrity, findings[], model, prompt_v }`
-- `score`: `score, reasoning, strengths[], gaps[], evidence[] { claim, source, verified }, parts, model, prompt_v`
+## application row (recruiter)
+`id, job, user { id, name, email, phone, photo }, stage, qual { qualified, matched, gaps }, score { score, reasoning,
+evidence, strengths, gaps, provider, model }, psych { score, reasoning, style, report, at }, exam { score, to_mark,
+report, at }, best, final, combined, created`. Rows come sorted by final score, unscored last.
 
-## notices
-`id, to, title, text, href, read, created`
+## application (job seeker)
+`id, job { id, title, company, path, published, status, psych_test, message }, stage, psych_done, exam { done, score },
+scored, can_withdraw, created, next ('psych' | 'exam' | null)`
 
-## ai_log
-`id, at, task, label, provider, model, key, ok, ms, tokens, note` (production: a table, or a log service)
+## stages
+psych, screening, scored, shortlisted, not_shortlisted, selected, not_selected
 
-## Indexes to add
-`users(email)`, `users(id_number)`, `applications(job, stage)`, `applications(user)`, `notices(to, read)`,
-and `ivfflat` or `hnsw` indexes on the embedding columns.
+## notice and AI log
+`notice: id, title, text, href, read, created`; `ai_log: at, task, label, provider, model, ok, ms, tokens, note`
