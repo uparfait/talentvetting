@@ -13,15 +13,25 @@ export const combined_of = (a, job) => job.path === 'exam' && a.exam ? Math.roun
 export const ranked = (job, apps, by = final_of) => apps.filter(a => a.score).sort((x, y) => by(y, job) - by(x, job));
 export const fallback_scored = apps => apps.filter(a => a.score && a.score.model !== primary('scoring'));
 
+/* on_step({ id, phase: 'scoring' | 'done', score }) tells the screening overlay how each applicant goes */
 async function score_one(job, a, on_step) {
-  const u = db.find('users', a.user); on_step?.(`Scoring ${u.name}`);
+  const u = db.find('users', a.user); on_step?.({ id: a.id, phase: 'scoring' });
   const s = await agents.score(get_profile(u.id), job, `${u.name} for ${job.title}`);
-  db.upsert('applications', { id: a.id, score: s, stage: a.stage === 'screening' ? 'scored' : a.stage });
+  db.upsert('applications', { id: a.id, score: s, stage: a.stage === 'screening' ? 'scored' : a.stage }); on_step?.({ id: a.id, phase: 'done', score: s.score });
 }
-export async function screen(job, on_step) {
-  for (const a of db.where('applications', x => x.job === job.id && x.stage === 'screening')) await score_one(job, a, on_step);
+/* who a run scores: 'screen' = everyone ready to score, 'rescore' = those a fallback model scored */
+export const to_score = (job, kind) => kind === 'rescore' ? fallback_scored(db.where('applications', x => x.job === job.id))
+  : db.where('applications', x => x.job === job.id && x.stage === 'screening');
+export async function screen(job, on_step, kind = 'screen') { for (const a of to_score(job, kind)) await score_one(job, a, on_step); }
+export const rescore = (job, on_step) => screen(job, on_step, 'rescore');
+/* start over: every scored applicant is ready to score again; scores, the shortlist, its path, exams and best performers
+   are cleared (not once the results are published) */
+const LATER = ['scored', 'shortlisted', 'not_shortlisted', 'selected', 'not_selected'];
+export function restart_screening(job) {
+  if (job.published) return;
+  for (const a of db.where('applications', x => x.job === job.id && LATER.includes(x.stage))) db.upsert('applications', { id: a.id, stage: 'screening', score: null, exam: null });
+  db.upsert('jobs', { id: job.id, shortlist_n: null, path: null, exam_md: '', message: '', best_done: false });
 }
-export async function rescore(job, on_step) { for (const a of fallback_scored(db.where('applications', x => x.job === job.id))) await score_one(job, a, on_step); }
 export const set_weight = (job, weight) => db.upsert('jobs', { id: job.id, psych: { ...job.psych, weight } });
 export function shortlist(job, n) {
   ranked(job, db.where('applications', a => a.job === job.id && a.score)).forEach((a, i) => db.upsert('applications', { id: a.id, stage: i < n ? 'shortlisted' : 'not_shortlisted' }));

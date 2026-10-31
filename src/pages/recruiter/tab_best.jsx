@@ -1,10 +1,10 @@
 /* pages/recruiter/tab_best.jsx: best performer screening: the shortlist ranked by combined score (the final score, and the
    exam's when there is one), the top ones marked selected (as many as the job's places), then Publish results, which
    tells every candidate the outcome. */
-import { db } from '../../store/index.js';
-import { ranked, combined_of, final_of, best, publish } from '../../api/index.js';
-import { notify, ask, chip, empty } from '../../ui/index.js';
-import { person, score_cell } from '../shared/person.jsx';
+import { ranked, combined_of, best, publish } from '../../api/index.js';
+import { go } from '../../router/index.js';
+import { Data_table, notify, ask, chip, empty } from '../../ui/index.js';
+import { best_cols, rank_rows } from './screen_cols.jsx';
 
 export function Tab_best({ job, apps }) {
   const list = ranked(job, apps.filter(a => ['shortlisted', 'selected', 'not_selected'].includes(a.stage)), combined_of);
@@ -15,8 +15,5 @@ export function Tab_best({ job, apps }) {
     <p className="text-sm text-muted">{job.expected} of {list.length} will be selected{waiting ? `; ${waiting} have not taken the exam yet` : ''}.</p></div>
     {job.published ? chip('Results published', 'ok') : <><button type="button" className="btn btn_outline btn_sm" onClick={() => { best(job); notify(`The top ${job.expected} are marked selected.`, 'ok', 'Ranked'); }}>Select the best</button>
       <button type="button" className="btn btn_primary btn_sm" disabled={!job.best_done} onClick={pub}>Publish results</button></>}</section>
-    <section className="card overflow-x-auto"><table className="table_data"><thead><tr><th>#</th><th>Candidate</th><th>Final</th>{job.path === 'exam' ? <th>Exam</th> : null}<th>Combined</th><th>Result</th></tr></thead>
-      <tbody>{list.map((a, i) => { const u = db.find('users', a.user); return <tr key={a.id}><td>{i + 1}</td><td><a href={`/app/candidates/${u.id}?job=${job.id}`}>{person(u, u.email)}</a></td>
-        <td>{score_cell(final_of(a, job))}</td>{job.path === 'exam' ? <td>{score_cell(a.exam?.score)}</td> : null}<td><b className="score_n !text-lg">{combined_of(a, job)}</b></td>
-        <td>{a.stage === 'selected' ? chip('Selected', 'ok') : a.stage === 'not_selected' ? chip('Not selected', 'muted') : chip('Pending', 'info')}</td></tr>; })}</tbody></table></section></div>;
+    <Data_table id="best" title="Ranking" cols={best_cols(job)} rows={rank_rows(list)} on_row={a => go(`/app/candidates/${a.user}?job=${job.id}`)} /></div>;
 }
