@@ -40,8 +40,3 @@
   legend { padding: 0 .5rem; margin-left: -.5rem; font-family: var(--font_display); font-weight: 500; font-size: 1rem; }
   :where(label) { font-size: .875rem; font-weight: 500; }
 }
-  /* every search field (the template's base/05_native_option_list.css): its own search and clear buttons, text never under them */
-@layer base {
-  input[type=search]::-webkit-search-cancel-button { -webkit-appearance: none; }
-  input:where([type=search]) { padding-left: 2.75rem; padding-right: 2.75rem; }
-}

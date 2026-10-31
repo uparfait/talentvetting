@@ -10,6 +10,9 @@
 @import './overrides/smooth_state.css';
 @import './overrides/tile_menu.css';
 @import './overrides/picker.css';
+@import './overrides/files.css';
+@import './overrides/notices.css';
+@import './overrides/account.css';
 @import './overrides/reduced_motion.css';
 @import './app/shell.css';
 @import './app/public.css';

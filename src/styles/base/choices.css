@@ -1,0 +1,47 @@
+/* base/choices.css: the template's base/05_native_option_list.css: native options, number fields without spinners, search
+   fields, autofill lock, and Imberabyombi checkboxes, radios and switches in brand colours. */
+@layer base {
+  /* Native option list (only seen if the picker cannot run): follows the theme in light and dark */
+  :where(option) { background: rgb(var(--surface)); color: rgb(var(--fg)); padding: .35rem .6rem; border-radius: calc(var(--radius) * .5); }
+  .dark select { color-scheme: dark; }
+  :where(option:checked) { background: rgb(var(--brand)); color: #fff; }
+  :where(optgroup) { font-weight: 700; color: rgb(var(--muted)); background: rgb(var(--surface)); }
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+  input[type=search]::-webkit-search-cancel-button { -webkit-appearance: none; }
+  /* Every search field: a clickable search button on the left and a clear button on the right (search_ui()); text never runs under them */
+  input:where([type=search]) { padding-left: 2.75rem; padding-right: 2.75rem; }
+  datalist { display: none; }
+
+  /* Autofill lock: browsers may NOT recolour filled fields (wins over the dark no-shadow rule by specificity). */
+  input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus,
+  textarea:-webkit-autofill, select:-webkit-autofill {
+    -webkit-text-fill-color: rgb(var(--field_fg, var(--fg))) !important;
+    -webkit-box-shadow: 0 0 0 100rem rgb(var(--field, var(--surface))) inset !important;
+    box-shadow: 0 0 0 100rem rgb(var(--field, var(--surface))) inset !important;
+    caret-color: rgb(var(--field_fg, var(--fg)));
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+  input:autofill { filter: none; background-color: rgb(var(--field, var(--surface))); }
+
+  /* Checkbox, radio, switch: Imberabyombi shapes in brand colours */
+  :where(input[type=checkbox], input[type=radio]) {
+    appearance: none; width: 1.125rem; height: 1.125rem; flex-shrink: 0; cursor: pointer; vertical-align: middle;
+    border: 2px solid rgb(var(--muted)); border-radius: calc(var(--radius) * .35); background: transparent center / 85% no-repeat;
+    transition: background-color .2s, border-color .2s, background-position .25s var(--ease), background-size .2s var(--ease);
+  }
+  :where(input[type=checkbox], input[type=radio]):hover { border-color: rgb(var(--brand)); }
+  :where(input[type=radio]) { width: 1.25rem; height: 1.25rem; border-radius: 999px; }
+  :where(input[type=checkbox]:checked) { background-color: rgb(var(--brand)); border-color: rgb(var(--brand));
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); }
+  :where(input[type=radio]:checked) { border-color: rgb(var(--brand)); background-image: radial-gradient(circle, rgb(var(--brand)) 0 .3rem, transparent .33rem); background-size: 100%; }
+  input[type=checkbox][role=switch] {
+    width: 3.25rem; height: 2rem; border-radius: 999px; border-width: 2px; border-color: rgb(var(--muted)); background-color: rgb(var(--surface_3));
+    background-image: radial-gradient(circle, rgb(var(--muted)) 0 .5rem, transparent .53rem);
+    background-size: 1.75rem 1.75rem; background-position: 0 center;
+  }
+  input[type=checkbox][role=switch]:checked {
+    background-color: rgb(var(--brand)); border-color: rgb(var(--brand));
+    background-image: radial-gradient(circle, #fff 0 .75rem, transparent .78rem); background-position: 100% center;
+  }
+}

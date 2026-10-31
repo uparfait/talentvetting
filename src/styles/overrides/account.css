@@ -1,0 +1,22 @@
+/* overrides/account.css: the template's account pages (overrides/19_account_pages.css, 20_copyable_value.css): a link
+   row to a related page, numbered steps, password rules; and its chips input (28_event_page.css). */
+  .auth_row { display: flex; align-items: center; gap: .875rem; padding: .875rem 1rem; border: 1px solid rgb(var(--line)); border-radius: var(--radius); font-size: .875rem; transition: background-color .2s; }
+  .auth_row:hover { background: rgb(var(--fg) / .04); }
+  .auth_steps { display: grid; gap: 1.75rem; counter-reset: step; }
+  .auth_steps > li { position: relative; padding-left: 2.5rem; counter-increment: step; }
+  .auth_steps > li::before { content: counter(step); position: absolute; left: 0; top: -.0625rem; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: var(--pill);
+    background: rgb(var(--brand) / .14); color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); font-size: .8125rem; font-weight: 600; }
+  .otp_box { height: 3.5rem; padding: 0; text-align: center; font-family: var(--font_mono); font-size: 1.5rem; font-weight: 600; }
+  .pw_rules li { display: flex; align-items: center; gap: .5rem; color: rgb(var(--muted)); transition: color .2s; }
+  .pw_rules li svg { opacity: .3; transition: opacity .2s; }
+  .pw_rules li.ok { color: rgb(var(--ok)); }
+  .pw_rules li.ok svg { opacity: 1; }
+  .ev_chips { display: flex; flex-wrap: wrap; gap: .375rem; max-height: 10rem; overflow-y: auto; }
+  .ev_chip { display: inline-flex; align-items: center; gap: .25rem; max-width: 100%; padding: .25rem .25rem .25rem .75rem; border-radius: var(--pill);
+    background: rgb(var(--brand) / .1); font-size: .8125rem; }
+  .ev_chip_x { display: grid; flex: none; place-items: center; width: 1.375rem; height: 1.375rem; border-radius: var(--pill); color: rgb(var(--muted)); }
+  .ev_chip_text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: text; }
+  .ev_chip_edit { padding: .125rem .5rem; outline: 2px solid rgb(var(--brand)); outline-offset: -2px; }
+  .ev_chip_input { width: auto; min-width: 12ch; max-width: 100%; field-sizing: content; padding: .125rem .25rem; border: 0; outline: 0; background: transparent;
+    font-size: .8125rem; line-height: 1.25rem; text-overflow: clip; }   /* as wide as the address */
+  .ev_chip_x:hover { background: rgb(var(--fg) / .1); color: rgb(var(--fg)); }

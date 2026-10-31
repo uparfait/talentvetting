@@ -7,6 +7,8 @@
 @import './base/native_b.css';
 @import './base/tables.css';
 @import './base/range.css';
+@import './base/choices.css';
+@import './base/dialog.css';
 @import './components/components.css';
 @import './components/segmented.css';
 

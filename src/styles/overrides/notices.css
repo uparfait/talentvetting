@@ -1,0 +1,9 @@
+/* overrides/notices.css: the template's bell and notices (overrides/30_notices.css): the count, the list, new ones with a dot */
+  .notice_btn { position: relative; }
+  .notice_count { position: absolute; top: .25rem; right: .125rem; display: grid; place-items: center; min-width: 1.125rem; height: 1.125rem; padding: 0 .25rem;
+    border-radius: var(--pill); background: rgb(var(--brand)); color: #fff; font-size: .625rem; font-weight: 700; line-height: 1; }
+  .notice_list { display: grid; gap: .125rem; max-height: min(26rem, 70dvh); overflow-y: auto; }
+  .notice { position: relative; display: flex; align-items: center; gap: .75rem; width: 100%; padding: .625rem .75rem; border-radius: var(--radius); transition: background-color .2s; }
+  .notice:hover { background: rgb(var(--fg) / .05); }
+  .notice_ic { display: grid; flex: none; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: var(--pill); }
+  .notice.is_new::after { content: ''; flex: none; width: .5rem; height: .5rem; border-radius: var(--pill); background: rgb(var(--brand)); }

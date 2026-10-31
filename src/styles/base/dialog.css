@@ -1,0 +1,26 @@
+/* base/dialog.css: the template's base/07_details_summary.css: details and summary, and the dialogs (#modal). */
+@layer base {
+  /* Details / summary */
+  :where(details) { border: 1px solid rgb(var(--line)); border-radius: var(--radius); background: rgb(var(--surface)); overflow: hidden; }
+  summary { list-style: none; cursor: pointer; padding: 1rem 1.25rem; font-weight: 500; display: flex; align-items: center; justify-content: space-between; gap: 1rem; transition: background-color .2s; }
+  :where(summary):hover { background: rgb(var(--fg) / .03); }
+  summary::-webkit-details-marker { display: none; }
+  :where(summary)::after { content: ""; flex-shrink: 0; width: .55rem; height: .55rem; border-right: 2px solid rgb(var(--muted)); border-bottom: 2px solid rgb(var(--muted)); transform: rotate(45deg) translateY(-25%); transition: transform .3s var(--ease); }
+  :where(details[open] > summary)::after { transform: rotate(-135deg); }
+  :where(details[open] > summary) { border-bottom: 1px solid rgb(var(--line)); }
+  details[open] > :not(summary) { animation: rise .35s var(--ease); }
+
+  /* Dialog */
+  :where(dialog) { padding: 0; color: rgb(var(--fg)); background: rgb(var(--surface)); border: 1px solid rgb(var(--line)); border-radius: calc(var(--radius) * 1.5); box-shadow: var(--shadow); }
+  dialog::backdrop { background: rgb(var(--ink) / .55); backdrop-filter: blur(4px); }
+  dialog[open] { animation: pop .3s var(--ease); }
+  #modal { width: min(44rem, calc(100% - 1.5rem)); max-width: none; }
+  @media (min-width: 1024px) { #modal.modal_wide { width: min(max(70vw, 44rem), calc(100% - 3rem)); } }   /* modal({ wide: true }), e.g. the task view: at least 70% of a large screen */
+  #modal > form { max-height: min(90dvh, 54rem); }
+  #viewer { width: min(64rem, calc(100% - 1rem)); max-width: none; max-height: calc(100dvh - 1rem); }
+  #viewer[open] { display: flex; flex-direction: column; }
+  #viewer.viewer_table { width: min(80rem, calc(100% - 1rem)); }   /* a table in it (who attended: events/attendees_view.jsx) */
+  #confirm { width: min(26rem, calc(100% - 1.5rem)); max-width: none; }
+  dialog.drawer { margin: 0 0 0 auto; height: 100dvh; max-height: none; width: min(20rem, 88vw); max-width: none; border-radius: var(--radius) 0 0 var(--radius); border-width: 0 0 0 1px; }
+  dialog.drawer[open] { animation: slide .35s var(--ease); }
+}
