@@ -12,3 +12,22 @@
   .pk_item:hover, .pk_item:focus-visible { background: rgb(var(--fg) / .06); outline: 0; }
   .pk_item[aria-selected=true] { background: rgb(var(--brand) / .14); color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); font-weight: 500; }
   .pk_group { padding: .6rem 1rem .25rem; font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: rgb(var(--muted)); }
+  /* the calendar for date fields (ui/picker_cal.js), the template's mini calendar */
+  #picker_cal { position: fixed; z-index: 350; padding: .75rem; color: rgb(var(--fg)); background: rgb(var(--surface)); border: 1px solid rgb(var(--line));
+    border-radius: calc(var(--radius) * 1.5); animation: pop .15s var(--ease); }
+  #picker_cal[hidden] { display: none; }
+  .pk_cal { width: min(18rem, calc(100vw - 2.5rem)); }
+  .pk_head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .25rem; }
+  .pk_title { display: inline-flex; align-items: center; gap: .25rem; padding: .375rem .625rem; border-radius: var(--pill); font-size: .9rem; font-weight: 500; transition: background-color .15s; }
+  .pk_title:hover { background: rgb(var(--fg) / .06); }
+  .pk_grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); text-align: center; }
+  .pk_grid > span { padding: .375rem 0; font-size: .7rem; color: rgb(var(--muted)); }
+  .pk_day, .pk_mon { display: grid; place-items: center; border-radius: var(--pill); font-size: .8rem; transition: background-color .15s; }
+  .pk_day { width: 2.25rem; height: 2.25rem; max-width: 100%; margin: 1px auto; }
+  .pk_mon { height: 2.5rem; font-size: .85rem; }
+  .pk_day:hover, .pk_mon:hover, .pk_day:focus-visible, .pk_mon:focus-visible { background: rgb(var(--fg) / .06); }
+  .pk_day.out { color: rgb(var(--muted) / .6); }
+  .pk_day.today, .pk_mon.today { font-weight: 600; color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); outline: 1px solid rgb(var(--brand)); outline-offset: -1px; }
+  .pk_day[aria-selected=true], .pk_mon[aria-selected=true] { background: rgb(var(--brand)); color: #fff; outline: 0; }
+  .pk_years { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .25rem; max-height: 16rem; overflow-y: auto; }
+  .pk_foot { display: flex; justify-content: flex-end; gap: .25rem; margin-top: .5rem; padding-top: .5rem; border-top: 1px solid rgb(var(--line)); }
