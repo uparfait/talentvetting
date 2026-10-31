@@ -20,7 +20,7 @@ Settings come from `.env` (see `.env.example`); on Vercel from the project's env
 | AUTH_SECRET | signs sign in tokens |
 | ALLOWED_ORIGINS | web app origins allowed to call the API |
 | LLM_PROVIDER, SUMMARY_PROVIDER | first provider for most tasks, and for summaries |
-| GEMINI_API_KEY, GEMINI_MODEL | Gemma on the Gemini API (several keys may be comma separated) |
+| GEMINI_API_KEY, GEMINI_MODEL, GEMINI_FALLBACK_MODEL | Gemma on the Gemini API, and the model tried next on the same key (several keys may be comma separated) |
 | GROQ_API_KEY, GROQ_MODEL | Groq |
 | HF_TOKEN, HF_MODEL | Hugging Face inference |
 
@@ -32,7 +32,8 @@ Settings come from `.env` (see `.env.example`); on Vercel from the project's env
 | face_recognition (6.3 MB) | on this server | 128 number face descriptor, matching exams to the registration photo |
 | tfjs wasm backends (3 files) | on this server, `models/wasm` | running the three nets without native binaries |
 | gemma-4-26b-a4b-it | Gemini API | scoring, document checks (reads the actual file), skills in a job |
-| llama-3.3-70b-versatile | Groq | summaries of links and profiles, proctoring reports |
+| gemini-flash-lite-latest | Gemini API | next in line when Gemma is busy (also reads files) |
+| openai/gpt-oss-120b | Groq | summaries of links and profiles, and fallback for every task |
 | google/gemma-3-27b-it | Hugging Face | fallback for every AI task |
 
 Every AI call is logged (task, provider, model, time, result) and fails over to the next provider when one is busy.

@@ -20,10 +20,11 @@ function to_buffer(b) {
 }
 const mime_of = type => String(type || '').toLowerCase().trim().replace('image/jpg', 'image/jpeg');
 
+/* the pdf.js inside pdf-parse ignores a Buffer's byteOffset (small or sliced Buffers share memory), so it gets a copy */
 async function extract_text({ buffer, type } = {}) {
   if (!/pdf/.test(mime_of(type))) return '';
   try {
-    const r = await pdf_parse(to_buffer(buffer), { max: 30 });
+    const r = await pdf_parse(new Uint8Array(to_buffer(buffer)), { max: 30 });
     return clean(r.text || '').slice(0, MAX_TEXT);
   } catch {
     return '';

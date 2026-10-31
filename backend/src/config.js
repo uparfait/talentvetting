@@ -17,7 +17,9 @@ module.exports = {
   ai: {
     primary: env('LLM_PROVIDER', 'gemini'), summary: env('SUMMARY_PROVIDER', 'groq'),
     gemini: { keys: list('GEMINI_API_KEY'), model: env('GEMINI_MODEL', 'gemma-4-26b-a4b-it') },
-    groq: { keys: list('GROQ_API_KEY'), model: env('GROQ_MODEL', 'llama-3.3-70b-versatile') },
+    /* a second model on the same Gemini key, tried right after Gemma when it is busy (it also reads files) */
+    gemini_alt: { keys: list('GEMINI_API_KEY'), model: env('GEMINI_FALLBACK_MODEL', 'gemini-flash-lite-latest') },
+    groq: { keys: list('GROQ_API_KEY'), model: env('GROQ_MODEL', 'openai/gpt-oss-120b') },
     hf: { keys: list('HF_TOKEN'), model: env('HF_MODEL', 'google/gemma-3-27b-it') },
     timeout_ms: 25000, cooldown_ms: 60000
   },

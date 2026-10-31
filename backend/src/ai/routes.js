@@ -1,7 +1,8 @@
 /* ai/routes.js: which providers each task tries, in order, and how it is asked. Tasks that read files (score, document,
    and any call with files attached) go to Gemini first; summaries (crawl, synthesize) go to the summary provider
    (config.ai.summary) first; the rest to the primary provider (config.ai.primary). The remaining providers follow as
-   fallbacks. Providers without a key are left out. */
+   fallbacks. Gemini's second model (gemini_alt) comes right after Gemma wherever Gemini is first. Providers without a key
+   are left out. */
 const config = require('../config');
 const { NAMES } = require('./providers');
 
@@ -19,8 +20,8 @@ const settings_of = task => TASKS[task] || OTHER;
 const resolve = first => (first === 'primary' ? config.ai.primary : first === 'summary' ? config.ai.summary : first);
 
 function order_for(task, has_files = false) {
-  const first = has_files ? 'gemini' : resolve(settings_of(task).first);
-  return [...new Set([first, config.ai.primary, config.ai.summary, ...NAMES])]
+  const first = resolve(settings_of(task).first), reads = has_files || first === 'gemini' ? ['gemini', 'gemini_alt'] : [first];
+  return [...new Set([...reads, config.ai.primary, config.ai.summary, ...NAMES])]
     .filter(p => NAMES.includes(p) && (config.ai[p]?.keys || []).length > 0);
 }
 

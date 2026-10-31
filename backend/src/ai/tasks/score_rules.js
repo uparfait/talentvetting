@@ -20,7 +20,8 @@ function score_rules(profile = {}, job = {}, { experience_months = 0, facts = []
   const score = parts.skills + parts.experience + parts.education + parts.verified;
   const evidence = [
     ...found.slice(0, 6).map(({ s, line }) => ({ claim: `Shows ${s}: ${clip(line.text, 140)}`, source: line.source, verified: line.verified })),
-    ...facts.filter(f => f.verified && /^document:/.test(f.source)).slice(0, 2).map(f => ({ claim: clip(f.text, 160), source: f.source, verified: true }))
+    ...facts.filter((f, i, all) => f.verified && /^document:/.test(f.source) && all.findIndex(x => x.source === f.source) === i)
+      .slice(0, 2).map(f => ({ claim: clip(f.text, 160), source: f.source, verified: true }))
   ];
   const strengths = [...found.slice(0, 4).map(x => `Shows ${x.s}`), exp >= 1 && asked ? 'Experience meets the years asked' : '',
     edu >= 1 && need >= 0 ? `Education at or above ${job.level}` : '', ver >= 0.6 ? 'Most documents and links are verified' : ''].filter(Boolean);
