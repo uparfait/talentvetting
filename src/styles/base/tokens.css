@@ -31,8 +31,8 @@
        If you change --brand to another hue, re-check the order (series 2 is blue). */
     --series_1: rgb(var(--brand)); --series_2: #2a78d6; --series_3: #1baf7a; --series_4: #eda100; --series_5: #e87ba4; --series_6: #008300; --series_7: #6250d6; --series_8: #e34948;
     --shadow: none;          /* flat system: no shadows in any theme, borders carry depth */
-    /* Diamond lattice from the brand artwork (used as a CSS mask, so it takes any colour) */
-    --pattern: url('/patterns/lattice.svg');
+    /* OK hands (the thumb and index make an O), used as a CSS mask, so it takes any colour */
+    --pattern: url('/patterns/ok_hand.svg');
     color-scheme: light;
   }
   .dark {

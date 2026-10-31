@@ -2,7 +2,7 @@
 
 ## From the Imberabyombi template
 Tokens (`src/styles/base/tokens.css`), fonts (Figtree, Bricolage Grotesque, JetBrains Mono, served locally), scaling,
-buttons, cards, chips, outlined fields, data tables, toasts, the tooltip, the segmented tabs, the lattice pattern and the
+buttons, cards, chips, outlined fields, data tables, toasts, the tooltip, the segmented tabs, the OK hand pattern and the
 cartoon pictures. Only what the app uses was copied.
 
 - Brand colour: #E01FAD (`--brand`), deep shade #8F146F (`--brand_2`). One token restyles everything.

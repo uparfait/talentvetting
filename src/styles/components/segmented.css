@@ -28,7 +28,7 @@
   .prose_x :where(img) { border-radius: var(--radius); width: 100%; }
   .prose_x :where(a) { color: rgb(var(--brand)); text-decoration: underline; text-underline-offset: 3px; }
 
-  /* Brand artwork (home page): the hero with its lattice and the curved wave at the bottom */
+  /* Brand artwork (home page): the hero with its pattern and the curved wave at the bottom */
   /* The hero and the Vision band follow the theme: light = white to soft orange with dark text, dark = ink to orange with light text */
   .hero { --h0: rgb(var(--surface)); --h1: color-mix(in srgb, rgb(var(--brand)) 14%, rgb(var(--surface))); --h2: color-mix(in srgb, rgb(var(--brand)) 42%, rgb(var(--surface))); border: 0;
     background: linear-gradient(180deg, var(--h0) 0%, var(--h0) 40%, var(--h1) 78%, var(--h2) 100%); }
