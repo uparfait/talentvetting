@@ -1,0 +1,27 @@
+<!doctype html>
+<!-- TalentVetting: the page shell. SEO tags, the font preload and a theme boot that runs before the first paint. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TalentVetting</title>
+<meta name="description" content="AI powered recruitment: verified profiles, fair scoring and proctored exams, from application to selection.">
+<meta name="theme-color" content="#E0661B" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1F1F1F" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="TalentVetting">
+<meta property="og:description" content="Recruit with verified profiles, fair AI scoring and proctored exams.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/figtree_latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  (function () { try {
+    var mode = JSON.parse(localStorage.getItem('tv:v1:theme') || '"system"');
+    document.documentElement.classList.toggle('dark', mode === 'dark' || (mode === 'system' && matchMedia('(prefers-color-scheme: dark)').matches));
+  } catch (e) {} })();
+</script>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="padding:2rem;font-family:sans-serif">Turn on JavaScript to use TalentVetting.</p></noscript>
+<script type="module" src="/src/main.jsx"></script>
+</body>
+</html>
