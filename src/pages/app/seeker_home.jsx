@@ -15,7 +15,7 @@ export function Seeker_home() {
   return <>{page_head(`Hello, ${u.name.split(' ')[0]}`, <a href="/app/browse" className="btn btn_primary btn_sm">Find jobs</a>)}
     <section className="card flex flex-wrap items-center gap-5 p-5">{avatar(u, 'h-16 w-16')}<div className="min-w-0 flex-1">
       <p className="text-lg font-semibold">{p.headline || 'Add a headline to your profile'}</p>
-      <div className="mt-2 score_bar" aria-label={`Profile ${c.pct} % complete`}><i style={{ width: `${c.pct}%` }}></i></div>
+      <progress className="mt-2" max="100" value={c.pct} aria-label={`Profile ${c.pct} % complete`}></progress>
       <p className="mt-1 text-sm text-muted">{c.pct} % complete{c.next ? `: next, ${c.next}` : ''}</p></div>
       <div className="flex flex-wrap gap-2">{p.summary && !p.summary_stale ? chip('Summary up to date', 'ok') : chip('Verify to update your summary', 'warn')}
         <a href="/app/profile" className="btn btn_outline btn_sm">Edit profile</a></div></section>

@@ -29,3 +29,5 @@
   .scroll_hover::-webkit-scrollbar-thumb { background-color: transparent; }
   .scroll_hover:is(:hover, :focus-within)::-webkit-scrollbar-thumb { background-color: rgb(var(--brand) / .4); }
   .page_enter { animation: page .45s var(--ease) backwards; }
+  dialog.closing { animation: pop_out .2s var(--ease) forwards; }
+  dialog.closing::backdrop { opacity: 0; transition: opacity .2s; }

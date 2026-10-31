@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { register } from '../../api/index.js';
 import { go } from '../../router/index.js';
 import { age_of } from '../../lib/index.js';
-import { Field, form_values, notify, spinner } from '../../ui/index.js';
+import { Field, form_values, notify, spinner, Password } from '../../ui/index.js';
 import { Auth_shell } from './auth_shell.jsx';
 import { Photo_capture } from './photo_capture.jsx';
 
@@ -23,7 +23,7 @@ export default function Register_seeker() {
       <Field label="Phone" name="phone" type="tel" autoComplete="tel" defaultValue={data.phone} required />
       <Field label="National ID number" name="id_number" inputMode="numeric" maxLength={16} defaultValue={data.id_number} required />
       <Field label="Date of birth" name="dob" type="date" defaultValue={data.dob} required />
-      <Field label="Password (8 characters or more)" name="password" type="password" autoComplete="new-password" defaultValue={data.password} required className="sm:col-span-2" />
+      <div className="grid gap-5 sm:col-span-2"><Password label="Password" auto="new-password" initial={data.password} rules /></div>
       {err ? <p className="field_err sm:col-span-2" role="alert">{err}</p> : null}
       <button className="btn btn_primary sm:col-span-2">Continue</button></form>
     : <div className="mt-8 grid gap-5"><Photo_capture on_done={set_face} />{err ? <p className="field_err" role="alert">{err}</p> : null}

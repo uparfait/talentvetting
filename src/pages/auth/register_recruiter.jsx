@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { register } from '../../api/index.js';
 import { go } from '../../router/index.js';
-import { Field, form_values, notify, spinner } from '../../ui/index.js';
+import { Field, form_values, notify, spinner, Password } from '../../ui/index.js';
 import { CATEGORIES } from '../../store/seed/fields.js';
 import { Auth_shell } from './auth_shell.jsx';
 
@@ -19,7 +19,7 @@ export default function Register_recruiter() {
       <Field label="Phone" name="phone" type="tel" autoComplete="tel" />
       <Field label="Company or business" name="company" required />
       <Field label="Business category" name="category" as="select" options={CATEGORIES} required />
-      <Field label="Password (8 characters or more)" name="password" type="password" autoComplete="new-password" required className="sm:col-span-2" />
+      <div className="grid gap-5 sm:col-span-2"><Password label="Password" auto="new-password" rules /></div>
       {err ? <p className="field_err sm:col-span-2" role="alert">{err}</p> : null}
       <button className={`btn btn_primary sm:col-span-2 ${busy ? 'is_busy' : ''}`} disabled={busy}>{busy ? spinner() : null}Create account</button></form>
     <p className="mt-6 text-center text-sm text-muted">Looking for a job instead? <a href="/register/seeker" className="font-medium text-accent hover:underline">Register as a job seeker</a></p>
