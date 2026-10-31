@@ -21,7 +21,6 @@ with 400, 401, 403, 404, 409, 413, 429 or 500. The app shows `message` as it is.
 | Exam builder | GET /jobs/:id | POST /exams/import, GET /exams/rules, PUT /jobs/:id/exam, POST /jobs/:id/path |
 | Exam review | GET /applications/:id/review | POST /applications/:id/marks |
 | Candidate | GET /candidates/:user?job= | |
-| AI activity | GET /ai-log | |
 | My profile, summary | GET /profile | PATCH /profile, POST and DELETE work, education, links, POST /profile/verify |
 | My applications | GET /applications | DELETE /applications/:id |
 | Exam room | GET /applications | POST /vision/check, /tests/:app/start, /tests/:test/events, frame, submit |

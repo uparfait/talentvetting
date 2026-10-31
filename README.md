@@ -25,7 +25,6 @@ Start the API first (`backend/README.md`). The database starts empty: register a
 - Pipeline: qualification check, proctored psychometric test, automatic AI scoring with reasons and evidence, weight
   changes without AI calls, shortlist the applicants you tick with an exam (drag and drop builder, preview) or a message,
   choices marked by the server and written answers by you, best performers, published results, notifications
-- AI activity: every AI call made about your jobs, with provider, model and result
 
 ## Docs
 | | |

@@ -14,5 +14,4 @@ r.use('/tests', require('./tests'));
 r.use('/exams', require('./exams'));
 r.use('/vision', require('./vision'));
 r.use('/notices', require('./notices'));
-r.use('/ai-log', require('./ai_log'));
 module.exports = r;

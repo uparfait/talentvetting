@@ -1,6 +1,6 @@
 /* styles/app/present.css: the presentation on the whole screen (pages/present), after the template's agenda on the whole
    screen (overrides/34_track_full.css): the slide's soft tint (.tint, --h from its title, easing between slides), the
-   strip that slides, the words rising in turn, the drawings tracing themselves in, the dots and a progress line. */
+   strip that slides, the words rising in turn, the illustration's people and 3D icons popping in, the dots and a progress line. */
 @property --h { syntax: '<number>'; inherits: true; initial-value: 320; }
 .tint { background: radial-gradient(70% 80% at 12% 8%, color-mix(in oklab, hsl(var(--h) 70% 62%) 20%, transparent), transparent 72%),
     radial-gradient(65% 75% at 90% 92%, color-mix(in oklab, hsl(calc(var(--h) + 45) 65% 62%) 16%, transparent), transparent 72%), rgb(var(--surface));
@@ -17,23 +17,32 @@
 @media (min-width: 900px) { .pr_slide { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 4vw; } }
 .pr_words { display: grid; justify-items: start; gap: 1.25rem; }
 .pr_kicker { color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); font-size: clamp(.9rem, 1.3vw, 1.125rem); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-.pr_title { font-family: var(--font_display); font-size: clamp(2.25rem, 5vw, 4.75rem); font-weight: 500; line-height: 1.06; text-wrap: balance; }
+.pr_title { font-family: var(--font_display); font-size: clamp(2.5rem, 5.5vw, 5.5rem); font-weight: 500; line-height: 1.06; text-wrap: balance; }
 .pr_text { max-width: 44rem; color: rgb(var(--muted)); font-size: clamp(1.125rem, 1.8vw, 1.625rem); line-height: 1.45; }
 .pr_points { display: grid; gap: .875rem; font-size: clamp(1.05rem, 1.6vw, 1.5rem); }
-.pr_points li { display: flex; align-items: flex-start; gap: .75rem; }
-.pr_art { width: min(100%, 30rem); justify-self: center; overflow: visible; color: rgb(var(--brand)); }
-@media (max-width: 899px) { .pr_art { width: min(70%, 16rem); order: -1; } }
-.pr_line { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.pr_dot { fill: currentColor; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.pr_points li { display: flex; align-items: center; gap: .875rem; }
+.pr_icon { display: grid; flex: none; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--pill); background: rgb(var(--brand) / .14); color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); }
+.pr_line { fill: none; stroke: rgb(var(--brand) / .45); stroke-width: 2; stroke-dasharray: 6 6; stroke-linecap: round; vector-effect: non-scaling-stroke; clip-path: inset(0 100% 0 0); }
 /* the open slide: its parts rise in turn and its drawing traces itself in */
 .pr_slide.on .pr_words > * { animation: rise .7s var(--ease) both; }
 .pr_slide.on .pr_kicker { animation-delay: .15s; } .pr_slide.on .pr_title { animation-delay: .25s; } .pr_slide.on .pr_text { animation-delay: .4s; }
 .pr_slide.on .pr_points li { animation: rise .6s var(--ease) both; animation-delay: calc(.45s + var(--i) * .12s); }
-.pr_slide.on .pr_line { animation: pr_draw 1.2s var(--ease) forwards; animation-delay: calc(.3s + var(--i) * .25s); }
-.pr_slide.on .pr_dot { animation: pr_pop .5s var(--ease) forwards; animation-delay: calc(.6s + var(--i) * .2s); }
-@keyframes pr_draw { to { stroke-dashoffset: 0; } }
+.pr_slide.on .pr_line { animation: pr_draw 1.4s var(--ease) .3s forwards; }
+/* the illustration: people and 3D icons on a stage, popping in one by one and floating gently */
+.pr_stage { position: relative; width: min(100%, 34rem); aspect-ratio: 6 / 5; justify-self: center; }
+@media (max-width: 899px) { .pr_stage { width: min(80%, 20rem); order: -1; } }
+.pr_path { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pr_pop { position: absolute; display: grid; justify-items: center; gap: .375rem; translate: -50% -50%; }
+.pr_tile { padding: .75rem .875rem .5rem; border: 1px solid rgb(var(--line)); border-radius: 1.25rem; background: rgb(var(--surface) / .85); }
+.pr_tile small { font-size: .8125rem; font-weight: 600; white-space: nowrap; }
+.pr_who > img { border: 3px solid rgb(var(--surface)); background: rgb(var(--brand) / .12); }
+.pr_badge { position: absolute; right: -.75rem; bottom: -.5rem; }
+.pr_cover { position: static; width: 100%; translate: none; border-radius: 1.5rem; }
+.pr_slide.on .pr_pop { animation: pr_pop .6s var(--ease) backwards, pr_float 6s ease-in-out infinite; animation-delay: calc(.35s + var(--i) * .15s), calc(1.2s + var(--i) * .4s); }
+@keyframes pr_draw { to { clip-path: inset(0 0 0 0); } }
+@keyframes pr_float { 50% { transform: translateY(-.4rem); } }
 @keyframes pr_pop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
 .pr_dots { display: flex; justify-content: center; gap: .5rem; }
 .pr_dots button { width: .55rem; height: .55rem; padding: 0; border-radius: 1rem; background: rgb(var(--fg) / .15); transition: width .4s var(--ease), background .4s; }
 .pr_dots .done { background: rgb(var(--fg) / .35); } .pr_dots .on { width: 1.75rem; background: rgb(var(--brand)); }
-@media (prefers-reduced-motion: reduce) { .tint, .pr_strip, .pr_bar { transition: none; } .pr_line { stroke-dashoffset: 0; } .pr_dot { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .tint, .pr_strip, .pr_bar { transition: none; } .pr_line { clip-path: none; } .pr_slide.on .pr_pop { animation: none; } }

@@ -33,7 +33,7 @@ export function Present() {
     <div className="pr_view">{step(-1, 'Back', 'chev_l')}<div className="pr_clip"><ol className="pr_strip" style={{ transform: `translateX(${-i * 100}%)` }}>
       {SLIDES.map((s, k) => <li key={k} className={`pr_slide ${k === i ? 'on' : ''}`} aria-hidden={k !== i} aria-current={k === i ? 'step' : undefined}>
         <div className="pr_words"><p className="pr_kicker">{s.kicker}</p><h2 className="pr_title">{s.title}</h2>{s.text ? <p className="pr_text">{s.text}</p> : null}
-          {s.points ? <ul className="pr_points">{s.points.map((p, n) => <li key={p} style={{ '--i': n }}>{ic('check', 'h-5 w-5 shrink-0 text-brand')}{p}</li>)}</ul> : null}</div>
+          {s.points ? <ul className="pr_points">{s.points.map(([icon, p], n) => <li key={p} style={{ '--i': n }}><span className="pr_icon">{ic(icon, 'h-5 w-5')}</span>{p}</li>)}</ul> : null}</div>
         {art(s.art)}</li>)}</ol></div>{step(1, 'Next', 'chev_r')}</div>
     <footer className="pr_dots">{SLIDES.map((s, k) => <button key={k} type="button" className={k === i ? 'on' : k < i ? 'done' : ''} aria-label={`Slide ${k + 1}: ${s.title}`} onClick={() => go(k)}></button>)}</footer></div>, document.body);
 }

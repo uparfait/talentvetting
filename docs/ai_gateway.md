@@ -9,7 +9,7 @@ Every AI call goes through the server's gateway (`backend/src/ai`); keys never r
 4. Logs every call: task, what it was about, provider, model, result, latency, tokens.
 
 ## In the web app
-- AI activity (`/app/ai`, `GET /ai-log`) lists the calls about the recruiter's jobs, failovers as failed calls.
+- Every call is kept in the `ai_log` collection for 90 days (task, provider, model, time, result, failovers as failed calls), for audits.
 - Every AI result shows the model that produced it (scores, summaries, reports).
 - Screening flags a job whose scores came from more than one model; Screen again has everyone scored anew.
 - The final score (profile and psychometric test, with the recruiter's weight) needs no AI: the server works it out
