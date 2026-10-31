@@ -6,7 +6,7 @@
 | 2 Psychometric | job seeker | proctored test, then its integrity report | screening |
 | 3 Screening | automatic | each application scored 0 to 100 as it comes in; Screen again if wanted | scored |
 | 4 Shortlist | recruiter | ticks applicants, Shortlist: with an exam (prepare, preview, send) or a message | shortlisted, not_shortlisted |
-| 5 Best performers | recruiter | ranked by combined score; top places selected | selected, not_selected |
+| 5 Best performers | recruiter | ticked on the shortlist, ranked by combined score; ticks who is selected | best, then selected, not_selected |
 | 6 Results | recruiter | Publish results: everyone is notified, the job closes | job.published |
 
 ## Scores
@@ -18,6 +18,11 @@
 ## Suggestions before applying
 The job's top 10: people who have not applied, ranked by similarity between the job and their profile (embeddings and
 pgvector in production; a word vector cosine in the demo). Invite sends them a notification.
+
+## Ticking and locks
+Every step picks people the same way: ticks in the table (a box in its header ticks the page), kept while paging, and a
+Selected panel at the bottom that shows who is ticked (x takes one out). A posted job cannot be edited, and it can be
+deleted only while nobody has applied (`api/jobs.js`); after that it can be closed.
 
 ## Automatic screening
 An application is scored when it is made, or once its psychometric test is in (`api/auto_score.js`, a queue job per
