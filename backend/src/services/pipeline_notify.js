@@ -1,5 +1,6 @@
 /* services/pipeline_notify.js: the pipeline steps that tell people: publishing the results (every applicant told
-   whether they are selected; the job closed and final) and inviting a suggested candidate to apply. */
+   whether they are selected; the job closed and final), inviting a suggested candidate to apply, and a candidate blocked
+   from a test after too many failed identity checks (the open test handed in as it was, the recruiter told). */
 const { col } = require('../db/connect');
 const { now } = require('../db/ids');
 const { fail } = require('../http/errors');
@@ -23,4 +24,11 @@ async function invite(job, user_id) {
   await notify(user_id, `You may fit: ${job.title}`, 'A recruiter thinks your profile fits this job. Check it and apply.', `/app/browse/${job._id}`);
   return true;
 }
-module.exports = { publish, invite };
+async function blocked(app, kind, max) {
+  const test = await (await col('tests')).findOne({ app: app._id, kind, done: null }, { projection: { _id: 1 } });
+  if (test) await require('./test_submit').finish(test._id, {});
+  const [job, user] = await Promise.all([(await col('jobs')).findOne({ _id: app.job }, { projection: { owner: 1, title: 1 } }),
+    (await col('users')).findOne({ _id: app.user }, { projection: { name: 1 } })]);
+  if (job) await notify(job.owner, 'Blocked from a test', `${user?.name || 'A candidate'} was blocked from the ${kind === 'psych' ? 'psychometric test' : 'shortlist exam'} for ${job.title}: the face on camera did not match the account ${max} times.`, `/app/jobs/${job._id}/review/${app._id}`);
+}
+module.exports = { publish, invite, blocked };

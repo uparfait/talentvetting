@@ -1,9 +1,10 @@
-/* ai/crawl/fetch_page.js: fetch_page(address) -> { url, type, body } reads one public web page the polite way: the
-   TalentVetting user agent, http(s) only, no private network addresses, robots.txt obeyed for every address on the way,
-   at most 3 redirects, 10 s in all, at most 1.5 MB read, HTML or plain text only. Throws an Error whose message says
+/* ai/crawl/fetch_page.js: fetch_page(address) -> { url, type, body } reads one public web page a job seeker linked,
+   once, when they verify (like a link preview): the TalentVetting user agent, http(s) only, no private network
+   addresses at any step, at most 3 redirects, 10 s in all, at most 1.5 MB read, HTML or plain text only. Throws an Error whose message says
    why the page was not read. */
 const { guard_url } = require('./net_guard');
-const { robots_allow, UA } = require('./robots');
+
+const UA = 'Mozilla/5.0 (compatible; TalentVetting/1.0; reads the links job seekers add to their profile)';
 
 const MAX_BYTES = 1.5 * 1024 * 1024, MAX_REDIRECTS = 3, TIME_MS = 10000;
 const no = message => { throw new Error(message); };
@@ -28,7 +29,6 @@ async function fetch_page(address) {
     let url = new URL(address);
     for (let hop = 0; ; hop++) {
       await guard_url(url);
-      if (!(await robots_allow(url, ctl.signal))) no('robots.txt asks crawlers not to read this page');
       const res = await fetch(url, { redirect: 'manual', signal: ctl.signal,
         headers: { 'user-agent': UA, accept: 'text/html,application/xhtml+xml,text/plain;q=0.8', 'accept-language': 'en' } });
       const next = res.status >= 300 && res.status < 400 && res.headers.get('location');

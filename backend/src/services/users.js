@@ -1,5 +1,5 @@
 /* services/users.js: accounts. user_public() is what anyone is sent of a user (never the password or the face
-   descriptor); by_email() and user_by_id() find one; check_details() applies every registration rule (name, email not
+   descriptor; face says whether one is saved); by_email() and user_by_id() find one; check_details() applies every registration rule (name, email not
    used, phone, 16 digit ID not used, age 16 or more, password) and returns the details cleaned. */
 const { col } = require('../db/connect');
 const { fail } = require('../http/errors');
@@ -8,7 +8,7 @@ const HIDE = { pass: 0, descriptor: 0 };
 const norm_email = e => (typeof e === 'string' ? e.trim().toLowerCase() : '');
 const is_email = e => e.length <= 160 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 const user_public = u => u && ({ id: u._id, role: u.role, name: u.name, email: u.email, phone: u.phone || '', company: u.company || '',
-  category: u.category || '', id_number: u.id_number || '', dob: u.dob || '', photo: u.photo || '', created: u.created });
+  category: u.category || '', id_number: u.id_number || '', dob: u.dob || '', photo: u.photo || '', face: !!u.face, created: u.created });
 const by_email = async (email, projection) => (await col('users')).findOne({ email: norm_email(email) }, projection ? { projection } : {});
 const user_by_id = async id => (typeof id === 'string' && id.length <= 64 ? (await col('users')).findOne({ _id: id }, { projection: HIDE }) : null);
 

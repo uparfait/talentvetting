@@ -27,7 +27,7 @@ const system = lines(
 
 function build({ user = {}, item = {}, file = {}, text = '', attached = true }) {
   const account = `Name: ${user.name || 'unknown'}\nDate of birth: ${user.dob || 'unknown'}`;
-  const typed = `Level: ${item.level || 'unknown'}\nDegree: ${item.degree || 'unknown'}\nField: ${item.field || 'not given'}\nSchool: ${item.school || 'unknown'}\nYear completed: ${item.year || 'unknown'}`;
+  const typed = `Level: ${item.level || 'unknown'}\nDegree: ${item.degree || 'unknown'}\nField: ${item.field || 'not given'}\nSchool: ${item.school || 'unknown'}\nStudied: ${item.start || 'unknown'} to ${item.end || 'unknown'}\nYear completed: ${item.year || 'unknown'}`;
   const about = `File name: ${file.name || 'unknown'}\nType: ${file.type || 'unknown'}\nSize: ${Math.round((file.size || 0) / 1024)} KB\nAttached: ${attached ? 'yes, read it' : 'no'}`;
   return {
     v, system,

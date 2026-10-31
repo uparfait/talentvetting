@@ -15,9 +15,9 @@ const ART = {
   mark: () => <img src="/cartoons/scene_vetting.svg" alt="" className="pr_pop pr_cover" style={{ '--i': 0 }} />,
   steps: () => [line('M12 78 C 30 78 30 56 40 56 S 58 34 66 34 S 82 16 88 16'),
     face(3, 12, 78, 0, 'h-20 w-20'), tile('check', 'green', 'Apply', 40, 56, 1), tile('sparkle', 'magenta', 'AI score', 66, 34, 2), tile('star', 'amber', 'Selected', 88, 16, 3)],
-  nodes: () => [line('M50 50 L50 10 M50 50 L86 28 M50 50 L86 74 M50 50 L50 90 M50 50 L14 74 M50 50 L14 28'), tile('sparkle', 'magenta', 'One answer', 50, 50, 0, 'h-16 w-16'),
-    tile('file', 'blue', 'Gemma 4', 50, 10, 1), tile('globe', 'sky', 'Crawler', 86, 28, 2), tile('note', 'green', 'GPT-OSS', 86, 74, 3),
-    tile('layers', 'violet', 'Flash Lite', 50, 90, 4), tile('eye', 'teal', 'Face models', 14, 74, 5), tile('shield', 'amber', 'MongoDB', 14, 28, 6)],
+  nodes: () => [line('M50 50 L50 10 M50 50 L86 36 M50 50 L74 86 M50 50 L26 86 M50 50 L14 36'), tile('sparkle', 'magenta', 'One answer', 50, 50, 0, 'h-16 w-16'),
+    tile('file', 'blue', 'Gemma 4', 50, 10, 1), tile('globe', 'sky', 'Crawler', 86, 36, 2), tile('note', 'green', 'GPT-OSS', 74, 86, 3),
+    tile('eye', 'teal', 'Face models', 26, 86, 4), tile('shield', 'amber', 'MongoDB', 14, 36, 5)],
   people: () => [line('M50 50 L18 24 M50 50 L84 24 M50 50 L18 78 M50 50 L84 78'), face(7, 50, 50, 0, 'h-28 w-28'),
     face(2, 18, 24, 1, 'h-20 w-20', 'briefcase'), face(11, 84, 24, 2, 'h-20 w-20', 'users'), face(16, 18, 78, 3, 'h-20 w-20', 'cap'), face(21, 84, 78, 4, 'h-20 w-20', 'user')],
   /* employers pay in (coins) to the platform; a job seeker joins free */

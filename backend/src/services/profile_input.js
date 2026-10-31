@@ -1,5 +1,5 @@
 /* services/profile_input.js: checks what a job seeker sends for the profile and its items, with the rules the forms
-   show: trimmed text with length caps, real dates (not in the future), a real completion year, known education levels
+   show: trimmed text with length caps, real dates (a job not in the future, a degree's start and end in order), known education levels
    and https links. Anything wrong fails with a message the person can act on. */
 const { fail } = require('../http/errors');
 const { uid } = require('../db/ids');
@@ -36,16 +36,17 @@ function clean_work(body) {
   const why = !w.position ? 'Write the position.' : !w.company ? 'Write the employer.' : !w.start ? 'Choose when it started.'
     : w.start > today ? 'It cannot start in the future.' : current ? '' : !w.end ? 'Choose when it ended, or tick I work here now.'
       : w.end < w.start ? 'It cannot end before it started.' : w.end > today ? 'It cannot end in the future: tick I work here now.' : '';
-  if (why) throw fail(why);
-  return w;
+  if (why) throw fail(why); return w;
 }
+/* a degree from when it started to when it ended (or is expected to end); year is the end's year */
 function clean_education(body) {
-  const b = obj(body), level = b.level || 'bachelor', year = Number(b.year);
+  const b = obj(body), level = b.level || 'bachelor', today = new Date().toISOString().slice(0, 10);
   if (!LEVELS.includes(level)) throw fail(`Choose a level: ${LEVELS.join(', ')}.`);
-  const e = { id: uid(), level, degree: field(b.degree, 120, 'The degree'), field: field(b.field, 120, 'The field'), school: field(b.school, 160, 'The school'), year };
+  const e = { id: uid(), level, degree: field(b.degree, 120, 'The degree'), field: field(b.field, 120, 'The field'), school: field(b.school, 160, 'The school'), start: day(b.start), end: day(b.end) };
   if (!e.degree || !e.school) throw fail('Add the degree and the school.');
-  if (!Number.isInteger(year) || year <= 1960 || year > new Date().getFullYear() + 1) throw fail('Add the real year it was completed.');
-  return e;
+  const why = !e.start ? 'Choose when you started.' : e.start > today ? 'It cannot start in the future.' : !e.end ? 'Choose when it ended, or when it is expected to end.'
+    : e.end < e.start ? 'It cannot end before it started.' : e.start < '1960' || e.end.slice(0, 4) > String(new Date().getFullYear() + 6) ? 'Check the dates.' : '';
+  if (why) throw fail(why); return { ...e, year: Number(e.end.slice(0, 4)) };
 }
 function clean_link(body) {
   const b = obj(body); let u = null;

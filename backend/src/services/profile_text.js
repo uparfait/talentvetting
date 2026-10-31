@@ -1,6 +1,6 @@
 /* services/profile_text.js: what the rules read of a profile: its text (for finding skills), its highest education
    level (certificate, diploma, bachelor, master, phd) and whether it shows a skill (listed, or written as a whole word
-   anywhere in the profile, its links or its verified summary). */
+   anywhere in the profile, its links, its CV or its verified summary). */
 const LEVELS = ['certificate', 'diploma', 'bachelor', 'master', 'phd'];
 
 const norm = s => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
@@ -11,7 +11,7 @@ function profile_text(p = {}) {
     ...(p.work || []).map(w => `${w.position} ${w.company}`),
     ...(p.education || []).map(e => `${e.level} ${e.degree} ${e.field || ''} ${e.school}`),
     ...(p.links || []).map(l => `${l.name} ${l.desc} ${l.summary || ''}`),
-    ...(p.summary?.items || []).map(i => i.text)].filter(Boolean).join('. ');
+    p.cv?.summary, p.summary?.intro, ...(p.summary?.sections || []).map(s => s.text)].filter(Boolean).join('. ');
 }
 
 const escape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

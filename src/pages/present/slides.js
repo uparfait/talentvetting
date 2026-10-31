@@ -13,7 +13,7 @@ export const SLIDES = [
     points: [['file', 'Gemma 4', 'reads each document with the file itself, checks it is real, scores applicants'],
       ['globe', 'Link crawler', 'opens every link on a profile, AI sums up what it finds'],
       ['copy', 'Document reader', 'pulls the text out of each upload for the AI'],
-      ['note', 'GPT-OSS on Groq', 'fast skills and summaries'], ['layers', 'Gemini Flash Lite', 'takes over when Gemma is busy'],
+      ['note', 'GPT-OSS on Groq', 'fast skills and summaries'],
       ['eye', 'Face models', 'liveness and identity, on our own server'], ['shield', 'MongoDB Atlas and Vercel', 'data and hosting']] },
   { kicker: 'Who it is for', title: 'Anyone who hires, anyone who seeks.', art: 'people',
     points: [['briefcase', 'Hiring companies'], ['users', 'Recruitment agencies'], ['cap', 'Schools and public institutions'], ['user', 'Job seekers and graduates']] },

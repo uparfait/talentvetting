@@ -1,6 +1,6 @@
 /* routes/profile_items.js: the job seeker's work entries, degrees (with a document: PDF or image, base64) and links:
-   POST /work, /education, /links to add one; DELETE /work/:id, /education/:id, /links/:id to remove one. Each answers
-   with the whole profile, the same shape as GET /profile. */
+   POST /work, /education, /links to add one; DELETE /work/:id, /education/:id, /links/:id to remove one; PUT /cv {doc}
+   to add or replace the CV and DELETE /cv to remove it. Each answers with the whole profile, the same shape as GET /profile. */
 const { Router } = require('express');
 const { need } = require('../http/auth');
 const { wrap } = require('../http/errors');
@@ -8,6 +8,7 @@ const { ok } = require('../http/reply');
 const limit = require('../http/limit');
 const { view_of } = require('../services/profiles');
 const { add_item, remove_item, KINDS } = require('../services/profile_items');
+const { set_cv, drop_cv } = require('../services/profile_cv');
 
 const r = Router(), seeker = need('seeker');
 
@@ -21,5 +22,8 @@ for (const kind of Object.keys(KINDS)) {
     ok(res, await view_of(req.user.id));
   }));
 }
+
+r.put('/cv', seeker, limit(10, 60000), wrap(async (req, res) => { await set_cv(req.user.id, req.body); ok(res, await view_of(req.user.id)); }));
+r.delete('/cv', seeker, wrap(async (req, res) => { await drop_cv(req.user.id); ok(res, await view_of(req.user.id)); }));
 
 module.exports = r;

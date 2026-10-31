@@ -1,8 +1,8 @@
-/* api/profiles.js: a job seeker's profile (PATCH /profile, and its items: work, education with its document, links).
+/* api/profiles.js: a job seeker's profile (PATCH /profile, and its items: work, education with its document, links, CV).
    Each reply is the whole profile view (profile, experience, completeness, all worked out on the server), stored as
    /profile's data at once. verify() has the server check the documents, read the links and write the Grand Profile
    Summary; it returns the steps it ran. */
-import { post, patch, del, set_data, refresh } from '../net/index.js';
+import { post, patch, put, del, set_data, refresh } from '../net/index.js';
 
 async function keep(call) {
   const r = await call;
@@ -18,3 +18,5 @@ export const remove_education = id => keep(del(`/profile/education/${id}`));
 export const add_link = d => keep(post('/profile/links', d));
 export const remove_link = id => keep(del(`/profile/links/${id}`));
 export const verify = () => keep(post('/profile/verify'));
+export const set_cv = doc => keep(put('/profile/cv', { doc }));
+export const remove_cv = () => keep(del('/profile/cv'));

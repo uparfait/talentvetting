@@ -20,5 +20,7 @@ an AI call; the apply panel shows its matched skills and gaps.
 the verify panel lists them. Items checked before show as such.
 
 ## Crawling rules
-The server respects robots.txt and skips sites that forbid reading them; for those the person's own description is
-used and the item stays unverified. Only https pages are visited.
+Every link a person adds is read once when they verify, like a link preview (any site, LinkedIn included). A link is
+skipped only when its page shows nothing: it cannot be fetched (an error, a private network address, over 10 s), has
+no readable text, or the AI finds only a sign in wall, an error or an empty page. A skipped link keeps the person's
+own description and stays unverified. Each link that was read becomes a titled section of the Grand Profile Summary.

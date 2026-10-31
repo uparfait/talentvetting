@@ -13,3 +13,7 @@
 .fig_cell { display: grid; aspect-ratio: 1; place-items: center; border: 1px solid rgb(var(--line)); border-radius: .625rem; background: #fff; }
 .fig_cell svg { width: 85%; height: 85%; }
 .fig_cell.ask { border-style: dashed; color: rgb(var(--muted)); font-size: 1.5rem; font-weight: 700; background: rgb(var(--surface_2)); }
+/* the psychometric test one question at a time: each slides in, and slides out once answered */
+.ps_step { animation: ps_in .35s var(--ease) backwards; transition: opacity .25s, transform .25s var(--ease); } .ps_step.out { opacity: 0; transform: translateX(-1.5rem); }
+@keyframes ps_in { from { opacity: 0; transform: translateX(1.5rem); } }
+@media (prefers-reduced-motion: reduce) { .ps_step { animation: none; transition: none; } }

@@ -19,7 +19,7 @@ const r = Router();
 const NONE = `${'0'.repeat(32)}:${'0'.repeat(128)}`;   /* compared when the email is unknown, so both answers take as long */
 const body = req => (req.body && typeof req.body === 'object' ? req.body : {});
 const empty_profile = (id, t) => ({ _id: id, headline: '', about: '', location: { city: '', district: '', country: 'Rwanda' }, work: [], skills: [],
-  hobbies: [], education: [], links: [], summary: null, stale: false, updated: t });
+  hobbies: [], education: [], links: [], cv: null, summary: null, stale: false, updated: t });
 
 r.post('/sign-in', limit(20, 60000), wrap(async (req, res) => {
   const b = body(req), u = await by_email(b.email), pw = typeof b.password === 'string' ? b.password.slice(0, 200) : '';
@@ -39,12 +39,12 @@ r.post('/register', limit(10, 60000), wrap(async (req, res) => {
     if (typeof b.capture !== 'string' || !b.capture || b.capture.length > 64) throw fail('Take your live photo first.');
     const cap = await take_capture(b.capture);
     if (!cap?.photo || !Array.isArray(cap.descriptor)) throw fail('Your live photo has expired. Take it again.');
-    Object.assign(user, { id_number: d.id_number, dob: d.dob, photo: cap.photo, descriptor: cap.descriptor });
+    Object.assign(user, { id_number: d.id_number, dob: d.dob, photo: cap.photo, descriptor: cap.descriptor, face: true });
   }
   Object.assign(user, { pass: await hash(d.password), created: t, updated: t });
   await (await col('users')).insertOne(user);
   if (role === 'seeker') await (await col('profiles')).insertOne(empty_profile(user._id, t));
-  await notify(user._id, 'Welcome to TalentVetting', role === 'seeker' ? 'Complete your profile, verify it, then apply to jobs.'
+  await notify(user._id, 'Welcome to TalentVetting', role === 'seeker' ? 'Complete your profile, then apply to jobs. It is checked by itself as you go.'
     : 'Post your first job to start receiving candidates.', role === 'seeker' ? '/app/profile' : '/app/jobs/new');
   ok(res, { token: sign(user), user: user_public(user) }, 201);
 }));

@@ -1,5 +1,5 @@
-/* services/profile_checks.js: the steps of profile verification. check_doc() reads a degree document from storage, takes
-   its text and has the AI check it against the profile; read_link() has the crawler read a link. Each runs within its
+/* services/profile_checks.js: the steps of profile verification. check_doc() reads a degree document (or the CV, cv: true,
+   checked against the profile's fact lines) from storage, takes its text and has the AI check it against the profile; read_link() has the crawler read a link. Each runs within its
    own time limit and never throws: a document not checked in time is left for review, a link not read is skipped, and
    both are marked retry so the next verification tries them again. pool() runs steps a few at a time. */
 const ai = require('../ai');
@@ -19,18 +19,18 @@ async function pool(tasks, n) {
 }
 
 const STEP = { verified: 'ok', flagged: 'warn', review: 'review' };
-async function check_doc(user, e, ms) {
-  const doc = e.doc, name = `Document: ${doc.name}`;
+async function check_doc(user, e, ms, profile = '') {
+  const doc = e.doc, name = `${e.cv ? 'CV' : 'Document'}: ${doc.name}`;
   const work = async () => {
     const buffer = await file_bytes(doc.file), text = await ai.extract_text({ buffer, type: doc.type });
-    return ai.check_document({ buffer, type: doc.type, name: doc.name, text }, { user, item: e, owner: user._id });
+    return ai.check_document({ buffer, type: doc.type, name: doc.name, text }, { user, item: e, owner: user._id, kind: e.cv ? 'cv' : 'degree', profile });
   };
   const r = ms > 2000 ? await within(ms, work()) : { late: true };
   if (r.error) console.error('[verify] document', r.error.message);
   const v = r.value;
   if (!v) {
     const why = r.late ? 'Not checked in time' : 'Could not be checked now';
-    return { id: e.id, doc: { ...doc, status: 'review', flags: [why], retry: true, at: now() }, step: { name, status: 'review', detail: `${why}; verify again later.` } };
+    return { id: e.id, doc: { ...doc, status: 'review', flags: [why], retry: true, at: now() }, step: { name, status: 'review', detail: `${why}; it is tried again on the next run.` } };
   }
   const status = STEP[v.status] ? v.status : 'review', flags = Array.isArray(v.flags) ? v.flags : [];
   const detail = status === 'verified' ? 'Consistent with your profile' : flags.join('; ') || 'Left for a recruiter to review';

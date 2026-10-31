@@ -13,6 +13,7 @@ module.exports = {
   auth_secret: env('AUTH_SECRET'),
   token_days: 7,
   origins: list('ALLOWED_ORIGINS'),
+  starter_password: env('STARTER_PASSWORD'),   /* the two starter accounts (services/starter.js); empty: none made */
   body_limit: '4.5mb',   /* Vercel's request cap: a 3 MB document is about 4 MB in base64 */
   ai: {
     primary: env('LLM_PROVIDER', 'gemini'), summary: env('SUMMARY_PROVIDER', 'groq'),

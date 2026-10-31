@@ -11,7 +11,7 @@ import { Links_list } from '../shared/profile_view.jsx';
 export function Links_edit({ p }) {
   const [busy, set_busy] = useState(false);
   const add = async e => { e.preventDefault(); const f = e.currentTarget, v = form_values(f); set_busy(true);
-    try { await add_link({ name: v.name, url: v.url, desc: v.desc }); f.reset(); notify('Verify your profile so the server reads it.', 'ok', 'Link added'); }
+    try { await add_link({ name: v.name, url: v.url, desc: v.desc }); f.reset(); notify('It is read and added to your summary by itself in a moment.', 'ok', 'Link added'); }
     catch (er) { notify(er.message, tone(er), 'Link not added'); } finally { set_busy(false); } };
   const remove = l => ask(`Remove ${l.name}?`, () => remove_link(l.id).catch(er => notify(er.message, tone(er), 'Not removed')), 'Remove', true);
   return <section className="card grid gap-4 p-5"><h2 className="text-lg">Links</h2>

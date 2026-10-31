@@ -1,13 +1,15 @@
 /* services/tests.js: starting (or resuming) the test an application is waiting for: the psychometric test while the
    stage is psych, the shortlist exam once shortlisted on a job whose path is exam. Items with their answers stay in the
    tests collection; the browser gets the public view, the deadline (server time) and the server's time now. A test
-   whose time ran out unsubmitted is closed as it was. */
+   whose time ran out unsubmitted is closed as it was. Starting or resuming needs the face checked in the last minutes
+   (identity(), test_identity.js); a test paused for an unlike face resumes with the time it had left. */
 const quiz = require('../quiz');
 const { col } = require('../db/connect');
 const { uid, now } = require('../db/ids');
 const { fail } = require('../http/errors');
 const { finish } = require('./test_submit');
 const { past_due } = require('./test_answers');
+const { assert_open, fresh, check_identity } = require('./test_identity');
 
 function kind_for(app, job) {
   if (app.stage === 'psych' && !app.psych) return 'psych';
@@ -22,16 +24,23 @@ function items_for(kind, app, job) {
   const set = Number(job.exam.secs), secs = set > 0 ? set : questions.reduce((s, q) => s + quiz.question_secs(q), 0);
   return { items: questions, secs };
 }
-
 const public_items = (kind, items) => (kind === 'psych' ? quiz.psych_public(items) : quiz.exam_public(items));
 
-async function start_test(user_id, app_id, asked) {
+async function load(user_id, app_id, asked) {
   if (asked && !['psych', 'exam'].includes(asked)) throw fail('Choose the psychometric test or the exam.');
   const app = await (await col('applications')).findOne({ _id: app_id, user: user_id });
   if (!app) throw fail('Not found.', 404);
   const job = await (await col('jobs')).findOne({ _id: app.job }, { projection: { path: 1, exam: 1 } });
   const kind = job ? kind_for(app, job) : null;
   if (!kind || (asked && asked !== kind)) throw fail('There is no test to take for this application now.', 409, 'info');
+  return { app, job, kind };
+}
+const identity = async (user_id, app_id, asked, frame) => { const { app, kind } = await load(user_id, app_id, asked); return check_identity(app, kind, frame); };
+
+async function start_test(user_id, app_id, asked) {
+  const { app, job, kind } = await load(user_id, app_id, asked);
+  if (!fresh(assert_open(app, kind))) throw fail('Check your face with the camera first.', 409, 'info');
+  await (await col('applications')).updateOne({ _id: app._id }, { $set: { [`identity.${kind}.ok_at`]: '' } });
   const tests = await col('tests');
   let test = await tests.findOne({ app: app._id, kind });
   if (!test) {
@@ -41,11 +50,10 @@ async function start_test(user_id, app_id, asked) {
     test = await tests.findOneAndUpdate({ app: app._id, kind }, { $setOnInsert: doc }, { upsert: true, returnDocument: 'after' });
   }
   if (test.done) throw fail('This test is already submitted.', 409, 'info');
-  if (past_due(test)) {
-    await finish(test._id, {});
-    throw fail('The time for this test ran out, so it was handed in as it was.', 409);
-  }
+  if (test.paused) test = await tests.findOneAndUpdate({ _id: test._id }, { $set: { deadline: new Date(Date.now() + test.paused.left).toISOString(), paused: null },
+    $push: { events: { kind: 'resumed', text: 'Face checked again, test resumed', at: now() } } }, { returnDocument: 'after' });
+  if (past_due(test)) { await finish(test._id, {}); throw fail('The time for this test ran out, so it was handed in as it was.', 409); }
   return { test: test._id, kind, items: public_items(kind, test.items), deadline: test.deadline, now: now() };
 }
 
-module.exports = { start_test, kind_for };
+module.exports = { start_test, identity, kind_for };

@@ -1,9 +1,9 @@
-/* ai/prompts/crawl_summary.js (v1): what a crawled page (a link a job seeker added) proves about their skills and work,
-   at most 120 words, facts from the page only. build({ text, title, description, url, link, name }) -> prompt parts. */
+/* ai/prompts/crawl_summary.js (v2): what a crawled page (any link a job seeker added) proves about their skills and
+   work, at most 120 words, facts from the page only; shows false when the page shows nothing to read. build({ text, title, description, url, link, name }) -> prompt parts. */
 const { GUARD, HONEST, JSON_ONLY, tag, lines } = require('./common');
 const { clip } = require('../text');
 
-const v = 1;
+const v = 2;
 
 const system = lines(
   'You summarize one web page that a job seeker linked from their TalentVetting profile, for a recruiter.',
@@ -11,9 +11,10 @@ const system = lines(
   'Write in the third person without using the person\'s name; the name is given only to tell whether the page is about them. At most 120 words, plain sentences.',
   'If the page is not about the person, or proves nothing about skills or work, say that in one sentence and set about_person or proves accordingly.',
   'skills: the skills the page itself shows (at most 15 short names), empty when none.',
+  'shows: false when the page shows nothing to read about anyone: only a sign in or join wall, a cookie notice, an error or not found page, or an empty shell that needs JavaScript. Then summary is "" and skills is []. Otherwise true.',
   HONEST, GUARD,
-  'Output contract: {"summary": string, "skills": [string], "about_person": boolean, "proves": boolean}',
-  'Example: {"summary": "GitHub profile with 6 pinned repositories, mostly Python and Django: a school timetable app and a payroll API with tests. The bio says they work as a backend developer.", "skills": ["Python", "Django", "REST APIs"], "about_person": true, "proves": true}',
+  'Output contract: {"summary": string, "skills": [string], "about_person": boolean, "proves": boolean, "shows": boolean}',
+  'Example: {"summary": "GitHub profile with 6 pinned repositories, mostly Python and Django: a school timetable app and a payroll API with tests. The bio says they work as a backend developer.", "skills": ["Python", "Django", "REST APIs"], "about_person": true, "proves": true, "shows": true}',
   JSON_ONLY
 );
 

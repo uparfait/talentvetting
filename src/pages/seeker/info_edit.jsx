@@ -1,11 +1,15 @@
 /* pages/seeker/info_edit.jsx: the profile's personal sections. Personal info: who you are (name, email, phone and ID from
-   registration, changed on My account) and your headline and about text. Location: where you live. Skills and Hobbies:
+   registration, changed on My account), your headline and about text, and your CV (checked by itself). Location: where you live. Skills and Hobbies:
    chips you type and Add (saved at once). Each saves with PATCH /profile; the server checks it. */
+import { useState } from 'react';
 import { use_session, tone } from '../../net/index.js';
-import { save_profile } from '../../api/index.js';
-import { Field, Tags_field, form_values, notify, help_tip } from '../../ui/index.js';
+import { save_profile, set_cv, remove_cv } from '../../api/index.js';
+import { Field, Tags_field, form_values, notify, help_tip, ask, spinner } from '../../ui/index.js';
+import { read_file } from '../../lib/file.js';
+import { ic } from '../../icons/index.js';
+import { Cv_row } from '../shared/profile_view.jsx';
 
-const saved = () => notify('Verify your profile to update your summary.', 'ok', 'Saved');
+const saved = () => notify('Your summary updates by itself in a moment.', 'ok', 'Saved');
 const oops = e => notify(e.message, tone(e), 'Not saved');
 const send = d => save_profile(d).then(saved, oops);
 const save = fn => e => { e.preventDefault(); send(fn(form_values(e.currentTarget))); };
@@ -29,3 +33,16 @@ export const Location_edit = ({ p }) => <form className="card grid gap-5 p-5 sm:
 /* Skills or Hobbies: k is the profile's list ('skills' or 'hobbies') */
 export const Tags_edit = ({ p, k, title, label, help }) => <section className="card grid gap-4 p-5"><h2 className="flex items-center gap-1 text-lg">{title}{help ? help_tip(help, title) : null}</h2>
   <Tags_field label={label} name={k} initial={p[k] || []} on_change={list => send({ [k]: list })} /></section>;
+/* the CV, on Personal info: a PDF or a picture up to 3 MB, checked against the profile by itself and summarized into
+   the Grand Profile Summary */
+export function Cv_edit({ p }) {
+  const [busy, set_busy] = useState(false);
+  const pick = async e => { const file = e.target.files[0]; e.target.value = ''; if (!file) return; set_busy(true);
+    try { await set_cv(await read_file(file)); notify('It is checked and added to your summary by itself in a moment.', 'ok', 'CV saved'); }
+    catch (er) { oops(er); } finally { set_busy(false); } };
+  const drop = () => ask('Remove your CV?', () => remove_cv().catch(oops), 'Remove', true);
+  return <section className="card grid gap-4 p-5"><h2 className="flex items-center gap-1 text-lg">CV{help_tip('A PDF or a picture of your CV, up to 3 MB. It is checked against your profile and its summary goes into your Grand Profile Summary.', 'CV')}</h2>
+    {p.cv ? <Cv_row cv={p.cv} on_remove={drop} /> : null}
+    <label className={`btn btn_outline btn_sm justify-self-start ${busy ? 'is_busy' : ''}`}>{busy ? spinner() : ic('upload', 'h-4 w-4')}{p.cv ? 'Replace the CV' : 'Upload your CV'}
+      <input type="file" accept="application/pdf,image/*" className="sr-only" onChange={pick} disabled={busy} /></label></section>;
+}

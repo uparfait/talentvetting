@@ -16,3 +16,6 @@
 .dnd_handle:hover { background: rgb(var(--fg) / .06); color: rgb(var(--fg)); } .dnd_handle:active { cursor: grabbing; }
 [data-dnd=from] { opacity: .45; } [data-dnd=over] { outline: 2px dashed rgb(var(--brand) / .6); outline-offset: 2px; }
 .quiz_choice { display: flex; align-items: center; gap: .5rem; padding: .25rem; border-radius: calc(var(--radius) * .75); background: rgb(var(--surface_2)); }
+/* the Grand Profile Summary as a document: the opening paragraph a little larger, each section a heading and a paragraph */
+.sum_doc { display: grid; gap: 1.25rem; } .sum_doc h3 { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .375rem; font-size: 1.0625rem; font-weight: 600; }
+.sum_intro { font-size: 1.0625rem; line-height: 1.65; } .sum_doc section > p:first-of-type { line-height: 1.65; }

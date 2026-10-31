@@ -1,5 +1,6 @@
 /* routes/profile.js: the job seeker's own profile: GET / (with experience and completeness), PATCH / (headline, about,
-   location, skills, hobbies) and POST /verify (documents, links and the Grand Profile Summary; 6 a minute at most).
+   location, skills, hobbies) and POST /verify (documents, links and the Grand Profile Summary, now; it also runs by itself after every
+   change; 6 a minute at most).
    Work, education and links are added and removed in profile_items.js. */
 const { Router } = require('express');
 const { need } = require('../http/auth');

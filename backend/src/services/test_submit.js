@@ -39,9 +39,10 @@ async function finish(test_id, sent) {
 }
 
 async function submit_test(user_id, test_id, answers) {
-  const test = await (await col('tests')).findOne({ _id: test_id, user: user_id }, { projection: { deadline: 1, done: 1 } });
+  const test = await (await col('tests')).findOne({ _id: test_id, user: user_id }, { projection: { deadline: 1, done: 1, paused: 1 } });
   if (!test) throw fail('Not found.', 404);
   if (test.done) throw fail('This test is already submitted.', 409, 'info');
+  if (test.paused) throw fail('This test is paused: check your face again to go on.', 409);
   const late = past_due(test);
   await finish(test._id, late ? {} : answers);
   if (late) throw fail('The time was up, so answers sent after the deadline were not counted.', 409);

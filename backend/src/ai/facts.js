@@ -1,5 +1,5 @@
 /* ai/facts.js: a profile as fact lines for the prompts, each with its source and whether it is verified (a verified
-   document, a link that was read, the live photo taken at registration). Names, ages and photos are left out so the
+   document or CV, a link that was read, the live photo taken at registration). Names, ages and photos are left out so the
    models judge only the work. verified_sources() lets the server refuse any answer that marks an unverified source as
    verified. job_block() is the job as text for the score prompt. */
 const { clip, norm, html_plain } = require('./text');
@@ -20,10 +20,13 @@ function fact_lines(user, p = {}, { experience_text = '', personal = false } = {
   if (experience_text) add(`Work experience in all: ${experience_text}.`, 'profile');
   for (const e of p.education || []) {
     const ok = e.doc?.status === 'verified';
-    add(`${cap(e.level)} of ${e.degree || 'unknown degree'}${e.field ? ` in ${e.field}` : ''}, ${e.school || 'unknown school'}, ${e.year || 'year unknown'}.`, doc_source(e), ok);
+    add(`${cap(e.level)} of ${e.degree || 'unknown degree'}${e.field ? ` in ${e.field}` : ''}, ${e.school || 'unknown school'}, ${e.start ? `${month(e.start)} to ${month(e.end)}` : e.year || 'year unknown'}.`, doc_source(e), ok);
     if (e.doc?.summary) add(`What the document shows: ${e.doc.summary}`, doc_source(e), ok);
     if (e.doc && !ok) add(`Document check: ${e.doc.status || 'pending'}${e.doc.flags?.length ? ` (${e.doc.flags.join('; ')})` : ''}.`, doc_source(e));
   }
+  if (p.cv) { const ok = p.cv.status === 'verified', src = `document: ${p.cv.name || 'CV'}`;
+    if (p.cv.summary) add(`What the CV shows: ${p.cv.summary}`, src, ok);
+    if (!ok) add(`CV check: ${p.cv.status || 'pending'}${p.cv.flags?.length ? ` (${p.cv.flags.join('; ')})` : ''}.`, src); }
   if (p.skills?.length) add(`Skills listed by the person: ${p.skills.join(', ')}.`, 'profile');
   for (const l of p.links || []) {
     const read = l.status === 'read' && !!l.summary;

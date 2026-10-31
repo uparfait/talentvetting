@@ -1,5 +1,5 @@
 /* pages/seeker/profile_meter.jsx: how complete the profile is: the percentage with its bar, and every detail still
-   missing, each a link to the section where it is added (Verify for the summary); the server works both out. */
+   missing, each a link to the section where it is added (the summary page for the summary); the server works both out. */
 import { chip } from '../../ui/index.js';
 import { ic } from '../../icons/index.js';
 

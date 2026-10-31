@@ -1,4 +1,4 @@
-/* api/auth.js: sign in, registration and the signed in person's own account (POST /auth/*, /me). A sign in or a new
+/* api/auth.js: sign in, registration and the signed in person's own account (POST /auth/*, /me, its photo and face). A sign in or a new
    account keeps the token and the user in the session. */
 import { api, post, patch, sign_in as keep, set_me } from '../net/index.js';
 
@@ -9,3 +9,7 @@ export async function register(d) { const r = await post('/auth/register', d); k
 export async function load_me() { const u = await api('/me'); set_me(u); return u; }
 export async function update_account(d) { const u = await patch('/me', d); set_me(u); return u; }
 export const change_password = (old, next) => post('/me/password', { old, next });
+/* a new profile photo (a jpeg data URL); a job seeker's must show their own face */
+export async function change_photo(photo) { const u = await post('/me/photo', { photo }); set_me(u); return u; }
+/* a job seeker's face, saved once from a live capture when the account has none */
+export async function save_face(capture) { const u = await post('/me/face', { capture }); set_me(u); return u; }

@@ -16,6 +16,7 @@ Settings come from `.env` (see `.env.example`); on Vercel from the project's env
 | Name | What it is |
 |---|---|
 | MONGO_URI | MongoDB connection string (mongodb+srv) |
+| STARTER_PASSWORD | Password of the two starter accounts, job@gmail.com (recruiter) and seeker@gmail.com (job seeker), made on the first request when missing; leave empty for none |
 | DNS_SERVERS | resolvers for the SRV lookup, for example 8.8.8.8,1.1.1.1 (public ones are used when the local one refuses) |
 | AUTH_SECRET | signs sign in tokens |
 | ALLOWED_ORIGINS | web app origins allowed to call the API |

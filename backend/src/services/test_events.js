@@ -1,18 +1,21 @@
 /* services/test_events.js: what happens during a test, kept on it with the server's time: what the browser reports (tab
    hidden, focus lost, full screen left, screen sharing stopped) and the face checks of camera frames (no face, more
-   than one person, someone unlike the profile photo). Only an open test of the signed in job seeker takes them. */
+   than one person, someone unlike the profile photo). Only an open test of the signed in job seeker takes them, and
+   not while it is paused: unlike faces in a row pause it (test_identity.js), and the reply then says blocked. */
 const { col } = require('../db/connect');
 const { now } = require('../db/ids');
 const { fail } = require('../http/errors');
 const { past_due } = require('./test_answers');
+const { watch_match } = require('./test_identity');
 
 const KINDS = ['tab', 'blur', 'fullscreen', 'share_end', 'no_face', 'many', 'mismatch'];
 const KEEP = 500;
 
 async function open_test(user_id, test_id) {
-  const test = await (await col('tests')).findOne({ _id: test_id, user: user_id }, { projection: { deadline: 1, done: 1 } });
+  const test = await (await col('tests')).findOne({ _id: test_id, user: user_id }, { projection: { deadline: 1, done: 1, paused: 1 } });
   if (!test) throw fail('Not found.', 404);
   if (test.done || past_due(test)) throw fail('This test is over.', 409, 'info');
+  if (test.paused) throw fail('This test is paused until your face is checked again.', 409, 'info');
   return test;
 }
 
@@ -42,7 +45,8 @@ async function frame_event(user_id, test_id, frame) {
   const user = await (await col('users')).findOne({ _id: user_id }, { projection: { descriptor: 1 } });
   const { check_frame } = require('../face');   /* loaded on first use: the face models are large */
   const r = await check_frame(frame, user?.descriptor || null), hit = event_of(r || {});
-  return { event: hit ? await push_event(test_id, hit[0], hit[1]) : null, count: r?.count ?? 0, hint: r?.hint || '' };
+  const event = hit ? await push_event(test_id, hit[0], hit[1]) : null, held = await watch_match(test_id, r?.match ?? null);
+  return { event, count: r?.count ?? 0, hint: r?.hint || '', ...(held ? { blocked: true, text: held } : {}) };
 }
 
 module.exports = { add_event, frame_event, KINDS };
