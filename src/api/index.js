@@ -1,7 +1,7 @@
 /* api: everything that will call a server. Each module names its future endpoints (docs/backend.md).
    import { sign_in, save_job, verify } from '../api/index.js' */
 export { categories, add_category, read_skills } from './catalog.js';
-export { sign_in, register, update_account, change_password } from './auth.js';
+export { sign_in, register, check_details, update_account, change_password } from './auth.js';
 export { notice, my_notices, mark_read } from './notices.js';
 export { my_jobs, open_jobs, get_job, apps_of, save_job, set_status, remove_job, suggestions } from './jobs.js';
 export { get_profile, save_profile, verify } from './profiles.js';

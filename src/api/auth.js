@@ -10,13 +10,20 @@ export const sign_in = (email, password) => call(async () => {
   if (!u || u.pass !== await hash(password)) throw fail('error', 'Wrong email or password.');
   start(u.id); return u;
 });
-export const register = d => call(async () => {
+/* what is wrong with registration details, or '' (the same rules the server applies) */
+function problem(d) {
   const email = String(d.email || '').trim().toLowerCase(), users = db.list('users');
-  if (!d.name || d.name.length < 3) throw fail('warning', 'Enter your full name.');
-  if (!is_email(email)) throw fail('warning', 'Enter a valid email address.');
-  if (users.some(u => u.email === email)) throw fail('warning', 'This email already has an account. Sign in instead.');
-  if (d.id_number && users.some(u => u.id_number === d.id_number)) throw fail('warning', 'This ID number already has an account.');
-  if (String(d.password || '').length < 8) throw fail('warning', 'Use at least 8 characters for the password.');
+  if (!d.name || d.name.trim().length < 3) return 'Enter your full name.';
+  if (!is_email(email)) return 'Enter a valid email address.';
+  if (users.some(u => u.email === email)) return 'This email already has an account. Sign in instead.';
+  if (d.id_number && users.some(u => u.id_number === d.id_number)) return 'This ID number already has an account.';
+  return String(d.password || '').length < 8 ? 'Use at least 8 characters for the password.' : '';
+}
+/* the details step of a two step registration: checked in full before the photo step opens (POST /api/auth/check) */
+export const check_details = d => call(() => { const p = problem(d); if (p) throw fail('warning', p); return true; }, 200);
+export const register = d => call(async () => {
+  const email = String(d.email || '').trim().toLowerCase(), p = problem(d);
+  if (p) throw fail('warning', p);
   const { password, ...rest } = d;
   const u = db.upsert('users', { ...rest, id: uid(), email, pass: await hash(password) });
   if (u.role === 'seeker') db.upsert('profiles', { id: u.id, headline: '', about: '', years: 0, skills: [], hobbies: [], education: [], links: [], summary: null });
