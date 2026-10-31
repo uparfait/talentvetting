@@ -13,13 +13,14 @@ export const PAGES = {
   ai_log: L(() => import('../pages/recruiter/ai_log.jsx')), profile: L(() => import('../pages/seeker/profile.jsx')),
   summary: L(() => import('../pages/seeker/summary.jsx')), browse: L(() => import('../pages/seeker/browse.jsx')),
   job_view: L(() => import('../pages/seeker/job_view.jsx')), applications: L(() => import('../pages/seeker/applications.jsx')),
-  exam_room: L(() => import('../pages/exam/exam_room.jsx')), notices: L(() => import('../pages/app/notices.jsx'))
+  exam_room: L(() => import('../pages/exam/exam_room.jsx')), notices: L(() => import('../pages/app/notices.jsx')),
+  account: L(() => import('../pages/app/account.jsx'))
 };
 export const ROUTES = [
   ['/', 'home', 'public'], ['/about', 'about', 'public'], ['/jobs', 'jobs_public', 'public'], ['/jobs/:id', 'job_public', 'public'],
   ['/sign-in', 'sign_in', 'guest'], ['/register', 'register', 'guest'],
   ['/register/recruiter', 'register_recruiter', 'guest'], ['/register/seeker', 'register_seeker', 'guest'],
-  ['/app', 'dashboard', 'user'], ['/app/notices', 'notices', 'user'],
+  ['/app', 'dashboard', 'user'], ['/app/notices', 'notices', 'user'], ['/app/account', 'account', 'user'],
   ['/app/jobs', 'jobs', 'recruiter'], ['/app/jobs/new', 'job_form', 'recruiter'], ['/app/jobs/:id', 'job_page', 'recruiter'],
   ['/app/jobs/:id/edit', 'job_form', 'recruiter'], ['/app/candidates/:id', 'candidate', 'recruiter'], ['/app/ai', 'ai_log', 'recruiter'],
   ['/app/profile', 'profile', 'seeker'], ['/app/summary', 'summary', 'seeker'], ['/app/browse', 'browse', 'seeker'],

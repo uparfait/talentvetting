@@ -1,0 +1,31 @@
+/* overrides/smooth_state.css: the template's smooth state changes (overrides/23_smooth_state_changes.css): the sidebar
+   that slides (a drawer on a phone, folds to nothing on a computer), the logo that turns into "open sidebar", the scrim,
+   the folding sidebar sections, the turning chevron and the glass header. */
+  .side { transition: transform .35s var(--ease); }
+  .side[data-open=true] { transform: translateX(0); }
+  @media (min-width: 1024px) {
+    .side { overflow: hidden; transition: width .3s var(--ease); }
+    .side[data-min=true] { width: 0; }
+    .side > div { width: 18rem; }
+  }
+  .brand_toggle { display: none; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: var(--pill); transition: background-color .2s; }
+  .brand_toggle > span { grid-area: 1 / 1; display: grid; place-items: center; transition: opacity .2s, scale .2s var(--ease); }
+  .brand_toggle .bt_open { opacity: 0; scale: .8; color: rgb(var(--fg)); }
+  .brand_toggle:is(:hover, :focus-visible) { background: rgb(var(--fg) / .06); }
+  .brand_toggle:is(:hover, :focus-visible) .bt_logo { opacity: 0; scale: .8; }
+  .brand_toggle:is(:hover, :focus-visible) .bt_open { opacity: 1; scale: 1; }
+  @media (min-width: 1024px) { body:has(#sidebar[data-min=true]) .brand_toggle { display: grid; } }
+  .scrim { opacity: 0; pointer-events: none; transition: opacity .3s var(--ease); }
+  .scrim.on { opacity: 1; pointer-events: auto; }
+  .fold { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .3s var(--ease), opacity .25s var(--ease); }
+  .fold[data-closed=true] { grid-template-rows: 0fr; opacity: 0; }
+  .fold > div { min-height: 0; overflow: hidden; }
+  .chev { transition: rotate .3s var(--ease); }
+  [aria-expanded=true] > .chev { rotate: 180deg; }
+  .hdr { border-bottom: 0; background: transparent; }
+  .hdr::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgb(var(--bg) / .72); pointer-events: none;
+    -webkit-backdrop-filter: saturate(1.6) blur(16px); backdrop-filter: saturate(1.6) blur(16px); }
+  .scroll_hover { scrollbar-gutter: stable; }
+  .scroll_hover::-webkit-scrollbar-thumb { background-color: transparent; }
+  .scroll_hover:is(:hover, :focus-within)::-webkit-scrollbar-thumb { background-color: rgb(var(--brand) / .4); }
+  .page_enter { animation: page .45s var(--ease) backwards; }

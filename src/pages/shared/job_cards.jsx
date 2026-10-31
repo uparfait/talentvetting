@@ -1,15 +1,23 @@
 /* pages/shared/job_cards.jsx: open jobs as cards (title, company, category, date, skills), each linking to its page,
-   and the search above them; used by the public Jobs page and the job seeker's Find jobs. */
+   and above them the search and the category select; used by the public Jobs page and the job seeker's Find jobs. */
 import { db } from '../../store/index.js';
 import { chip, empty } from '../../ui/index.js';
 import { ic } from '../../icons/index.js';
 import { fmt_date } from '../../lib/index.js';
 
-export const job_match = (j, q) => { const t = q.trim().toLowerCase(); return !t || [j.title, j.category, ...(j.skills || [])].join(' ').toLowerCase().includes(t); };
+export const job_match = (j, q, cat = '') => { const t = q.trim().toLowerCase();
+  return (!cat || j.category === cat) && (!t || [j.title, j.category, ...(j.skills || [])].join(' ').toLowerCase().includes(t)); };
 
-export const job_search = (q, set_q) => <label className="relative mb-5 block max-w-xl"><span className="sr-only">Search jobs</span>
-  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted">{ic('search', 'h-4 w-4')}</span>
-  <input type="search" className="h-11 w-full rounded-full border-transparent bg-surface-2 pl-10 hover:border-transparent focus:bg-surface" placeholder="Search by title, skill or category" value={q} onChange={e => set_q(e.target.value)} /></label>;
+/* the search and, beside it with a gap, the category (a select: All, then each category of these jobs with how many) */
+const FIELD = 'h-11 w-full rounded-full border-transparent bg-surface-2 hover:border-transparent focus:bg-surface';
+export const job_tools = (jobs, q, set_q, cat, set_cat) => { const n = {}; jobs.forEach(j => { n[j.category] = (n[j.category] || 0) + 1; });
+  return <div className="mb-6 flex flex-wrap items-center gap-3">
+    <label className="relative min-w-[14rem] max-w-xl flex-1"><span className="sr-only">Search jobs</span>
+      <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted">{ic('search', 'h-4 w-4')}</span>
+      <input type="search" className={`${FIELD} pl-10`} placeholder="Search by title or skill" value={q} onChange={e => set_q(e.target.value)} /></label>
+    <label className="w-full sm:w-64"><span className="sr-only">Category</span>
+      <select className={`${FIELD} px-4`} value={cat} onChange={e => set_cat(e.target.value)}><option value="">All categories ({jobs.length})</option>
+        {Object.keys(n).sort().map(c => <option key={c} value={c}>{c} ({n[c]})</option>)}</select></label></div>; };
 
 /* href(job): where a card goes; mine: ids of jobs already applied to */
 export const job_cards = (jobs, href, mine = new Set()) => jobs.length
@@ -18,4 +26,4 @@ export const job_cards = (jobs, href, mine = new Set()) => jobs.length
     <p className="text-sm text-muted">{db.find('users', j.owner)?.company} . {j.category} . {fmt_date(j.created)}</p>
     <div className="flex flex-wrap gap-1.5">{(j.skills || []).map(s => <span key={s}>{chip(s, 'brand')}</span>)}</div>
     {j.psych.enabled ? <p className="text-xs text-muted">Includes a proctored psychometric test</p> : null}</a>)}</div>
-  : <div className="card">{empty('No jobs match', 'Try another word.', null, 'scene_city')}</div>;
+  : <div className="card">{empty('No jobs match', 'Try another word or category.', null, false)}</div>;

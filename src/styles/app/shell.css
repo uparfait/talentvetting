@@ -1,16 +1,5 @@
-/* styles/app/shell.css: the signed in layout (the template's admin shell): a sidebar, a sticky top bar, the page; on a
-   phone the sidebar is a drawer over a scrim. Also the page heading, the dialog, tabs and the help icon. */
-.tv_shell { display: flex; min-height: 100dvh; background: rgb(var(--bg)); }
-.tv_side { position: fixed; inset: 0 auto 0 0; z-index: 50; width: 17rem; overflow-y: auto; transform: translateX(-100%);
-  border-right: 1px solid rgb(var(--line)); background: rgb(var(--bg)); transition: transform .3s var(--ease); }
-.tv_side.open { transform: none; }
-.tv_scrim { position: fixed; inset: 0; z-index: 40; background: rgb(0 0 0 / .4); }
-@media (min-width: 1024px) { .tv_side { position: sticky; top: 0; flex: none; height: 100dvh; transform: none; } .tv_scrim { display: none; } }
-.tv_main { display: flex; min-width: 0; flex: 1; flex-direction: column; }
-.tv_top { position: sticky; top: 0; z-index: 30; display: flex; height: 4rem; align-items: center; gap: .5rem; padding: 0 1rem;
-  background: rgb(var(--bg) / .85); backdrop-filter: blur(10px); }
-.tv_page { width: 100%; max-width: 80rem; margin: 0 auto; padding: .75rem 1rem 3rem; animation: page .45s var(--ease) backwards; }
-@media (min-width: 640px) { .tv_page { padding: 1rem 1.5rem 4rem; } }
+/* styles/app/shell.css: the signed in pages (the layout itself is the template's: overrides/smooth_state.css): the page
+   heading, the dialog, tabs, the help icon and job details written in Markdown. */
 .page_head { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin-bottom: 1.25rem; }
 .page_title { font-family: var(--font_display); font-size: 1.75rem; font-weight: 600; line-height: 1.2; }
 .cap { color: rgb(var(--muted)); font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }

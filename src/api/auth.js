@@ -1,6 +1,6 @@
 /* api/auth.js: sign in and registration (a backend: Auth.js or Supabase Auth, POST /api/auth/*). Emails and ID numbers are
    unique, the password is kept hashed, a job seeker's live photo and face descriptor are stored with the account. */
-import { db, sign_in as start } from '../store/index.js';
+import { db, me, sign_in as start } from '../store/index.js';
 import { uid } from '../lib/index.js';
 import { call, fail, hash, is_email } from './net.js';
 import { notice } from './notices.js';
@@ -22,4 +22,15 @@ export const register = d => call(async () => {
   if (u.role === 'seeker') db.upsert('profiles', { id: u.id, headline: '', about: '', years: 0, skills: [], hobbies: [], education: [], links: [], summary: null });
   notice(u.id, 'Welcome to TalentVetting', u.role === 'seeker' ? 'Complete your profile, verify it, then apply to jobs.' : 'Post your first job to start receiving candidates.', u.role === 'seeker' ? '/app/profile' : '/app/jobs/new');
   start(u.id); return u;
+});
+/* the signed in person's own details (PATCH /api/me) and password (POST /api/me/password) */
+export const update_account = d => call(async () => {
+  const u = me(); if (!u) throw fail('error', 'Sign in first.');
+  if (!d.name || d.name.length < 3) throw fail('warning', 'Enter your full name.');
+  return db.upsert('users', { ...u, name: d.name, phone: d.phone || '', ...(u.role === 'recruiter' ? { company: d.company || u.company } : {}) });
+});
+export const change_password = (old, next) => call(async () => {
+  const u = me(); if (!u || u.pass !== await hash(old)) throw fail('warning', 'The current password is wrong.');
+  if (String(next || '').length < 8) throw fail('warning', 'Use at least 8 characters for the new password.');
+  db.upsert('users', { ...u, pass: await hash(next) });
 });

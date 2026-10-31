@@ -7,6 +7,7 @@
 @import './overrides/details_view.css';
 @import './overrides/fields.css';
 @import './overrides/tooltip.css';
+@import './overrides/smooth_state.css';
 @import './overrides/reduced_motion.css';
 @import './app/shell.css';
 @import './app/public.css';
