@@ -9,12 +9,7 @@
 .ev_log { display: grid; max-height: 14rem; gap: .25rem; overflow-y: auto; font-family: var(--font_mono); font-size: .75rem; }
 .ev_log li { padding: .25rem .5rem; border-radius: .375rem; background: rgb(var(--fg) / .04); }
 .ev_log li.warn { background: rgb(var(--warn) / .12); color: rgb(var(--warn)); } .ev_log li.bad { background: rgb(var(--bad) / .12); color: rgb(var(--bad)); }
-.choice { display: flex; align-items: flex-start; gap: .75rem; padding: .75rem 1rem; border: 1px solid rgb(var(--line)); border-radius: var(--radius); cursor: pointer; transition: border-color .2s, background-color .2s; }
-.choice:hover { border-color: rgb(var(--brand) / .6); } .choice:has(input:checked) { border-color: rgb(var(--brand)); background: rgb(var(--brand) / .06); }
 .fig_grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; }
 .fig_cell { display: grid; aspect-ratio: 1; place-items: center; border: 1px solid rgb(var(--line)); border-radius: .625rem; background: #fff; }
 .fig_cell svg { width: 85%; height: 85%; }
 .fig_cell.ask { border-style: dashed; color: rgb(var(--muted)); font-size: 1.5rem; font-weight: 700; background: rgb(var(--surface_2)); }
-.likert { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .375rem; }
-.likert label { display: grid; place-items: center; gap: .25rem; padding: .5rem .25rem; border: 1px solid rgb(var(--line)); border-radius: .625rem; font-size: .75rem; text-align: center; cursor: pointer; }
-.likert label:has(input:checked) { border-color: rgb(var(--brand)); background: rgb(var(--brand) / .08); color: rgb(var(--brand)); }

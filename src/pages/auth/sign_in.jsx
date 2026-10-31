@@ -19,7 +19,7 @@ export default function Sign_in() {
       <Password />
       {err ? <p className="field_err" role="alert">{err}</p> : null}
       <button className={`btn btn_primary w-full ${busy ? 'is_busy' : ''}`} disabled={busy}>{busy ? spinner() : null}Sign in</button></form>
-    <div className="mt-6 grid gap-2"><p className="cap">Demo accounts (password demo1234)</p><div className="grid grid-cols-2 gap-2">{DEMO.map(([l, e]) =>
+    <div className="mt-6 grid gap-2"><p className="text-xs font-medium uppercase tracking-wider text-muted">Demo accounts (password demo1234)</p><div className="grid grid-cols-2 gap-2">{DEMO.map(([l, e]) =>
       <button key={e} type="button" className="btn btn_outline btn_sm" disabled={busy} onClick={() => run(e, 'demo1234')}>{l}</button>)}</div></div>
     <p className="mt-6 text-center text-sm text-muted">New here? <a href="/register" className="font-medium text-accent hover:underline">Create an account</a></p>
   </Auth_shell>;

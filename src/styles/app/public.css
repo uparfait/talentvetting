@@ -18,11 +18,6 @@ html { scroll-padding-top: calc(var(--pub_h) + 1rem); }
   background: radial-gradient(circle, rgb(var(--brand) / .16), transparent 68%); }
 .marquee_track { animation: marquee 42s linear infinite; } .marquee:hover .marquee_track { animation-play-state: paused; }
 .page_enter { animation: page .45s var(--ease) backwards; } .hero_in { animation: rise .9s var(--ease) both; animation-delay: var(--d, 0s); }
-.auth_bg { position: relative; isolation: isolate; display: flex; min-height: 100dvh; flex-direction: column; background: rgb(var(--brand)); }
+.auth_bg { position: relative; isolation: isolate; background: rgb(var(--brand)); }
 .auth_bg > .pattern_layer { --pc: 255 255 255; --pa: .13; }
-.auth_card { width: calc(100% - 1.5rem); max-width: 30rem; margin: 0 auto; padding: 2rem 1.5rem; border-radius: calc(var(--radius) * 1.5); background: rgb(var(--bg)); }
-.auth_card.wide { max-width: 40rem; }
-@media (min-width: 640px) { .auth_card { width: 100%; margin: auto; padding: 2.5rem; } }
 .auth_top .icon_btn, .auth_top a { color: #fff; } .auth_foot { color: rgb(255 255 255 / .8); }
-.role_card { display: grid; gap: .75rem; padding: 1.25rem; border: 1px solid rgb(var(--line)); border-radius: var(--radius); text-align: left; transition: border-color .2s, background-color .2s; }
-.role_card:hover, .role_card:focus-visible { border-color: rgb(var(--brand)); background: rgb(var(--brand) / .05); }

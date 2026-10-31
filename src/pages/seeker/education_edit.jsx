@@ -2,7 +2,7 @@
    demo only the file's name, type and size are kept; a backend uploads it straight from the browser to storage. */
 import { useState } from 'react';
 import { save_profile } from '../../api/index.js';
-import { Field, form_values, notify, ask } from '../../ui/index.js';
+import { Field, File_box, form_values, notify, ask } from '../../ui/index.js';
 import { uid } from '../../lib/index.js';
 import { ic } from '../../icons/index.js';
 import { LEVELS } from '../../ai/agents/profile_text.js';
@@ -25,7 +25,7 @@ export function Education_edit({ p }) {
       <Field label="Level" name="level" as="select" options={LEVELS} defaultValue="bachelor" /><Field label="Year completed" name="year" type="number" min="1960" />
       <Field label="Degree (for example Computer Science)" name="degree" /><Field label="Field or option" name="field" />
       <Field label="School or university" name="school" className="sm:col-span-2" />
-      <label className="grid gap-1 text-sm sm:col-span-2">Document (PDF or image)<input type="file" name="doc" accept="application/pdf,image/*" /></label>
+      <div className="field sm:col-span-2"><label htmlFor="edu_doc">Document (PDF or image)</label><File_box id="edu_doc" name="doc" accept="application/pdf,image/*" /></div>
       <div className="flex gap-2 sm:col-span-2"><button className="btn btn_primary btn_sm">Add</button>
         {p.education.length ? <button type="button" className="btn btn_ghost btn_sm" onClick={() => set_adding(false)}>Cancel</button> : null}</div></form> : null}</section>;
 }

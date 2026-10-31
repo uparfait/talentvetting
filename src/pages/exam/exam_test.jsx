@@ -18,8 +18,8 @@ export function Exam_test({ src, on_done, busy }) {
     <div className="card sticky top-16 z-10 flex items-center justify-between p-4"><span>{Object.keys(ans).length} of {items.length} answered</span><b className={left < 60 ? 'text-bad' : ''}>{mmss(left)}</b></div>
     {items.map((q, i) => <fieldset key={q.id} className="card grid gap-3 p-5"><legend className="sr-only">Question {i + 1}</legend>
       <div className="md"><b>Question {i + 1}{q.correct?.length > 1 ? ' (select all that apply)' : ''}</b><div dangerouslySetInnerHTML={{ __html: md(q.text) }} /></div>
-      {q.kind === 'typed' ? <textarea aria-label={`Answer to question ${i + 1}`} className="min-h-28 w-full" onChange={e => set_ans(x => ({ ...x, [q.id]: e.target.value }))} />
-        : q.choices.map((c, k) => <label key={k} className="choice"><input type={q.correct.length > 1 ? 'checkbox' : 'radio'} name={q.id} checked={(ans[q.id] || []).includes(k)} onChange={() => toggle(q, k)} />
+      {q.kind === 'typed' ? <div className="field"><label htmlFor={`a_${q.id}`}>Your answer</label><textarea id={`a_${q.id}`} rows={5} placeholder=" " onChange={e => set_ans(x => ({ ...x, [q.id]: e.target.value }))} /></div>
+        : q.choices.map((c, k) => <label key={k} className="choice_pill !items-start !justify-start rounded-2xl !text-left"><input type={q.correct.length > 1 ? 'checkbox' : 'radio'} name={q.id} checked={(ans[q.id] || []).includes(k)} onChange={() => toggle(q, k)} />
           <span className="md" dangerouslySetInnerHTML={{ __html: md(c) }} /></label>)}</fieldset>)}
     <button className={`btn btn_primary justify-self-start ${busy ? 'is_busy' : ''}`} disabled={busy}>{busy ? spinner() : null}Submit the exam</button></form>;
 }
