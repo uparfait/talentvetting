@@ -19,6 +19,10 @@ const ART = {
     tile('file', 'blue', 'Gemma 4', 50, 12, 1), tile('layers', 'violet', 'Flash Lite', 86, 32, 2), tile('note', 'green', 'GPT-OSS', 80, 82, 3),
     tile('eye', 'teal', 'Face models', 20, 82, 4), tile('shield', 'amber', 'MongoDB', 14, 32, 5)],
   people: () => [line('M50 50 L18 24 M50 50 L84 24 M50 50 L18 78 M50 50 L84 78'), face(7, 50, 50, 0, 'h-28 w-28'),
-    face(2, 18, 24, 1, 'h-20 w-20', 'briefcase'), face(11, 84, 24, 2, 'h-20 w-20', 'users'), face(16, 18, 78, 3, 'h-20 w-20', 'cap'), face(21, 84, 78, 4, 'h-20 w-20', 'user')]
+    face(2, 18, 24, 1, 'h-20 w-20', 'briefcase'), face(11, 84, 24, 2, 'h-20 w-20', 'users'), face(16, 18, 78, 3, 'h-20 w-20', 'cap'), face(21, 84, 78, 4, 'h-20 w-20', 'user')],
+  /* employers pay in (coins) to the platform; a job seeker joins free */
+  money: () => [line('M16 22 L50 50 M16 62 L50 50 M50 50 L86 50'), face(5, 16, 22, 0, 'h-20 w-20', 'briefcase'), face(9, 16, 62, 1, 'h-20 w-20', 'users'),
+    tile('coin', 'amber', 'Per job', 36, 26, 2, 'h-10 w-10'), tile('coin', 'amber', 'Plans', 36, 70, 3, 'h-10 w-10'),
+    <img key="m" src="/favicon.svg" alt="" className="pr_pop h-24 w-24 bg-transparent" style={at(50, 50, 4)} />, face(13, 86, 50, 5, 'h-20 w-20', 'heart'), tile('check', 'green', 'Free', 86, 80, 6, 'h-10 w-10')]
 };
 export const art = k => <div className="pr_stage" aria-hidden="true">{(ART[k] || ART.mark)()}</div>;
