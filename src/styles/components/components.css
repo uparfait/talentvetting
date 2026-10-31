@@ -1,0 +1,45 @@
+/* components/08_reusable_components.css: component classes */
+@layer components {
+/* =====================================================================
+   4. REUSABLE COMPONENTS: declared once, used everywhere.
+   ===================================================================== */
+  /* Public pages fill the screen edge to edge (gutters only); the root scaling rule keeps proportions the same on every device */
+  .wrap { @apply mx-auto w-full px-4 sm:px-6 lg:px-10 2xl:px-16; }
+  .section { @apply py-20 sm:py-28; }
+  /* 44px touch target (mobile first); .btn_sm is 36px; a button placed beside a field grows to the field height (section 5G) */
+  .btn { @apply inline-flex min-h-11 select-none items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-medium transition duration-300 active:scale-[.97] disabled:pointer-events-none disabled:opacity-50; }
+  .btn_primary { @apply bg-brand text-white hover:bg-brand-2; }
+  .btn_ink { @apply bg-ink text-white hover:bg-brand dark:bg-fg dark:text-bg dark:hover:bg-brand dark:hover:text-white; }
+  .btn_outline { @apply border border-muted/50 text-fg hover:bg-fg/5; }
+  .btn_ghost { @apply text-fg hover:bg-fg/5; }
+  .btn_soft { @apply bg-brand/10 text-accent hover:bg-brand/20; }
+  .btn_danger { @apply bg-bad/10 text-bad hover:bg-bad hover:text-white; }
+  .btn_warn { @apply bg-warn/10 text-warn hover:bg-warn hover:text-white; }   /* a caution that is not a loss (archive) */
+  .btn_glass { @apply border border-fg/20 bg-fg/5 text-fg backdrop-blur hover:bg-fg/10; }   /* on the hero, in either theme */
+  .btn_sm { @apply min-h-9 px-4 py-1.5 text-[.8125rem]; }
+  .icon_btn { @apply inline-grid h-10 w-10 shrink-0 place-items-center rounded-full text-muted transition hover:bg-fg/5 hover:text-fg; }
+  .card { @apply rounded-3xl border border-line bg-surface; }
+  .card_hover { @apply transition duration-300 hover:border-brand/40 hover:bg-surface-2/40; }
+  .chip { @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+  .chip_btn { @apply rounded-full border border-muted/40 px-4 py-1.5 text-sm font-medium text-fg/80 transition hover:bg-fg/5; }
+  .chip_btn[aria-pressed=true] { @apply border-transparent bg-brand/15 text-accent; }
+  .kicker { @apply inline-flex items-center gap-2 text-sm font-semibold text-accent; }
+  .field { @apply grid content-start gap-1.5; }
+  .nav_link { @apply relative block rounded-full px-3.5 py-1.5 text-sm font-medium text-fg/80 transition hover:bg-fg/5 hover:text-fg; }
+  .nav_link.active { @apply bg-surface text-accent; }
+  /* Right-hand link groups sit together in one translucent container */
+  .link_group { @apply items-center gap-0.5 rounded-full bg-fg/5 p-1; }
+  .side_link { @apply flex items-center gap-3 rounded-full px-4 py-2.5 text-sm font-medium text-fg/80 transition hover:bg-fg/5; }
+  .side_link.active { @apply bg-brand/15 font-semibold text-accent; }
+  .pop { @apply absolute z-50 mt-2 max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-3xl border border-line bg-surface p-2 shadow-soft; }
+  .pop:not([hidden]) { animation: pop .2s var(--ease); }
+  .pop.pop_fixed { position: fixed; z-index: 60; margin: 0; }
+  .menu_item.menu_item_sm { min-height: 2.25rem; padding-block: .25rem; font-size: .8125rem; color: rgb(var(--muted)); }   /* a small switch row */
+  .menu_item_sm input[role=switch] { transform: scale(.8); transform-origin: right center; }   /* drawn at the top of the page, placed under its button */
+  .menu_item { @apply flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm text-fg transition hover:bg-fg/5; }
+  .menu_danger { @apply hover:bg-bad/10 hover:text-bad; }
+  .menu_danger:hover svg { @apply text-bad; }
+  .tab { @apply relative whitespace-nowrap px-4 py-3 text-sm font-medium text-muted transition hover:text-fg; }
+  .tab.active { @apply text-accent; }
+  .tab.active::after { content: ""; @apply absolute inset-x-3 -bottom-px h-[3px] rounded-t-full bg-brand; }
+}

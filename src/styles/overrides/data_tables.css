@@ -1,0 +1,48 @@
+/* overrides/14_data_tables.css: rules that come after Tailwind's utilities, so they win at equal specificity */
+  /* F. Data tables: per-column search in the header, trimmed cells, clickable rows, Back · n of n · Next pager */
+  .trunc { max-width: 18rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .table_data thead th { min-width: 11rem; vertical-align: top; }
+  .table_data thead button { text-transform: inherit; }
+  /* Action Buttons: first column, pinned to the left edge while the table scrolls sideways */
+  .table_data .table_acts { position: sticky; left: 0; z-index: 1; min-width: 0; background: rgb(var(--surface)); border-right: 1px solid rgb(var(--line)); }
+  /* No rows (nothing yet, no matches, loading): the message stays in the middle of what is in view, however many columns
+     there are and wherever the table is scrolled sideways: pinned to the view's left edge (sticky), as wide as the view
+     (100cqw: the scroll box is a size container) */
+  .table_scroll { container-type: inline-size; }
+  .table_data td.table_none { padding-inline: 0; }
+  .table_data td.table_none > * { position: sticky; left: 0; width: 100cqw; }
+  .table_data thead .table_acts { z-index: 2; background: rgb(var(--surface_2)); }
+  .table_data tbody tr:hover:not(:has(:is(button, a, input, select, label, [data-act]):hover)) > .table_acts { background: color-mix(in srgb, rgb(var(--brand)) 4%, rgb(var(--surface))); }
+  /* Full screen (fills the tab; header row and Action Buttons stay pinned) */
+  .table_full { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; border: 0; border-radius: 0; }
+  .table_full > .table_scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .table_full thead th { position: sticky; top: 0; z-index: 2; }
+  .table_full thead th.table_acts { z-index: 3; }
+  html:has(.table_full) { overflow: hidden; }
+  .table_data tbody tr[data-act] { cursor: pointer; }
+  .table_data tbody tr:last-child > td { border-bottom: 0; }
+  tr[data-act]:focus-visible { outline-offset: -2px; }
+  /* Column filters: compact but never tiny (40px tall, 14px text) */
+  .table_filter { min-height: 2.5rem; padding: .5rem .75rem; font-size: .875rem; line-height: 1.5rem; font-weight: 400; letter-spacing: normal; text-transform: none; }
+  select.table_filter { padding-right: 2.25rem; background-position: right .4rem center; background-size: 1.375rem; }
+  .table_filter:where([data-type]) { padding-right: 2.25rem; background-position: right .6rem center; background-size: 1.125rem; }
+  .table_filter:where([type=search]) { padding-left: 2.25rem; padding-right: 2.25rem; }
+  .pick { position: relative; }
+  /* Search fields: .search_btn = search button (left, runs the search), .clear_btn = clear button (right, hidden while empty) */
+  .search_btn, .clear_btn { position: absolute; top: 50%; translate: 0 -50%; z-index: 1; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: var(--pill);
+    color: rgb(var(--muted)); transition: background-color .15s, color .15s; }
+  .search_btn { left: .375rem; }
+  .clear_btn { right: .375rem; }
+  .search_btn:hover, .search_btn:focus-visible { color: rgb(var(--brand)); background: rgb(var(--brand) / .1); }
+  .clear_btn:hover, .clear_btn:focus-visible { color: rgb(var(--fg)); background: rgb(var(--fg) / .08); }
+  .table_filter ~ :is(.search_btn, .clear_btn) { width: 1.75rem; height: 1.75rem; }
+  .table_filter ~ .search_btn { left: .2rem; }
+  .table_filter ~ .clear_btn { right: .2rem; }
+  .field > :is(.search_btn, .clear_btn) { top: calc(1.625rem + 1px); }
+  input[type=search]:placeholder-shown ~ .clear_btn { display: none; }
+  .field:has(> input[type=search]:placeholder-shown:not(:focus)) > label { transform: translate(2rem, -50%); }
+  .pager { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .5rem .75rem; border-top: 1px solid rgb(var(--line)); }
+  .pager:empty { display: none; }
+  /* Full-details view (row click): a COLUMN NAME | VALUE table, grouped by category when the schema has them.
+     Values wrap here, because this is where the full text is read. */
+  .kv { font-size: .875rem; }

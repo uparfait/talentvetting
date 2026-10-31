@@ -1,0 +1,26 @@
+/* overrides/10_motion_and_toasts.css: rules that come after Tailwind's utilities, so they win at equal specificity */
+/* =====================================================================
+   5. MOTION + THEME RULES
+   ===================================================================== */
+
+/* Runtime-state + motion rules: kept outside Tailwind layers so classes that only JS adds are always styled. */
+  .tile { @apply grid aspect-[4/3] content-center justify-items-center gap-1 rounded-2xl border border-dashed border-line bg-surface p-2 text-center transition hover:border-brand; }
+  .tile.is_on { @apply border-solid border-brand/40 bg-brand/10 text-accent; }
+
+  /* ── FEEDBACK SYSTEM ────────────────────────────────────────────────
+     A. Bottom-right notifications: completed background actions + system issues */
+  /* #toasts and #loader are manual popovers: the top layer keeps them above open dialogs (see raise_top()) */
+  #toasts { position: fixed; z-index: 250; inset: auto; width: auto; height: auto; margin: 0; padding: 0; border: 0; background: none; overflow: visible; color: inherit; right: 1rem; left: 1rem; bottom: max(1rem, env(safe-area-inset-bottom)); display: grid; gap: .6rem; pointer-events: none; }
+  @media (min-width: 640px) { #toasts { left: auto; width: 24rem; } }
+  .toast { --t: var(--ok); pointer-events: auto; position: relative; overflow: hidden; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: .8rem; align-items: start;
+    padding: .9rem .75rem 1.05rem 1rem; border-radius: calc(var(--radius) * 1.15); background: rgb(var(--surface)); color: rgb(var(--fg));
+    border: 1px solid rgb(var(--line)); box-shadow: var(--shadow); animation: toast_in .45s var(--ease) both; }
+  .toast[data-tone=bad] { --t: var(--bad); } .toast[data-tone=warn] { --t: var(--warn); } .toast[data-tone=info] { --t: var(--info); }
+  .toast [data-ico] { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: var(--pill); background: rgb(var(--t) / .14); color: rgb(var(--t)); }
+  .toast [data-title] { font-weight: 600; font-size: .9rem; line-height: 1.3; }
+  .toast [data-msg] { margin-top: .15rem; font-size: .84rem; line-height: 1.45; color: rgb(var(--muted)); }
+  .toast [data-close] { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: var(--pill); color: rgb(var(--muted)); transition: background-color .2s, color .2s; }
+  .toast [data-close]:hover { background: rgb(var(--fg) / .06); color: rgb(var(--fg)); }
+  .toast .bar { position: absolute; left: 0; right: 0; bottom: 0; height: .1875rem; background: rgb(var(--t)); transform-origin: left; animation: shrink var(--life, 4.5s) linear forwards; }
+  .toast:hover .bar { animation-play-state: paused; }
+  .toast.out { animation: toast_out .35s var(--ease) forwards; }

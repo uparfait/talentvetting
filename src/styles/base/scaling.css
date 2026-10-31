@@ -1,0 +1,40 @@
+/* base/02_scaling.css: base layer */
+@layer base {
+  /* =====================================================================
+     2. SCALING (everything is rem-based, so the root size scales text,
+        spacing, radii and layout together):
+        · phones, up to 430px: the 360px design scaled to the screen, so a
+          320px and a 430px phone look exactly like a 360px one
+        · 430–640px: eases from the phone size down to 16px (no jump)
+        · tablets, 640–1023px: 16px, normal responsive layout
+        · laptops and desktops, 1024px up to --scale_ref: 15px (admin pages: --scale_staff, 16.5px)
+        · wider than --scale_ref: that desktop view, scaled up (no cap)
+     ===================================================================== */
+  html {
+    font-size: calc(100vw * 16 / var(--scale_phone));
+    scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  }
+  @media (min-width: 430px) { html { font-size: calc(16px + (640px - 100vw) * (430 * 16 / var(--scale_phone) - 16) / 210); } }
+  @media (min-width: 640px) { html { font-size: 16px; } }
+  @media (min-width: 1024px) { html { font-size: max(var(--scale_desk) * 1px, 100vw * var(--scale_desk) / var(--scale_ref)); } }
+  html.staff_page { --scale_desk: var(--scale_staff); }   /* admin pages (class set by app.jsx): a little larger */
+  /* Pages never scroll sideways (clip, not hidden, so sticky headers and sidebars keep working).
+     Wide content (tables, tab strips) scrolls inside its own box instead. */
+  html, body { overflow-x: clip; }
+  /* Calm scrolling: the scrollbar space is always reserved (nothing shifts sideways when the page is frozen),
+     the page is frozen behind open dialogs / the phone menu, and overlays never pass their scroll to the page. */
+  html { scrollbar-gutter: stable; }
+  /* ...but none where the page never scrolls: full-window pages (the editor, Open This Event), something on the whole
+     screen (which also stops the page behind from scrolling) */
+  html.full_page, html:fullscreen, html:has(:fullscreen, .qr_full:not([hidden]), .track_full:not([hidden])) { scrollbar-gutter: auto; }
+  html:has(:fullscreen, .qr_full:not([hidden]), .track_full:not([hidden])) { overflow: hidden; }
+  html:has(dialog[open]), html:has(#sidebar_scrim.on) { overflow: hidden; }
+  :where(dialog, dialog *, #picker, #sidebar_scroll, .panel_in) { overscroll-behavior: contain; }
+  body {
+    min-width: 22.5rem; background: rgb(var(--bg)); color: rgb(var(--fg));
+    font-family: var(--font_sans); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  /* Light/dark switch: nothing animates while the theme changes */
+  .theme_switch, .theme_switch *, .theme_switch *::before, .theme_switch *::after { transition: none !important; }
+  [hidden] { display: none !important; }
+}

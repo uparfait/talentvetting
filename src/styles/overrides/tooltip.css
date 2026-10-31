@@ -1,0 +1,9 @@
+/* overrides/22_tooltip.css: rules that come after Tailwind's utilities, so they win at equal specificity */
+  /* I. Tooltip (Imberabyombi style): icon buttons, [data-tip], and any trimmed .truncate / .trunc text */
+  #tip { position: fixed; z-index: 400; left: 0; top: 0; max-width: min(20rem, calc(100vw - .5rem)); padding: .25rem .5rem; border-radius: calc(var(--radius) * .5);
+    font-size: .75rem; line-height: 1rem; font-weight: 500; color: rgb(var(--bg)); background: rgb(var(--fg) / .92); overflow-wrap: anywhere;
+    pointer-events: none; opacity: 0; transition: opacity .12s; }
+  #tip.on { opacity: 1; }
+  /* a help icon's introduction: the text rises and fades in slowly, and fades out the same way */
+  #tip.intro { transition: opacity .45s ease, transform .45s ease; }
+  #tip.intro:not(.on) { transform: translateY(.375rem) scale(.96); }

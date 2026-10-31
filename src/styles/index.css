@@ -1,0 +1,15 @@
+/* styles/index.css: the stylesheet entry, in cascade order: the base layer (fonts, tokens, scaling, native elements),
+   the component classes, then Tailwind. Rules that must beat the utilities are in overrides.css. */
+@import './base/fonts.css';
+@import './base/tokens.css';
+@import './base/scaling.css';
+@import './base/native_a.css';
+@import './base/native_b.css';
+@import './base/tables.css';
+@import './base/range.css';
+@import './components/components.css';
+@import './components/segmented.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

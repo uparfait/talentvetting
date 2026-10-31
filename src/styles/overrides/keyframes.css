@@ -1,0 +1,22 @@
+/* overrides/keyframes.css: the template's animations (from the Imberabyombi template) */
+@keyframes rise { from { opacity: 0; translate: 0 1rem; } }
+@keyframes page { from { opacity: 0; transform: translateY(.5rem); } }
+@keyframes pop { from { opacity: 0; transform: translateY(.6rem) scale(.98); } }
+@keyframes slide { from { transform: translateX(100%); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes glow { 50% { transform: scale(1.12); opacity: .82; } }
+@keyframes float { 50% { translate: 0 -.5rem; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes toast_in { from { opacity: 0; transform: translateX(calc(100% + 1rem)); } }
+@keyframes toast_out { to { opacity: 0; transform: translateX(calc(100% + 1rem)); } }
+@keyframes shrink { to { transform: scaleX(0); } }
+@keyframes spin_rotate { 100% { transform: rotate(360deg); } }
+@keyframes dash_pulse {
+  0% { stroke-dasharray: 1, 200; stroke-dashoffset: 0; }
+  50% { stroke-dasharray: 90, 200; stroke-dashoffset: -35; }
+  100% { stroke-dasharray: 90, 200; stroke-dashoffset: -125; }
+}
+@keyframes flash { from { background-color: rgb(var(--brand) / .2); } }
+@keyframes pop_out { to { opacity: 0; transform: translateY(.6rem) scale(.98); } }
+@keyframes slide_out { to { transform: translateX(100%); } }

@@ -1,0 +1,18 @@
+/* overrides/26_flat_and_reduced_motion.css: rules that come after Tailwind's utilities, so they win at equal specificity */
+/* Flat design rule: no shadows at all, in any theme (borders carry depth instead).
+   The autofill lock below still wins: it is more specific and also !important. */
+*, *::before, *::after { box-shadow: none !important; text-shadow: none !important; }
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 100rem rgb(var(--field, var(--surface))) inset !important;
+  box-shadow: 0 0 0 100rem rgb(var(--field, var(--surface))) inset !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  [data-reveal] { opacity: 1; translate: none; }
+  /* Loading must stay visible: a calm, steady rotation with a fixed arc instead of the pulsing dash */
+  .spinner_segmented_svg { animation: spin_rotate 2s linear infinite !important; }
+  .spinner_segmented_dash { animation: none !important; stroke-dasharray: 90, 200; }
+}
+  /* Where text stays selectable (to copy): fields, table cells, details, code, copy boxes, notes, contact links. Kept outside the
+     Tailwind block above, whose parser drops this selector list. */
+  :where(input, textarea, [contenteditable], td, .kv th[scope=row], .viz_data th[scope=row], code, pre, kbd, samp, .copy_val, .memo p, address, a[href^="mailto:"], a[href^="tel:"], .selectable) { -webkit-user-select: text; user-select: text; }

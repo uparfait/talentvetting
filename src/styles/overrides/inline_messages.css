@@ -1,0 +1,12 @@
+/* overrides/11_inline_messages.css: rules that come after Tailwind's utilities, so they win at equal specificity */
+  .toast.raised:not(.out) { animation: none; }   /* stacked again above a dialog that just opened: it does not slide in twice */
+  /* B. Inline messages: appear instantly inside the component that caused them */
+  .msg { --t: var(--info); display: flex; gap: .75rem; align-items: flex-start; padding: .8rem .9rem; font-size: .875rem; line-height: 1.45; text-align: left;
+    color: rgb(var(--fg)); background: rgb(var(--t) / .08); border: 1px solid rgb(var(--t) / .3); border-radius: var(--radius); animation: rise .35s var(--ease); }
+  .msg[data-tone=ok] { --t: var(--ok); } .msg[data-tone=bad] { --t: var(--bad); } .msg[data-tone=warn] { --t: var(--warn); }
+  .msg .ico { color: rgb(var(--t)); flex-shrink: 0; margin-top: .05rem; }
+  .msg .msg_x { margin: -.2rem -.2rem 0 auto; display: grid; place-items: center; width: 1.75rem; height: 1.75rem; flex-shrink: 0; border-radius: var(--pill); color: rgb(var(--muted)); }
+  .msg .msg_x:hover { background: rgb(var(--fg) / .06); color: rgb(var(--fg)); }
+  .msg.msg_out { opacity: 0; transform: translateY(-.25rem); transition: opacity .3s, transform .3s; }
+  .field_err { display: flex; align-items: center; gap: .35rem; margin-top: .1rem; font-size: .8rem; font-weight: 500; color: rgb(var(--bad)); animation: rise .25s var(--ease); }
+  [aria-invalid=true] { border-color: rgb(var(--bad)) !important; outline-color: rgb(var(--bad) / .16) !important; }

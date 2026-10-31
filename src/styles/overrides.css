@@ -1,0 +1,14 @@
+/* styles/overrides.css: rules after the utilities (they win at equal specificity): the template's, then the app's own */
+@import './overrides/keyframes.css';
+@import './overrides/motion_toasts.css';
+@import './overrides/inline_messages.css';
+@import './overrides/spinner.css';
+@import './overrides/data_tables.css';
+@import './overrides/details_view.css';
+@import './overrides/fields.css';
+@import './overrides/tooltip.css';
+@import './overrides/reduced_motion.css';
+@import './app/shell.css';
+@import './app/public.css';
+@import './app/pipeline.css';
+@import './app/exam.css';

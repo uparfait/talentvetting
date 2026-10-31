@@ -1,0 +1,14 @@
+/* overrides/15_details_view.css: rules that come after Tailwind's utilities, so they win at equal specificity */
+  /* The table scrolls inside the dialog; its COLUMN NAME / VALUE header row stays in place */
+  .kv_wrap { overflow: auto; overscroll-behavior: contain; max-height: min(30rem, calc(90dvh - 14rem)); }
+  .kv thead th { position: sticky; top: 0; z-index: 1; }
+  .kv thead th { padding-block: .6rem; }
+  .kv tbody th { width: 38%; font-size: .8rem; font-weight: 500; color: rgb(var(--muted)); background: rgb(var(--fg) / .025); white-space: normal; vertical-align: top; }
+  .kv tbody td { white-space: normal; overflow-wrap: anywhere; }
+  .kv .kv_group th { width: auto; padding-block: .5rem; font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); background: rgb(var(--brand) / .07); }
+  .kv tbody tr:last-child > * { border-bottom: 0; }
+  .kv :is(.truncate, .trunc, .whitespace-nowrap) { white-space: normal; overflow: visible; text-overflow: clip; }
+  /* Horizontal scrollers scroll on x only (no stray y scrollbar from tab underlines or focus rings) */
+  .overflow-x-auto { overflow-y: hidden; }
+  /* Everything you click to choose gets the pointer */
+  input:is([data-type], [type=radio], [type=checkbox], [type=range], [type=color], [type=file]), .multi_value, label:has(> input:is([type=radio], [type=checkbox])) { cursor: pointer; }

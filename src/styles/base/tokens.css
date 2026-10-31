@@ -1,0 +1,46 @@
+/* base/01_design_tokens.css: base layer */
+@layer base {
+/* =====================================================================
+   1. DESIGN TOKENS: the single source of truth.
+      Change one line here and the whole system (public + admin) follows.
+   ===================================================================== */
+  :root {
+    /* Brand */
+    --brand:   224 102 27;   /* primary orange  #E0661B */
+    --brand_2: 150 62 14;    /* deep rust for gradients #963E0E */
+    --ink:     26 18 12;     /* brand black-brown #1A120C */
+    /* Shape, rhythm, type, motion */
+    --radius: 1rem;          /* corners of larger surfaces (fields, cards, menus, dialogs) scale from this */
+    --pill: 999px;           /* small things are fully round: buttons, chips, badges, avatars, icon buttons, 3D icons, toggles */
+    --space:  1rem;          /* every p-*, m-*, gap-*, space-* scales from this */
+    --font_sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+    --font_display: "Bricolage Grotesque", var(--font_sans);
+    --font_mono: "JetBrains Mono", ui-monospace, monospace;
+    --ease: cubic-bezier(.22,.8,.22,1);
+    --speed: .3s;
+    /* Device scaling: 360px minimum layout; desktops (1024px and up) a little denser, growing slowly past 1920px */
+    --scale_phone: 360;      /* every phone (up to 430px wide) shows the 360px design, scaled to its width */
+    --scale_desk: 15;        /* root size in px on laptops and desktops (1024px and up) */
+    --scale_staff: 16.5;     /* the same on admin pages: a little larger text, icons and controls for daily work */
+    --scale_ref: 1536;       /* reference desktop width: wider views (a larger screen, a zoomed-out browser) show this layout scaled up, never smaller */
+    /* Light theme surfaces */
+    --bg: 250 250 250; --surface: 255 255 255; --surface_2: 247 247 246; --surface_3: 231 229 227;
+    --fg: 24 22 21; --muted: 105 100 96; --line: 228 226 223;
+    --ok: 21 128 61; --warn: 180 100 0; --bad: 200 40 40; --info: 30 100 210;
+    /* Chart series: a fixed order, checked for colour-blind separation on both surfaces. Series 1 is the brand.
+       If you change --brand to another hue, re-check the order (series 2 is blue). */
+    --series_1: rgb(var(--brand)); --series_2: #2a78d6; --series_3: #1baf7a; --series_4: #eda100; --series_5: #e87ba4; --series_6: #008300; --series_7: #6250d6; --series_8: #e34948;
+    --shadow: none;          /* flat system: no shadows in any theme, borders carry depth */
+    /* Diamond lattice from the brand artwork (used as a CSS mask, so it takes any colour) */
+    --pattern: url('/patterns/lattice.svg');
+    color-scheme: light;
+  }
+  .dark {
+    --bg: 31 31 31; --surface: 40 41 43; --surface_2: 50 51 54; --surface_3: 64 66 69;
+    --fg: 236 234 232; --muted: 166 163 160; --line: 64 65 68;
+    --ok: 74 200 120; --warn: 240 170 60; --bad: 245 105 105; --info: 120 165 255;
+    --series_2: #3987e5; --series_3: #199e70; --series_4: #c98500; --series_5: #d55181; --series_7: #9085e9; --series_8: #e66767;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}

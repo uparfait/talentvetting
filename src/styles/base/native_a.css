@@ -1,0 +1,18 @@
+/* styles/base/native_a.css: native elements, part one (from the Imberabyombi template) */
+@layer base {
+  /* =====================================================================
+     3. EVERY NATIVE ELEMENT, RESTYLED. :where() keeps specificity at 0,
+        so any Tailwind utility on an element still wins.
+        Elements that Tailwind Preflight resets (inputs, selects, textareas,
+        headings, fieldset, legend, summary, table, hr, code…) use a bare
+        element selector instead (specificity 0,0,1): later than Preflight,
+        so it wins over the reset, and still below any utility class.
+     ===================================================================== */
+  ::selection { background: rgb(var(--brand)); color: #fff; }
+  /* Text can be selected only where people copy: fields, table cells, details, code, copy boxes, notes, contact details */
+  body, dialog { -webkit-user-select: none; user-select: none; }   /* dialogs too: the browser makes open dialogs selectable */
+  html.allow_select body, html.allow_select dialog { -webkit-user-select: text; user-select: text; }   /* switched on in the account menu */
+  html.public_page body, html.public_page dialog { -webkit-user-select: text; user-select: text; }   /* the public website: always */
+  .ctx_label { padding: .5rem .75rem .25rem; font-size: .75rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: rgb(var(--muted)); }
+  :focus-visible { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; }
+}

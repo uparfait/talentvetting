@@ -1,0 +1,42 @@
+/* base/06_range.css: base layer */
+@layer base {
+  /* Range (fill width is set by JS through --val) */
+  input[type=range] { appearance: none; width: 100%; height: .4rem; border-radius: var(--pill); cursor: pointer; background:
+    linear-gradient(rgb(var(--brand)), rgb(var(--brand))) 0 / var(--val, 50%) 100% no-repeat, rgb(var(--surface_3)); }
+  input[type=range]::-webkit-slider-thumb { appearance: none; width: 1.15rem; height: 1.15rem; border-radius: var(--pill); background: #fff; border: 3px solid rgb(var(--brand)); transition: transform .2s; }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type=range]::-moz-range-thumb { width: .9rem; height: .9rem; border-radius: var(--pill); background: #fff; border: 3px solid rgb(var(--brand)); }
+
+  /* Colour + file */
+  input[type=color] { appearance: none; width: 2.75rem; height: 2.75rem; padding: .25rem; cursor: pointer; border: 1px solid rgb(var(--line)); border-radius: calc(var(--radius) * .8); background: rgb(var(--surface)); }
+  input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+  input[type=color]::-webkit-color-swatch { border: 0; border-radius: calc(var(--radius) * .55); }
+  input[type=color]::-moz-color-swatch { border: 0; border-radius: calc(var(--radius) * .55); }
+  /* a hidden file input (sr-only, inside a styled button or drop box) keeps its 1px: full width would push the page wider */
+  input[type=file]:not(.sr-only) { width: 100%; font-size: .875rem; line-height: 1.5rem; color: rgb(var(--muted)); border: 1px dashed rgb(var(--muted) / .6); border-radius: calc(var(--radius) * .75); padding: .5rem; background: rgb(var(--field, var(--surface))); cursor: pointer; transition: border-color .2s; }
+  input[type=file]:not(.sr-only):hover { border-color: rgb(var(--brand)); }
+  input[type=color]:hover { border-color: rgb(var(--brand)); }
+  input[type=file]::file-selector-button { margin-right: 1rem; border: 0; border-radius: var(--pill); padding: .5rem 1rem; font: inherit; font-weight: 600; cursor: pointer; background: rgb(var(--brand) / .12); color: rgb(var(--brand)); transition: background-color .2s; }
+  input[type=file]::file-selector-button:hover { background: rgb(var(--brand) / .22); }
+
+  /* Progress + meter */
+  progress { appearance: none; display: block; width: 100%; height: .55rem; border: 0; border-radius: var(--pill); overflow: hidden; background: rgb(var(--surface_3)); }
+  progress::-webkit-progress-bar { background: rgb(var(--surface_3)); border-radius: var(--pill); }
+  progress::-webkit-progress-value { background: linear-gradient(90deg, rgb(var(--brand_2)), rgb(var(--brand))); border-radius: var(--pill); transition: width .6s var(--ease); }
+  progress::-moz-progress-bar { background: linear-gradient(90deg, rgb(var(--brand_2)), rgb(var(--brand))); border-radius: var(--pill); }
+  /* <progress> is for known progress only. Every loading state uses spinner() (see 5F). */
+  meter { display: block; width: 100%; height: .55rem; -moz-appearance: none; border: 0; border-radius: var(--pill); background: rgb(var(--surface_3)); }
+  meter::-webkit-meter-bar { background: rgb(var(--surface_3)); border: 0; border-radius: var(--pill); height: .55rem; }
+  meter::-webkit-meter-optimum-value { background: rgb(var(--ok)); border-radius: var(--pill); }
+  meter::-webkit-meter-suboptimum-value { background: rgb(var(--warn)); border-radius: var(--pill); }
+  meter::-webkit-meter-even-less-good-value { background: rgb(var(--bad)); border-radius: var(--pill); }
+  meter:-moz-meter-optimum::-moz-meter-bar { background: rgb(var(--ok)); border-radius: var(--pill); }
+  meter:-moz-meter-sub-optimum::-moz-meter-bar { background: rgb(var(--warn)); border-radius: var(--pill); }
+  meter:-moz-meter-sub-sub-optimum::-moz-meter-bar { background: rgb(var(--bad)); border-radius: var(--pill); }
+  :where(output) { display: inline-flex; align-items: center; font-family: var(--font_mono); font-size: .85rem; font-weight: 600; color: rgb(var(--brand)); background: rgb(var(--brand) / .1); padding: .1rem .55rem; border-radius: var(--pill); }
+
+  /* Fieldset, legend, label */
+  fieldset { border: 1px solid rgb(var(--line)); border-radius: var(--radius); padding: 1.5rem 1.25rem 1.25rem; min-width: 0; }
+  legend { padding: 0 .5rem; margin-left: -.5rem; font-family: var(--font_display); font-weight: 500; font-size: 1rem; }
+  :where(label) { font-size: .875rem; font-weight: 500; }
+}

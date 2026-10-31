@@ -1,0 +1,16 @@
+/* styles/app/public.css: the public pages: the sticky header, the hero on the template's pattern, the stage cards and
+   the sign in pages (the brand colour with the white pattern, the form on its own card). */
+html { scroll-padding-top: 5rem; }
+.tv_pub_head { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid rgb(var(--line) / .6); background: rgb(var(--bg) / .85); backdrop-filter: blur(10px); }
+.tv_hero { position: relative; isolation: isolate; overflow: hidden; }
+.tv_hero > .pattern_layer { --pc: var(--fg); --pa: .045; }
+.stage_card { position: relative; display: grid; gap: .5rem; padding: 1.25rem; border: 1px solid rgb(var(--line)); border-radius: calc(var(--radius) * 1.25); background: rgb(var(--surface)); }
+.stage_no { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: var(--pill); background: rgb(var(--brand)); color: #fff; font-size: .8125rem; font-weight: 700; }
+.auth_bg { position: relative; isolation: isolate; display: flex; min-height: 100dvh; flex-direction: column; background: rgb(var(--brand)); }
+.auth_bg > .pattern_layer { --pc: 255 255 255; --pa: .13; }
+.auth_card { width: calc(100% - 1.5rem); max-width: 30rem; margin: 0 auto; padding: 2rem 1.5rem; border-radius: calc(var(--radius) * 1.5); background: rgb(var(--bg)); }
+.auth_card.wide { max-width: 40rem; }
+@media (min-width: 640px) { .auth_card { width: 100%; margin: auto; padding: 2.5rem; } }
+.auth_top .icon_btn, .auth_top a { color: #fff; } .auth_foot { color: rgb(255 255 255 / .8); }
+.role_card { display: grid; gap: .75rem; padding: 1.25rem; border: 1px solid rgb(var(--line)); border-radius: var(--radius); text-align: left; transition: border-color .2s, background-color .2s; }
+.role_card:hover, .role_card:focus-visible { border-color: rgb(var(--brand)); background: rgb(var(--brand) / .05); }

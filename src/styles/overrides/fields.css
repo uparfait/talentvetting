@@ -1,0 +1,28 @@
+/* overrides/16_imberabyombi_outlined_fields.css: rules that come after Tailwind's utilities, so they win at equal specificity */
+  /* G. Imberabyombi outlined fields: the label rests inside the box and floats onto the border on focus or once filled */
+  .field { position: relative; }
+  /* Animated with transform only (move + scale), so the label glides smoothly; size and weight never jump */
+  .field:has(:where(input:not([type=range],[type=color],[type=file],[type=checkbox],[type=radio]), select:not([multiple],[size]), textarea, .multi_value)) > label:where(:not(.sr-only)) {
+    position: absolute; z-index: 1; left: .75rem; top: calc(1.625rem + 1px); max-width: calc((100% - 1.5rem) / .75); padding: 0 .25rem;
+    font-size: 1rem; line-height: 1.5rem; font-weight: 400; color: rgb(var(--muted)); background: rgb(var(--field, var(--surface)));
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; transform-origin: left center;
+    transform: translateY(calc(-50% - 1.625rem - 1px)) scale(.75); transition: transform .2s var(--ease), color .2s, max-width .2s var(--ease); }
+  .field:has(:where(input, textarea):placeholder-shown:not(:focus)) > label, .field:has(> select:not(:focus, [data-open]) option[value=""]:checked) > label { transform: translateY(-50%); max-width: calc(100% - 1.5rem); }
+  .field:has(:focus, [data-open]) > label { color: rgb(var(--brand)); }
+  .field:has([aria-invalid=true]) > label { color: rgb(var(--bad)); }
+  .field:has(> label:not(.sr-only)) :is(input, textarea):not(:focus)::placeholder { color: transparent; }
+  .field > select:not(:focus, [data-open]):has(option[value=""]:checked) { color: transparent; }
+  .on_bg { --field: var(--bg); }
+  /* Typing hint of date/time fields: what is typed (invisible, keeps the place) + the rest of the format in grey */
+  .date_hint { position: absolute; left: 0; top: 0; display: flex; align-items: center; height: calc(3.25rem + 2px); padding: 0 1rem; border: 1px solid transparent;
+    font-size: 1rem; font-weight: 400; letter-spacing: normal; text-transform: none; white-space: pre; color: rgb(var(--muted) / .75); pointer-events: none; }
+  .date_hint i { font-style: normal; visibility: hidden; }
+  .pick > .date_hint { height: auto; bottom: 0; padding: 0 .75rem; font-size: .875rem; }
+  /* Scrollbar that shows only while the pointer is over the area (admin sidebar) */
+  .scroll_hover { scrollbar-gutter: stable; }
+  .scroll_hover::-webkit-scrollbar-thumb { background-color: transparent; }
+  .scroll_hover:is(:hover, :focus-within)::-webkit-scrollbar-thumb { background-color: rgb(var(--brand) / .4); }
+  @supports not selector(::-webkit-scrollbar) { .scroll_hover { scrollbar-color: transparent transparent; }
+    .scroll_hover:is(:hover, :focus-within) { scrollbar-color: rgb(var(--brand) / .45) transparent; } }
+  /* A button that sits beside a field (newsletter, inline forms) matches the field height */
+  :is(.field, input:not([type=checkbox],[type=radio],[type=hidden],[type=range])) ~ .btn:not(.btn_sm) { min-height: calc(3.25rem + 2px); padding-inline: 1.5rem; }

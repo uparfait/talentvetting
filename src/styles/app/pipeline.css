@@ -1,0 +1,13 @@
+/* styles/app/pipeline.css: the six stage track (done, current, to come), score bars and verified / unverified marks */
+.track { display: flex; gap: .25rem; overflow-x: auto; }
+.track_step { display: grid; flex: 1 0 6.5rem; gap: .375rem; padding-top: .5rem; border-top: 3px solid rgb(var(--line)); color: rgb(var(--muted)); font-size: .75rem; font-weight: 600; }
+.track_step.done { border-color: rgb(var(--ok)); color: rgb(var(--fg)); }
+.track_step.now { border-color: rgb(var(--brand)); color: rgb(var(--brand)); }
+.track_step.fail { border-color: rgb(var(--bad)); color: rgb(var(--bad)); }
+.score_bar { position: relative; height: .5rem; overflow: hidden; border-radius: var(--pill); background: rgb(var(--fg) / .08); }
+.score_bar > i { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: rgb(var(--brand)); }
+.score_n { font-family: var(--font_display); font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.src_tag { display: inline-flex; align-items: center; gap: .25rem; padding: .1rem .5rem; border-radius: var(--pill); font-size: .6875rem; font-weight: 600; }
+.src_tag.ok { background: rgb(var(--ok) / .14); color: rgb(var(--ok)); } .src_tag.no { background: rgb(var(--warn) / .14); color: rgb(var(--warn)); }
+.agent_row { display: flex; align-items: center; gap: .75rem; padding: .625rem 0; border-bottom: 1px solid rgb(var(--line)); font-size: .875rem; }
+.agent_row:last-child { border-bottom: 0; }

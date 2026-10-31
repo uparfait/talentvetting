@@ -1,0 +1,46 @@
+/* components/09_segmented_button.css: component classes */
+@layer components {
+  /* Segmented button (Imberabyombi): one outlined pill, dividers between segments, tinted selection */
+  .seg { @apply inline-flex overflow-hidden rounded-full border border-muted/50; }
+  .seg span { @apply block cursor-pointer px-4 py-2 text-sm font-medium text-fg/80 transition hover:bg-fg/5; }
+  .seg label + label span { border-left: 1px solid rgb(var(--muted) / .5); }
+  .seg input:checked + span { @apply bg-brand/15 text-accent; }
+  .seg input:focus-visible + span { outline: 2px solid rgb(var(--brand)); outline-offset: -2px; }
+  .choice_pill { @apply flex shrink-0 cursor-pointer items-center gap-2 rounded-full border border-muted/40 px-4 py-2 text-sm font-medium text-fg/80 transition hover:bg-fg/5; }
+  .choice_pill:has(input:checked) { @apply border-transparent bg-brand/15 text-accent; }
+  .choice_pill:has(input:disabled) { @apply cursor-not-allowed opacity-40; }
+  .choice_pill:has(input:focus-visible) { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; }
+  .hero_title { font-family: var(--font_display); font-weight: 500; font-size: clamp(3rem, 1.4rem + 6.4vw, 7.25rem); line-height: .95; letter-spacing: -.035em; }
+
+  /* Long-form article typography */
+  .prose_x { @apply text-muted; font-size: 1.0625rem; line-height: 1.8; }
+  .prose_x :where(h2,h3,h4,h5) { color: rgb(var(--fg)); }
+  .prose_x :where(h2) { font-size: 1.875rem; margin: 0 0 1rem; }
+  .prose_x :where(h3) { font-size: 1.375rem; margin: 2rem 0 .75rem; }
+  .prose_x :where(h4,h5,h6) { margin: 1.75rem 0 .5rem; }
+  .prose_x :where(p, ul, ol, dl, figure, blockquote, pre, table) { margin-block: 1.25rem; }
+  .prose_x :where(blockquote) { color: rgb(var(--fg)); }
+  .prose_x :where(ul) { list-style-type: "◆  "; padding-inline-start: 1.4rem; }
+  .prose_x :where(ol) { list-style-type: decimal; padding-inline-start: 1.5rem; }
+  .prose_x :where(li) { margin-block: .4rem; padding-inline-start: .2rem; }
+  .prose_x li::marker { color: rgb(var(--brand)); font-weight: 700; font-size: .8em; }
+  .prose_x :where(dd) { margin: 0 0 .9rem; }
+  .prose_x :where(img) { border-radius: var(--radius); width: 100%; }
+  .prose_x :where(a) { color: rgb(var(--brand)); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Brand artwork (home page): the hero with its lattice and the curved wave at the bottom */
+  /* The hero and the Vision band follow the theme: light = white to soft orange with dark text, dark = ink to orange with light text */
+  .hero { --h0: rgb(var(--surface)); --h1: color-mix(in srgb, rgb(var(--brand)) 14%, rgb(var(--surface))); --h2: color-mix(in srgb, rgb(var(--brand)) 42%, rgb(var(--surface))); border: 0;
+    background: linear-gradient(180deg, var(--h0) 0%, var(--h0) 40%, var(--h1) 78%, var(--h2) 100%); }
+  .dark .hero { --h0: rgb(var(--ink)); --h1: color-mix(in srgb, rgb(var(--brand_2)) 72%, rgb(var(--ink))); --h2: rgb(var(--brand)); }
+  .hero > .pattern_layer, .theme_band > .pattern_layer { --pc: var(--fg); --pa: .045; }
+  .theme_band { background: color-mix(in srgb, rgb(var(--brand)) 6%, rgb(var(--surface))); }
+  .dark .theme_band { background: rgb(var(--ink)); }
+  .pattern_layer { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-color: rgb(var(--pc, var(--brand)) / var(--pa, .06));
+    -webkit-mask: var(--pattern) 0 0 / 5rem 5rem repeat; mask: var(--pattern) 0 0 / 5rem 5rem repeat; }
+  .arch { @apply relative overflow-hidden border-2 border-brand/50; aspect-ratio: 4 / 5; border-radius: var(--pill) var(--pill) calc(var(--radius) * 1.75) calc(var(--radius) * 1.75); background: linear-gradient(180deg, rgb(var(--brand) / .18), rgb(var(--brand) / .55)); }
+  .dark .arch { background: linear-gradient(180deg, rgb(var(--brand) / .5), rgb(var(--ink))); }
+  .hour_lines { background-image: repeating-linear-gradient(to bottom, transparent 0, transparent calc(3rem - 1px), rgb(var(--line)) calc(3rem - 1px), rgb(var(--line)) 3rem); }
+  .field_dark { --field: var(--ink); --field_fg: 255 255 255; }
+}
