@@ -2,6 +2,7 @@
    job asks for are read from it), any category (type one that is missing and add it), minimum experience and education,
    how many places, and the psychometric test (a switch, and its weight in the final score). */
 import { useEffect, useRef, useState } from 'react';
+import { me } from '../../store/index.js';
 import { get_job, save_job, categories, add_category, read_skills } from '../../api/index.js';
 import { go } from '../../router/index.js';
 import { Field, form_values, notify, spinner, help_tip, chip, fill } from '../../ui/index.js';
@@ -12,7 +13,7 @@ import { page_head } from '../shared/kpi.jsx';
 const START = '<h2>About the role</h2><p>What the person will do.</p><h2>Requirements</h2><ul><li>The skills, experience and education you need</li></ul>';
 export default function Job_form({ params }) {
   const old = params.id ? get_job(params.id) : null, form = useRef(null), [busy, set_busy] = useState(false);
-  const [details, set_details] = useState(old?.details || START), [cat, set_cat] = useState(old?.category || ''), [psych, set_psych] = useState(old?.psych || { enabled: true, weight: 30 });
+  const [details, set_details] = useState(old?.details || START), [cat, set_cat] = useState(old?.category || me()?.category || ''), [psych, set_psych] = useState(old?.psych || { enabled: true, weight: 30 });
   const skills = read_skills(details);
   useEffect(() => { const f = form.current, add = e => { const c = add_category(e.detail); if (c) set_cat(c); };
     f.addEventListener('add', add); return () => f.removeEventListener('add', add); }, []);
