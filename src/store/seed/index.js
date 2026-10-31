@@ -7,7 +7,7 @@ import { JOBS, APPLIED } from './jobs.js';
 import { make_profile } from './make_profile.js';
 import { seed_apps } from './apps.js';
 
-const VERSION = 4;
+const VERSION = 5;
 const id = (p, i) => `${p}_${i + 1}`;
 export function reset_demo() {
   const now = Date.now(), users = [], profiles = [];

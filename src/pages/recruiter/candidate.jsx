@@ -6,7 +6,8 @@ import { query } from '../../router/index.js';
 import { avatar, chip, empty } from '../../ui/index.js';
 import { age_of } from '../../lib/index.js';
 import { ic } from '../../icons/index.js';
-import { Summary_items, Education_list, Links_list } from '../shared/profile_view.jsx';
+import { Summary_items, Education_list, Links_list, Work_list } from '../shared/profile_view.jsx';
+import { exp_text } from '../../ai/agents/profile_text.js';
 import { App_report } from './app_report.jsx';
 
 const card = (t, body) => <section className="card p-5"><h2 className="mb-3 text-lg">{t}</h2>{body}</section>;
@@ -21,6 +22,6 @@ export default function Candidate({ params }) {
       {chip(u.face_check === 'simulated' ? 'Photo, face check simulated' : 'Live photo checked', u.face_check === 'simulated' ? 'warn' : 'ok')}</section>
     <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,1fr)_24rem]"><div className="grid content-start gap-5">{a ? <App_report a={a} job={job} /> : null}
       {card('Grand Profile Summary', <Summary_items p={p} />)}</div>
-      <div className="grid content-start gap-5">{card('Education', <Education_list p={p} />)}{card('Links', <Links_list p={p} />)}
+      <div className="grid content-start gap-5">{card(`Work experience (${exp_text(p)})`, <Work_list p={p} />)}{card('Education', <Education_list p={p} />)}{card('Links', <Links_list p={p} />)}
         {card('Skills and hobbies', <div className="flex flex-wrap gap-1.5">{[...p.skills.map(s => chip(s, 'brand')), ...p.hobbies.map(h => chip(h))].map((c, i) => <span key={i}>{c}</span>)}</div>)}</div></div></>;
 }

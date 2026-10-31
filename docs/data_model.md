@@ -11,6 +11,8 @@ Supabase), with `pgvector` for matching.
 ## profiles (one per seeker, id = user id)
 `headline, about, years, skills[], hobbies[], summary_stale`
 - `education[]`: `id, level, degree, field, school, year, doc { name, type, size, status, flags[], text, model }`
+- `location`: `city, district, country`; `work[]`: `id, position, company, start, end, current` (the experience is worked
+  out from these, overlaps counted once; there is no overall number of years)
 - `links[]`: `id, name, desc, url, status ('new' | 'read' | 'skipped'), host, summary`
 - `summary`: `items[] { text, source, verified }, words, at, model, prompt_v`
 - production adds `embedding vector(768)` for matching

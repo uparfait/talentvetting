@@ -26,7 +26,7 @@ export const register = d => call(async () => {
   if (p) throw fail('warning', p);
   const { password, ...rest } = d;
   const u = db.upsert('users', { ...rest, id: uid(), email, pass: await hash(password) });
-  if (u.role === 'seeker') db.upsert('profiles', { id: u.id, headline: '', about: '', years: 0, skills: [], hobbies: [], education: [], links: [], summary: null });
+  if (u.role === 'seeker') db.upsert('profiles', { id: u.id, headline: '', about: '', location: { city: '', country: 'Rwanda' }, work: [], skills: [], hobbies: [], education: [], links: [], summary: null });
   notice(u.id, 'Welcome to TalentVetting', u.role === 'seeker' ? 'Complete your profile, verify it, then apply to jobs.' : 'Post your first job to start receiving candidates.', u.role === 'seeker' ? '/app/profile' : '/app/jobs/new');
   start(u.id); return u;
 });

@@ -16,6 +16,12 @@ export const Education_list = ({ p }) => <ul className="grid gap-3">{(p.educatio
     <span className="block text-sm text-muted">{e.school}, {e.year}{e.doc ? ` . ${e.doc.name}` : ''}</span>
     {e.doc?.flags?.length ? <span className="block text-xs text-bad">{e.doc.flags.join('; ')}</span> : null}</span>
   {e.doc ? chip(...(DOC[e.doc.status] || DOC.pending)) : chip('No document', 'muted')}</li>)}</ul>;
+const when = d => (d ? new Date(d).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }) : '');
+/* work experience, latest first; on_remove (the owner's page) adds a remove button to each */
+export const Work_list = ({ p, on_remove }) => <ul className="grid gap-3">{[...(p.work || [])].sort((a, b) => String(b.start).localeCompare(a.start)).map(w => <li key={w.id} className="flex flex-wrap items-start gap-3">
+  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand/15 text-brand">{ic('briefcase')}</span>
+  <span className="min-w-0 flex-1"><b className="block font-medium">{w.position}</b><span className="block text-sm text-muted">{w.company} . {when(w.start)} to {w.current ? 'now' : when(w.end)}</span></span>
+  {w.current ? chip('Current', 'ok') : null}{on_remove ? <button type="button" className="icon_btn h-8 w-8 hover:text-bad" aria-label={`Remove ${w.position}`} onClick={() => on_remove(w)}>{ic('trash', 'h-4 w-4')}</button> : null}</li>)}</ul>;
 export const Links_list = ({ p }) => <ul className="grid gap-3">{(p.links || []).map(l => <li key={l.id} className="grid gap-1">
   <span className="flex items-center gap-2"><a href={l.url} target="_blank" rel="noopener noreferrer" className="font-medium text-accent hover:underline">{l.name}</a>
     {chip(l.status === 'read' ? 'Read and summarized' : l.status === 'skipped' ? 'Skipped' : 'Not visited', l.status === 'read' ? 'ok' : 'warn')}</span>
