@@ -16,7 +16,7 @@ export function parse(src) {
     if (type === 'typed') {
       const key = strip(between(b, /ANSWER\s*KEY\s*:/i, null));
       if (!key) return errors.push(`Block ${i + 1}: a typed question needs ANSWER KEY:`);
-      return items.push({ id: `q${i + 1}`, kind: 'typed', text: strip(q), key, secs: own_secs(q) || secs_for(strip(q), 'application') + 60 });
+      return items.push({ id: `q${i + 1}`, kind: 'typed', text: strip(q), key, own: own_secs(q), secs: own_secs(q) || secs_for(strip(q), 'application') + 60 });
     }
     if (type !== 'question') return errors.push(`Block ${i + 1}: unknown TYPE ${type}`);
     const AN = /ANSWER\s*[[(]?\s*S?\s*[\])]?\s*:/i, ch = [], c = between(b, /CHOICES\s*:/i, AN), an = between(b, AN, null) || '';
@@ -24,7 +24,7 @@ export function parse(src) {
     const idx = ((/IND(?:EX|ICES)\s*[[({]?\s*E?S?\s*[\])}]?\s*:?\s*(\d[\d,\s]*)/i.exec(an) || [])[1] || '').split(/[\s,]+/).filter(Boolean).map(Number).filter(n => n < ch.length);
     if (!ch.length) return errors.push(`Block ${i + 1}: no choices`);
     if (!idx.length) return errors.push(`Block ${i + 1}: INDEX[S]: is missing`);
-    items.push({ id: `q${i + 1}`, kind: 'mcq', text: strip(q), choices: ch, correct: idx, secs: own_secs(q) || secs_for(strip(q) + ' ' + ch.join(' ')) });
+    items.push({ id: `q${i + 1}`, kind: 'mcq', text: strip(q), choices: ch, correct: idx, own: own_secs(q), secs: own_secs(q) || secs_for(strip(q) + ' ' + ch.join(' ')) });
   });
   return { items, errors };
 }
