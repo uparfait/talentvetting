@@ -1,6 +1,6 @@
 /* pages/exam/exam_room.jsx: /app/exam/<application>?kind=psych | exam. Setup first (camera on with the face matching the
    profile photo, the whole screen shared), then the test in full screen with monitoring beside it. On submit the text
-   event log goes to the ProctorReportAgent, typed answers to the ExamGraderAgent. Nothing visual leaves the browser. */
+   event log goes to the ProctorReportAgent; written answers wait for the recruiter to mark them. Nothing visual leaves the browser. */
 import { useEffect, useRef, useState } from 'react';
 import { db, me } from '../../store/index.js';
 import { get_job, submit_test } from '../../api/index.js';

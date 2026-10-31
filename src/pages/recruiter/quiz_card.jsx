@@ -1,6 +1,7 @@
 /* pages/recruiter/quiz_card.jsx: one question in the quiz builder: its handle (drag to reorder), its number and kind
-   (Choice: pick the right answers; Typed: a written answer graded by the AI against an answer key), its own time (empty:
-   worked out from its length), duplicate, move, remove; then the question and its choices or answer key. */
+   (Choice: pick the right answers, marked by themselves; Typed: a written answer the recruiter reviews and marks against
+   the expected answer), its own time (empty: worked out from its length), duplicate, move, remove; then the question
+   and its choices or its answer. */
 import { ic } from '../../icons/index.js';
 import { Field, help_tip } from '../../ui/index.js';
 import { Quiz_choices } from './quiz_choices.jsx';
@@ -19,8 +20,8 @@ export function Quiz_card({ q, i, n, set, drag, move, copy, remove }) {
         <button type="button" className="icon_btn h-9 w-9 hover:text-bad" aria-label="Remove question" data-tip="Remove" onClick={remove}>{ic('trash', 'h-4 w-4')}</button></span></div>
     <Field label="Question" name={`q_${q.id}`} as="textarea" rows={2} value={q.text} onChange={e => set({ ...q, text: e.target.value })} />
     {q.kind === 'mcq' ? <Quiz_choices q={q} set={set} />
-      : <div className="flex items-start gap-1"><Field label="Answer key: what a good answer says" name={`k_${q.id}`} as="textarea" rows={2} className="min-w-0 flex-1" value={q.key} onChange={e => set({ ...q, key: e.target.value })} />
-        {help_tip('The ExamGraderAgent compares each written answer with this key and explains its grade.', 'the answer key')}</div>}
+      : <div className="flex items-start gap-1"><Field label="Answer" name={`k_${q.id}`} as="textarea" rows={2} className="min-w-0 flex-1" value={q.key} onChange={e => set({ ...q, key: e.target.value })} />
+        {help_tip('What a good answer says. You compare each written answer with it when you mark the exam.', 'the answer')}</div>}
     <div className="flex items-center gap-1"><Field label="Seconds (empty: worked out)" name={`s_${q.id}`} type="number" min="10" className="w-56" value={q.secs || ''}
       onChange={e => set({ ...q, secs: Math.max(0, +e.target.value || 0) })} />{help_tip('Reading time plus thinking time, from the question\'s length, when this is empty.', 'the time')}</div>
   </li>;

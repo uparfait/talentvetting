@@ -14,7 +14,8 @@ export const PAGES = {
   summary: L(() => import('../pages/seeker/summary.jsx')), browse: L(() => import('../pages/seeker/browse.jsx')),
   job_view: L(() => import('../pages/seeker/job_view.jsx')), applications: L(() => import('../pages/seeker/applications.jsx')),
   exam_room: L(() => import('../pages/exam/exam_room.jsx')), notices: L(() => import('../pages/app/notices.jsx')),
-  account: L(() => import('../pages/app/account.jsx'))
+  account: L(() => import('../pages/app/account.jsx')), exam_prep: L(() => import('../pages/recruiter/exam_prep.jsx')),
+  exam_review: L(() => import('../pages/recruiter/exam_review.jsx'))
 };
 export const ROUTES = [
   ['/', 'home', 'public'], ['/about', 'about', 'public'], ['/jobs', 'jobs_public', 'public'], ['/jobs/:id', 'job_public', 'public'],
@@ -22,7 +23,8 @@ export const ROUTES = [
   ['/register/recruiter', 'register_recruiter', 'guest'], ['/register/seeker', 'register_seeker', 'guest'],
   ['/app', 'dashboard', 'user'], ['/app/notices', 'notices', 'user'], ['/app/account', 'account', 'user'],
   ['/app/jobs', 'jobs', 'recruiter'], ['/app/jobs/new', 'job_form', 'recruiter'], ['/app/jobs/:id', 'job_page', 'recruiter'],
-  ['/app/jobs/:id/edit', 'job_form', 'recruiter'], ['/app/candidates/:id', 'candidate', 'recruiter'], ['/app/ai', 'ai_log', 'recruiter'],
+  ['/app/jobs/:id/edit', 'job_form', 'recruiter'], ['/app/jobs/:id/exam', 'exam_prep', 'recruiter'],
+  ['/app/jobs/:id/review/:app', 'exam_review', 'recruiter'], ['/app/candidates/:id', 'candidate', 'recruiter'], ['/app/ai', 'ai_log', 'recruiter'],
   ['/app/profile', 'profile', 'seeker'], ['/app/summary', 'summary', 'seeker'], ['/app/browse', 'browse', 'seeker'],
   ['/app/browse/:id', 'job_view', 'seeker'], ['/app/applications', 'applications', 'seeker'], ['/app/exam/:id', 'exam_room', 'seeker']
 ];

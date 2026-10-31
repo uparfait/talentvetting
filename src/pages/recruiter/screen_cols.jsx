@@ -1,5 +1,5 @@
 /* pages/recruiter/screen_cols.jsx: the columns of the screening ranking and of the best performers (the template's table
-   card): the rank, the candidate, the scores (a number and a bar) and why, or the result. */
+   card): a tick to pick, the rank, the candidate, the scores (a bar and the number) and why, or the result. */
 import { db } from '../../store/index.js';
 import { final_of, combined_of } from '../../api/index.js';
 import { chip } from '../../ui/index.js';
@@ -11,6 +11,9 @@ const big = (k, l, f) => ({ k, l, value: f, render: a => <b className="score_n !
 const RESULT = { selected: ['Selected', 'ok'], not_selected: ['Not selected', 'muted'] };
 
 export const rank_rows = list => list.map((a, i) => ({ ...a, rank: i + 1 }));
+/* a tick per row, to pick who to shortlist (left out of exports) */
+export const pick_col = (pick, set) => ({ k: 'pick', l: 'Select', sort: false, filter: false, export: false, value: a => (pick.has(a.id) ? 'yes' : ''),
+  render: a => <input type="checkbox" aria-label={`Select ${u(a)?.name}`} checked={pick.has(a.id)} onChange={e => { const s = new Set(pick); e.target.checked ? s.add(a.id) : s.delete(a.id); set(s); }} /> });
 export const screen_cols = job => [{ k: 'rank', l: '#', filter: false }, { k: 'name', l: 'Candidate', value: a => u(a)?.name, render: a => person(u(a), a.score.model) },
   score('profile', 'Profile', a => a.score.score), ...(job.psych.enabled ? [score('psych', 'Psychometric', a => a.psych?.score)] : []),
   big('final', 'Final', a => final_of(a, job)),

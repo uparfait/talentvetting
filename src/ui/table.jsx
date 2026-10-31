@@ -29,7 +29,7 @@ export function Data_table({ id, title, label, cols, rows, on_row, acts, tools =
     <section className={`card ${full ? 'table_full' : ''}`} aria-label={name}>
       <header className="flex flex-wrap items-center gap-3 border-b border-line p-4"><Table_settings cols={cols} view={view} set_view={set_view} />
         <h2 className="text-lg">{name}</h2><span className="chip bg-surface-2 text-muted">{hit.length}</span>
-        <div className="ml-auto flex items-center gap-2"><Export_menu on={f => export_rows(name, f, shown_cols, hit)} />{tools}{full_btn(full, set_full)}</div></header>
+        <div className="ml-auto flex items-center gap-2"><Export_menu on={f => export_rows(name, f, shown_cols.filter(c => c.export !== false), hit)} />{tools}{full_btn(full, set_full)}</div></header>
       <div className="table_scroll relative overflow-x-auto"><table className="table_data">
         <thead><tr>{with_acts ? <th scope="col" className="table_acts whitespace-nowrap">Action Buttons</th> : null}{shown_cols.map(c => col_head(c, st, sort, q, filter, rows))}</tr></thead>
         <tbody>{page.length ? page.map((r, i) => <tr key={r.id} data-act={on_row ? 'view' : undefined} tabIndex={on_row ? 0 : undefined}

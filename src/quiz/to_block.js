@@ -22,6 +22,6 @@ export function to_block(qs) {
 export const problems = qs => qs.flatMap((q, i) => {
   const at = `Question ${i + 1}`, ch = q.choices.filter(c => c.t.trim());
   if (!q.text.trim()) return [`${at}: write the question`];
-  if (q.kind === 'typed') return q.key.trim() ? [] : [`${at}: add the answer key`];
+  if (q.kind === 'typed') return q.key.trim() ? [] : [`${at}: write the answer`];
   return ch.length < 2 ? [`${at}: add at least two choices`] : !ch.some(c => c.ok) ? [`${at}: tick the right choice`] : [];
 });

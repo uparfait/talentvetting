@@ -1,5 +1,5 @@
 /* pages/exam/exam_test.jsx: the recruiter's shortlist exam from its block format: multiple choice (one or several right
-   answers, marked here) and typed answers (graded against the key by the ExamGraderAgent). The time is the sum of each
+   answers, marked by themselves) and typed answers (marked by the recruiter). The time is the sum of each
    question's time; at zero it submits by itself. */
 import { useMemo, useState } from 'react';
 import { parse } from '../../quiz/index.js';
