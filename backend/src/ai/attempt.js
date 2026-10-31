@@ -50,7 +50,7 @@ async function attempt({ task, provider, key, parts, schema, files, owner, label
     return { ok: true, data: a.data, model };
   } catch (e) {
     const key_fault = e.kind === 'busy' || e.kind === 'key';
-    if (key_fault) cool_key(key);
+    if (key_fault) cool_key(provider, key);
     await log(false, `${scrub(e.message, key)}${key_fault ? `; key cools down ${Math.round(config.ai.cooldown_ms / 1000)} s` : ''}`);
     return { ok: false, next: key_fault ? 'key' : 'provider' };
   }

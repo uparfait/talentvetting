@@ -9,7 +9,7 @@ const { NAMES } = require('./providers');
 const TASKS = {
   score: { first: 'gemini', temperature: 0.1, max_tokens: 3072 },
   document: { first: 'gemini', temperature: 0, max_tokens: 2048 },
-  skills: { first: 'primary', temperature: 0, max_tokens: 1024 },
+  skills: { first: 'summary', temperature: 0, max_tokens: 1024 },   /* fast: the job form shows them live */
   crawl: { first: 'summary', temperature: 0.2, max_tokens: 1024 },
   synthesize: { first: 'summary', temperature: 0.2, max_tokens: 6144 },
   proctor: { first: 'primary', temperature: 0, max_tokens: 1536 }

@@ -4,6 +4,8 @@ AI powered recruitment: recruiters post jobs and vet candidates through six stag
 profiles and apply. This is the web app. It shows data and sends input; the API in `backend/` makes every decision
 (scores, qualification, AI, face checks, timing and marking).
 
+Live: https://talentvetting.vercel.app (web app) and https://talentvetting-backend.vercel.app/api (API).
+
 ## Run
 ```
 npm install
@@ -25,6 +27,7 @@ Start the API first (`backend/README.md`). The database starts empty: register a
 - Pipeline: qualification check, proctored psychometric test, automatic AI scoring with reasons and evidence, weight
   changes without AI calls, shortlist the applicants you tick with an exam (drag and drop builder, preview) or a message,
   choices marked by the server and written answers by you, best performers, published results, notifications
+- Present (footer): a five slide presentation of TalentVetting on the whole screen
 
 ## Docs
 | | |
