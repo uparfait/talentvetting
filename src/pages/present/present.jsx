@@ -1,6 +1,6 @@
 /* pages/present/present.jsx: the presentation on the whole screen (the template's agenda on the whole screen): one slide at a
    time sliding in, its words left and its drawing right, each part rising in turn; the slide's own soft tint behind
-   (hue of its title); the cover's problems and how each is solved in a row below; the logo and Close on top, a progress line, Back and Next, dots below. Arrow keys, Space and
+   (hue of its title); the cover's problems, each over its fix, in a strip below; the logo and Close on top, a progress line, Back and Next, dots below. Arrow keys, Space and
    swipes move; Esc or Close ends it. open_present() starts it from a click (the browser's full screen needs one). It is
    drawn straight into the page's body, above everything else. */
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
@@ -36,6 +36,6 @@ export function Present() {
           {s.points ? <ul className="pr_points">{s.points.map(([icon, p, more], n) => <li key={p} style={{ '--i': n }}><span className="pr_icon">{ic(icon, 'h-5 w-5')}</span>
             {more ? <span><b>{p}</b> <span className="pr_more">{more}</span></span> : p}</li>)}</ul> : null}</div>
         {art(s.art)}{s.solves ? <div className="pr_solves"><p className="pr_kicker">What it solves</p><ul>{s.solves.map(([icon, color, p, fix], n) =>
-          <li key={p} style={{ '--i': n }}>{i3(icon, 'h-10 w-10', color)}<b>{p}</b><span>{ic('check', 'h-4 w-4')}{fix}</span></li>)}</ul></div> : null}</li>)}</ol></div>{step(1, 'Next', 'chev_r')}</div>
+          <li key={p} style={{ '--i': n }}>{i3(icon, 'h-10 w-10', color)}<span><small>{p}</small><b>{ic('arrow_r', 'h-4 w-4')}{fix}</b></span></li>)}</ul></div> : null}</li>)}</ol></div>{step(1, 'Next', 'chev_r')}</div>
     <footer className="pr_dots">{SLIDES.map((s, k) => <button key={k} type="button" className={k === i ? 'on' : k < i ? 'done' : ''} aria-label={`Slide ${k + 1}: ${s.title}`} onClick={() => go(k)}></button>)}</footer></div>, document.body);
 }

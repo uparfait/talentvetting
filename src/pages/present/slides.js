@@ -1,14 +1,12 @@
 /* pages/present/slides.js: the presentation of TalentVetting, five slides with few words: the cover, how it works, the
    tools and models behind it, who it is for, and how it earns (employers pay, job seekers never do). Each slide: a
    kicker, the title, a line or points [icon, words, what it does], and its drawing (art.jsx). The cover also lists the problems it
-   solves [icon, colour, problem, how it is solved]. */
+   solves in a few words [icon, colour, problem, the fix]. */
 export const SLIDES = [
   { kicker: 'AI powered recruitment', title: 'TalentVetting', text: 'Every applicant read fairly. The best ones found, with reasons.', art: 'mark',
-    solves: [['eye', 'teal', 'Cheating in exams', 'Face checked throughout, tabs watched, every question timed'],
-      ['star', 'amber', 'Talent left unseen', 'Every application read in full and scored on skills'],
-      ['file', 'blue', 'Forged certificates and claims', 'AI reads each document and link and checks it'],
-      ['users', 'violet', 'Too many applications', 'Screening runs the moment someone applies'],
-      ['shield', 'green', 'Unfair, unexplained choices', 'Same rules for all, reasons for each score, everyone hears back']] },
+    solves: [['eye', 'teal', 'Exam cheating', 'Watched exams'], ['star', 'amber', 'Hidden talent', 'Every CV read'],
+      ['file', 'blue', 'Forged papers', 'Checked documents'],
+      ['globe', 'sky', 'Unread links', 'Every link crawled'], ['users', 'violet', 'Too many CVs', 'Instant screening'], ['shield', 'green', 'Unfair picks', 'Scores with reasons']] },
   { kicker: 'How it works', title: 'From application to selection.', art: 'steps',
     points: [['user', 'Build one verified profile'], ['check', 'Apply where you qualify'], ['sparkle', 'AI scores every application'], ['tasks', 'Shortlist, exam, select']] },
   { kicker: 'Tools and models', title: 'Several tools, one answer.', art: 'nodes',

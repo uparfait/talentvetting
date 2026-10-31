@@ -43,18 +43,18 @@
 @keyframes pr_draw { to { clip-path: inset(0 0 0 0); } }
 @keyframes pr_float { 50% { transform: translateY(-.4rem); } }
 @keyframes pr_pop { from { opacity: 0; transform: scale(.3); } to { opacity: 1; transform: scale(1); } }
-/* the cover's problems, each with how it is solved, in a row of cards under the words and the drawing */
-.pr_slide:has(.pr_solves) { align-content: safe center; row-gap: 1.5rem; } .pr_slide:has(.pr_solves) .pr_stage { width: min(100%, 26rem, 52vh); }
-.pr_solves { display: grid; grid-column: 1 / -1; gap: .75rem; } .pr_solves ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr)); gap: .75rem; }
-.pr_solves li { display: grid; align-content: start; gap: .5rem; padding: 1rem; border: 1px solid rgb(var(--line)); border-radius: 1.25rem; background: rgb(var(--surface) / .85); }
-.pr_solves b { font-size: clamp(1rem, 1.2vw, 1.125rem); font-weight: 600; line-height: 1.3; }
-.pr_solves span { display: flex; gap: .375rem; color: rgb(var(--muted)); font-size: clamp(.875rem, 1vw, 1rem); line-height: 1.4; }
-.pr_solves span > svg { flex: none; margin-top: .2em; color: rgb(var(--brand)); }
-.pr_slide.on .pr_solves > p { animation: rise .6s var(--ease) .5s both; } .pr_slide.on .pr_solves li { animation: rise .6s var(--ease) both; animation-delay: calc(.6s + var(--i) * .12s); }
+/* the cover's problems in a few words, each over its fix, in one strip of cells (3 by 2, 1 on phones) */
+.pr_slide:has(.pr_solves) { align-content: safe center; row-gap: 1.75rem; } .pr_slide:has(.pr_solves) .pr_stage { width: min(100%, 26rem, 50vh); }
+.pr_solves { display: grid; grid-column: 1 / -1; gap: .75rem; }
+.pr_solves ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; overflow: hidden; border: 1px solid rgb(var(--line)); border-radius: 1.25rem; background: rgb(var(--line)); }
+.pr_solves li { display: flex; align-items: center; gap: .875rem; padding: .875rem 1.125rem; background: rgb(var(--surface)); }
+.pr_solves small { display: block; color: rgb(var(--muted)); font-size: .9375rem; } .pr_solves b { display: flex; align-items: center; gap: .25rem; font-weight: 600; line-height: 1.3; } .pr_solves b > svg { flex: none; color: rgb(var(--brand)); }
+@media (max-width: 899px) { .pr_solves ul { grid-template-columns: minmax(0, 1fr); } }
+.pr_slide.on .pr_solves > p { animation: rise .6s var(--ease) .5s both; } .pr_slide.on .pr_solves li > * { animation: rise .6s var(--ease) both; animation-delay: calc(.6s + var(--i) * .12s); }
 @media (max-width: 899px) { .pr_slide { grid-template-columns: minmax(0, 1fr); align-content: start; overflow-y: auto; overflow-anchor: none; } }
 @media (max-width: 599px) { .pr_view { grid-template-columns: minmax(0, 1fr); } .pr_step { display: none; } .pr_stage { margin-block: 1.5rem; }
   .pr_tile { padding: .375rem .5rem .25rem; } .pr_tile .i3 { width: 2.25rem; height: 2.25rem; } .pr_tile small { font-size: .6875rem; } }
 .pr_dots { display: flex; justify-content: center; gap: .5rem; }
 .pr_dots button { width: .55rem; height: .55rem; padding: 0; border-radius: 1rem; background: rgb(var(--fg) / .15); transition: width .4s var(--ease), background .4s; }
 .pr_dots .done { background: rgb(var(--fg) / .35); } .pr_dots .on { width: 1.75rem; background: rgb(var(--brand)); }
-@media (prefers-reduced-motion: reduce) { .tint, .pr_strip, .pr_bar { transition: none; } .pr_line { clip-path: none; } .pr_slide.on .pr_pop, .pr_slide.on .pr_solves li { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .tint, .pr_strip, .pr_bar { transition: none; } .pr_line { clip-path: none; } .pr_slide.on .pr_pop, .pr_slide.on .pr_solves li > * { animation: none; } }
