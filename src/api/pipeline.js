@@ -28,7 +28,7 @@ export const rescore = (job, on_step) => screen(job, on_step, 'rescore');
 const LATER = ['scored', 'shortlisted', 'not_shortlisted', 'selected', 'not_selected'];
 export function restart_screening(job) {
   if (job.published) return;
-  for (const a of db.where('applications', x => x.job === job.id && LATER.includes(x.stage))) db.upsert('applications', { id: a.id, stage: 'screening', score: null, exam: null });
+  for (const a of db.where('applications', x => x.job === job.id && LATER.includes(x.stage))) db.upsert('applications', { id: a.id, stage: 'screening', score: null, exam: null, best: false });
   db.upsert('jobs', { id: job.id, shortlist_n: null, path: null, exam_md: '', message: '', best_done: false });
 }
 export const set_weight = (job, weight) => db.upsert('jobs', { id: job.id, psych: { ...job.psych, weight } });

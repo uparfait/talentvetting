@@ -7,7 +7,7 @@ export { my_jobs, open_jobs, get_job, apps_of, save_job, set_status, remove_job,
 export { get_profile, save_profile, verify } from './profiles.js';
 export { my_apps, app_for, check, apply, withdraw, submit_test } from './applications.js';
 export { final_of, combined_of, ranked, fallback_scored, screen, rescore, to_score, restart_screening, set_weight, set_psych_on } from './pipeline.js';
-export { shortlist, shortlist_ids, set_path, best, publish } from './shortlist.js';
+export { shortlist, shortlist_ids, to_best, select_ids, set_path, best, publish } from './shortlist.js';
 export { queue_score, score_due, scoring_now } from './auto_score.js';
 export { exam_items, to_mark, mark_exam } from './exams.js';
 export { is_email } from './net.js';

@@ -3,12 +3,13 @@
    psychometric x w: the switch and the weight re-sort at once, no AI call. The recruiter ticks applicants in the ranking
    and shortlists them (shortlist_ask.jsx: with an exam or not). Scores from a fallback model can be redone (fairness). */
 import { useState } from 'react';
-import { ranked, fallback_scored, set_weight, set_psych_on, restart_screening, scoring_now } from '../../api/index.js';
+import { final_of, ranked, fallback_scored, set_weight, set_psych_on, restart_screening, scoring_now } from '../../api/index.js';
 import { primary } from '../../ai/index.js';
 import { go } from '../../router/index.js';
 import { Data_table, ask, chip, help_tip, fill } from '../../ui/index.js';
 import { run_screening } from './screen_run.jsx';
-import { screen_cols, rank_rows, pick_col } from './screen_cols.jsx';
+import { screen_cols, rank_rows, name_of } from './screen_cols.jsx';
+import { Picked_bar } from './picked_bar.jsx';
 import { shortlist_ask } from './shortlist_ask.jsx';
 
 const SHORT = ['shortlisted', 'selected', 'not_selected'];
@@ -18,7 +19,7 @@ export function Tab_screening({ job, apps, go_tab }) {
   const again = () => ask('Screen everyone again? Every score is worked out anew; the shortlist, its exam and the best performers are cleared.',
     () => { restart_screening(job); run_screening(job); }, 'Screen again');
   const all = list.length && list.every(a => pick.has(a.id)), tools = list.length ? <button type="button" className="btn btn_ghost btn_sm"
-    onClick={() => set_pick(all ? new Set() : new Set(list.map(a => a.id)))}>{all ? 'Clear' : 'Select all'}</button> : null;
+    onClick={() => set_pick(all ? new Set() : new Set(list.map(a => a.id)))}>{all ? 'Clear all' : `Select all ${list.length}`}</button> : null;
   return <div className="grid gap-5">
     <section className="card flex flex-wrap items-center gap-3 p-5"><div className="min-w-0 flex-1"><h2 className="flex items-center gap-1 text-lg">Screening
       {help_tip(`Each application is scored by itself as it comes in, from 0 to 100 with reasons (model: ${primary('scoring')}). Screen again only if you want fresh scores.`, 'screening')}</h2>
@@ -32,9 +33,8 @@ export function Tab_screening({ job, apps, go_tab }) {
       <input type="checkbox" role="switch" checked={job.psych.enabled} disabled={job.published} onChange={e => set_psych_on(job, e.target.checked)} /></label>
       {job.psych.enabled ? <div className="field"><label htmlFor="screen_w">Weight <output htmlFor="screen_w">{job.psych.weight} %</output></label>
         <input id="screen_w" type="range" min="5" max="90" step="5" value={job.psych.weight} style={fill(job.psych.weight, 5, 90)} onChange={e => set_weight(job, +e.target.value)} /></div> : null}</section>
-    {list.length ? <Data_table id="screening" title="Ranking" cols={[pick_col(pick, set_pick), ...screen_cols(job)]} rows={rank_rows(list)} tools={tools}
+    {list.length ? <Data_table id="screening" title="Ranking" cols={screen_cols(job)} rows={rank_rows(list)} tools={tools} select={{ on: pick, set: set_pick, label: name_of }}
       on_row={a => go(`/app/candidates/${a.user}?job=${job.id}`)} empty_title="No scores yet" empty_text="Applications appear here once they are scored." /> : null}
-    {list.length && !job.published ? <section className="card flex flex-wrap items-center gap-3 p-5"><p className="text-sm"><b>{pick.size}</b> of {list.length} selected</p>
-      <button type="button" className="btn btn_primary btn_sm ml-auto" disabled={!pick.size} onClick={() => shortlist_ask(job, [...pick], go_tab)}>Shortlist selected</button></section> : null}
+    {list.length && !job.published ? <Picked_bar list={list} pick={pick} set_pick={set_pick} score={a => final_of(a, job)} action="Shortlist selected" on_action={() => shortlist_ask(job, [...pick], go_tab)} /> : null}
   </div>;
 }

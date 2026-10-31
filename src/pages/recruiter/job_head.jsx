@@ -1,5 +1,6 @@
-/* pages/recruiter/job_head.jsx: the job's title with its status, and Edit, Close or Reopen, Delete (it asks first) */
-import { set_status, remove_job } from '../../api/index.js';
+/* pages/recruiter/job_head.jsx: the job's title with its status, Close or Reopen, and Delete (it asks first) while nobody
+   has applied. A posted job is never edited: applicants applied to what they read. */
+import { set_status, remove_job, apps_of } from '../../api/index.js';
 import { go } from '../../router/index.js';
 import { chip, ask, notify } from '../../ui/index.js';
 import { ic } from '../../icons/index.js';
@@ -12,7 +13,7 @@ export function Job_head({ job }) {
     <div className="min-w-0 flex-1"><h1 className="page_title truncate">{job.title}</h1>
       <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted">{chip(job.published ? 'Results published' : open ? 'Open' : 'Closed', job.published ? 'ok' : open ? 'brand' : 'muted')}
         {job.category} . posted {fmt_date(job.created)} . {plural(job.expected, 'place')}</p></div>
-    <div className="flex flex-wrap gap-2"><a href={`/app/jobs/${job.id}/edit`} className="btn btn_outline btn_sm">{ic('edit', 'h-4 w-4')}Edit</a>
+    <div className="flex flex-wrap gap-2">
       {job.published ? null : <button type="button" className="btn btn_outline btn_sm" onClick={() => set_status(job.id, open ? 'closed' : 'open')}>{open ? 'Close' : 'Reopen'}</button>}
-      <button type="button" className="btn btn_danger btn_sm" onClick={del}>{ic('trash', 'h-4 w-4')}Delete</button></div></div>;
+      {apps_of(job.id).length ? null : <button type="button" className="btn btn_danger btn_sm" onClick={del}>{ic('trash', 'h-4 w-4')}Delete</button>}</div></div>;
 }

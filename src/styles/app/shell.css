@@ -15,3 +15,5 @@
 .md code { padding: .1rem .3rem; border-radius: .3rem; background: rgb(var(--fg) / .07); font-family: var(--font_mono); font-size: .875em; }
 .md pre { overflow-x: auto; padding: .875rem 1rem; border-radius: var(--radius); background: rgb(var(--fg) / .06); }
 .md pre code { padding: 0; background: none; } .md a { color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); text-decoration: underline; text-underline-offset: 4px; }
+/* ticked rows (ui/table_pick.jsx): a narrow first column, the row tinted while it is selected */
+.table_data .table_pick { width: 3rem; padding-right: 0; } .table_data tr.is_picked > td { background: rgb(var(--brand) / .06); }

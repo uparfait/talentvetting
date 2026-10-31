@@ -22,6 +22,6 @@ export default function Job_page({ params }) {
   return <><Job_head job={job} />
     <nav className="nav_row" aria-label="Stages"><Tile_menu title="Stages" cur={tab} on={set_tab} items={[{ k: 'overview', label: 'Overview', icon: 'layers' },
       { k: 'applicants', label: 'Applicants', icon: 'users', n: apps.length }, { k: 'screening', label: 'Screening', icon: 'target', n: apps.filter(a => a.score).length },
-      { k: 'shortlist', label: 'Shortlist', icon: 'tasks', n: n(['shortlisted', 'selected', 'not_selected']) }, { k: 'best', label: 'Best performers', icon: 'star', n: n(['selected']) }]} /></nav>
+      { k: 'shortlist', label: 'Shortlist', icon: 'tasks', n: n(['shortlisted', 'selected', 'not_selected']) }, { k: 'best', label: 'Best performers', icon: 'star', n: apps.filter(a => a.best).length }]} /></nav>
     <div className="mt-5"><View job={job} apps={apps} go_tab={set_tab} /></div></>;
 }
