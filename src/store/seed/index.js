@@ -7,13 +7,13 @@ import { JOBS, APPLIED } from './jobs.js';
 import { make_profile } from './make_profile.js';
 import { seed_apps } from './apps.js';
 
-const VERSION = 3;
+const VERSION = 4;
 const id = (p, i) => `${p}_${i + 1}`;
 export function reset_demo() {
   const now = Date.now(), users = [], profiles = [];
   RECRUITERS.forEach(([name, email, category, company], i) => users.push({ id: id('rec', i), role: 'recruiter', name, email, category, company, pass: PASS, phone: `+250 788 10${i} 20${i}`, created: now }));
   SEEKERS.forEach(([name, email, field, years, level, headline, face], i) => {
-    const u = { id: id('usr', i), role: 'seeker', name, email, face, pass: PASS, id_number: `1199${80 + i}0${100000 + i * 7919}`.slice(0, 16),
+    const u = { id: id('usr', i), role: 'seeker', name, email, face, pass: PASS, id_number: `1${1990 + (i % 9)}8${100000 + i * 7919}${10 + i}`.padEnd(16, '0').slice(0, 16),
       dob: `${1990 + (i % 9)}-0${(i % 9) + 1}-1${i % 9}`, phone: `+250 78${i % 10} 4${i}${i} ${300 + i}`, created: now - i * 86400000 };
     users.push(u); profiles.push(make_profile(u, field, years, level, headline));
   });
