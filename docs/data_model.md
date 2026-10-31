@@ -16,12 +16,12 @@ Supabase), with `pgvector` for matching.
 - production adds `embedding vector(768)` for matching
 
 ## jobs
-`id, owner, title, category, details (markdown), skills[], years, level, expected, psych { enabled, weight },
+`id, owner, title, category, details (HTML from the document editor; older ones Markdown), skills[] (read from the details), years, level, expected, psych { enabled, weight },
 status ('open' | 'closed'), shortlist_n, path ('exam' | 'message'), exam_md, message, best_done, published`
 - production adds `embedding vector(768)`
 
 ## applications
-`id, job, user, created, stage, qual, psych, score, exam`
+`id, job, user, created, stage, qual, psych, score, exam { src, answers, marks, score, report, at }`
 - `stage`: psych, screening, scored, shortlisted, not_shortlisted, selected, not_selected
 - `qual`: `qualified, matched[], gaps[], model, prompt_v`
 - `psych` and `exam`: `score, at, events[], report { verdict, integrity, findings[], model, prompt_v }`

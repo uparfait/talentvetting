@@ -11,13 +11,13 @@ function in `src/ai/agents` that returns the JSON its prompt asks for, so the sc
 | SummarizerAgent | page text | summary, facts | first sentences |
 | ProfileSynthesizer | user, profile | items with source and verified | up to 10000 words |
 | ScoringAgent | profile, job | score, reasoning, strengths, gaps, evidence | rubric 40, 30, 15, 15 |
-| ExamGraderAgent | typed questions, answers | per question score and why | share of key words |
+| ExamGraderAgent | typed questions, answers | per question score and why (kept for a backend; written answers are marked by the recruiter) | share of key words |
 | ProctorReportAgent | event log | verdict, integrity, findings | points per event kind |
 
 ## Trigger chain
 - Profile update: Document per file, Crawler then Summarizer per link, then Synthesizer, then re-matching.
 - Application: Qualification (before applying), Scoring (at screening).
-- Exam submission: ExamGrader (typed answers) and ProctorReport (the log).
+- Exam submission: ProctorReport (the log); choices are marked by themselves, written answers by the recruiter.
 
 ## Crawling rules
 The crawler respects robots.txt and skips sites that forbid scraping; for those the user's own description is used and

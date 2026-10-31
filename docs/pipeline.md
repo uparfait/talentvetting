@@ -4,8 +4,8 @@
 |---|---|---|---|
 | 1 Qualification | job seeker | Check if I qualify; Apply only when qualified | psych or screening |
 | 2 Psychometric | job seeker | proctored test, then its integrity report | screening |
-| 3 Screening | recruiter | Run screening: every applicant scored 0 to 100 | scored |
-| 4 Shortlist | recruiter | top n (all by default); then an exam or a message | shortlisted, not_shortlisted |
+| 3 Screening | automatic | each application scored 0 to 100 as it comes in; Screen again if wanted | scored |
+| 4 Shortlist | recruiter | ticks applicants, Shortlist: with an exam (prepare, preview, send) or a message | shortlisted, not_shortlisted |
 | 5 Best performers | recruiter | ranked by combined score; top places selected | selected, not_selected |
 | 6 Results | recruiter | Publish results: everyone is notified, the job closes | job.published |
 
@@ -18,6 +18,11 @@
 ## Suggestions before applying
 The job's top 10: people who have not applied, ranked by similarity between the job and their profile (embeddings and
 pgvector in production; a word vector cosine in the demo). Invite sends them a notification.
+
+## Automatic screening
+An application is scored when it is made, or once its psychometric test is in (`api/auto_score.js`, a queue job per
+application in production). Opening a job scores anything still waiting. Screen again (an overlay showing each
+applicant) is for fresh scores only.
 
 ## Notifications
 New application (to the recruiter), shortlisted with the exam or the message, exam submitted, results. Each opens the

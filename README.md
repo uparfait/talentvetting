@@ -26,10 +26,13 @@ Data lives in this browser (localStorage). Account menu, Reset demo data, starts
 - Registration: recruiters with a business category; job seekers with a national ID, date of birth and a live photo
   checked by head turns (face-api.js in the browser)
 - Profiles: education with documents, skills, hobbies, links; Verify runs the agents into a Grand Profile Summary
-- Jobs: Markdown details, required skills, experience, education, places, psychometric test and its weight; top 10
-  suggested candidates before anyone applies
-- Pipeline: qualification check, proctored psychometric test, AI scoring with reasons and evidence, weight changes
-  without AI calls, shortlist by exam or message, best performers, published results, notifications
+- Public site for job seekers: Home (hero, partners), About us, Jobs (search, category) and each job; Apply sends a
+  signed out visitor to sign in and back to the job, which checks at once whether they qualify
+- Jobs: a Word-like description (the skills are read from it), any category (or a new one), experience, education,
+  places, psychometric test and its weight; top 10 suggested candidates before anyone applies
+- Pipeline: qualification check, proctored psychometric test, automatic AI scoring with reasons and evidence, weight
+  changes without AI calls, shortlist the applicants you tick with an exam (drag and drop builder, preview) or a message,
+  choices marked by themselves and written answers by you, best performers, published results, notifications
 - AI gateway: providers, key pool, cooldown, failover, schema checks and a log of every call
 
 ## Docs
