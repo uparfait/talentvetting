@@ -1,4 +1,4 @@
-/* ui/theme.jsx: light or dark, saved with the demo data ('theme'); the page shell applies it before the first paint */
+/* ui/theme.jsx: light (the default) or dark, saved with the demo data ('theme'); the page shell applies it before the first paint */
 import { db } from '../store/index.js';
 import { ic } from '../icons/index.js';
 

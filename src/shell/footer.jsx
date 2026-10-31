@@ -1,10 +1,19 @@
-/* shell/footer.jsx: the public footer on the template's pattern: the logo, a line, links, the year */
+/* shell/footer.jsx: the public footer (the template's): the logo and a line, the Explore and Account link lists, and the
+   copyright bar with Back to top. */
 import { logo } from '../ui/index.js';
+import { ic } from '../icons/index.js';
 
-export const Footer = () => <footer className="relative isolate overflow-hidden border-t border-line bg-surface-2 text-muted">
-  <div className="pattern_layer" style={{ '--pa': '.05' }} aria-hidden="true"></div>
-  <div className="wrap flex flex-wrap items-center justify-between gap-6 py-12">
-    <div className="max-w-sm">{logo()}<p className="mt-3 text-sm">Verified profiles, fair scoring and proctored exams, from application to selection.</p></div>
-    <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm" aria-label="Footer"><a href="/register/recruiter" className="hover:text-accent">For recruiters</a>
-      <a href="/register/seeker" className="hover:text-accent">For job seekers</a><a href="/sign-in" className="hover:text-accent">Sign in</a></nav>
-    <small className="w-full border-t border-line pt-6 text-xs">© {new Date().getFullYear()} TalentVetting. A demo: data stays in this browser.</small></div></footer>;
+const col = (t, items) => <nav aria-label={t}><h2 className="text-sm font-semibold text-fg">{t}</h2><ul className="mt-4 grid gap-2.5 text-sm">
+  {items.map(([h, l]) => <li key={h}><a href={h} className="transition hover:text-accent">{l}</a></li>)}</ul></nav>;
+
+export const Footer = () => { const y = new Date().getFullYear();
+  return <footer className="relative isolate mt-10 overflow-hidden border-t border-line bg-surface-2 text-muted">
+    <div className="pattern_layer" style={{ '--pa': '.05' }} aria-hidden="true"></div>
+    <div className="wrap grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
+      <div>{logo()}<p className="mt-4 max-w-sm text-sm">Verified profiles, fair scoring and proctored exams, from the first application to the final selection.</p></div>
+      {col('Explore', [['/', 'Home'], ['/about', 'About us'], ['/jobs', 'Jobs']])}
+      {col('Account', [['/sign-in', 'Sign in'], ['/register', 'Create an account'], ['/app', 'Dashboard']])}</div>
+    <div className="border-t border-line"><div className="wrap flex flex-wrap items-center justify-between gap-4 py-6 text-xs">
+      <small>© <time dateTime={String(y)}>{y}</time> TalentVetting. A demo: data stays in this browser.</small>
+      <button type="button" className="btn btn_outline btn_sm" onClick={() => scrollTo({ top: 0, behavior: 'smooth' })}>{ic('chev_u', 'h-4 w-4')}Back to top</button></div></div>
+  </footer>; };

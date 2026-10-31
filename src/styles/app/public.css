@@ -1,11 +1,21 @@
-/* styles/app/public.css: the public pages: the sticky header, the hero on the template's pattern, the stage cards and
-   the sign in pages (the brand colour with the white pattern, the form on its own card). */
-html { scroll-padding-top: 5rem; }
-.tv_pub_head { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid rgb(var(--line) / .6); background: rgb(var(--bg) / .85); backdrop-filter: blur(10px); }
-.tv_hero { position: relative; isolation: isolate; overflow: hidden; }
-.tv_hero > .pattern_layer { --pc: var(--fg); --pa: .045; }
-.stage_card { position: relative; display: grid; gap: .5rem; padding: 1.25rem; border: 1px solid rgb(var(--line)); border-radius: calc(var(--radius) * 1.25); background: rgb(var(--surface)); }
-.stage_no { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: var(--pill); background: rgb(var(--brand)); color: #fff; font-size: .8125rem; font-weight: 700; }
+/* styles/app/public.css: the public pages: the header (see-through at the top, a contained glass bar once scrolled; the
+   current link in the brand colour with a dot), a contained width (public pages never stretch across a wide screen),
+   the dark brand hero card, the partners marquee and the sign in pages (the brand colour with the white pattern). */
+:root { --pub_h: 4.5rem; }
+.tv_pub .wrap { max-width: 92rem; }
+html { scroll-padding-top: calc(var(--pub_h) + 1rem); }
+.tv_pub_head { position: sticky; top: 0; z-index: 40; padding-top: .5rem; }
+.tv_pub_nav { display: flex; height: 4rem; align-items: center; gap: 1rem; border: 1px solid transparent; border-radius: var(--pill); transition: background-color .3s, border-color .3s, padding .3s var(--ease); }
+.tv_pub_head.stuck .tv_pub_nav { padding: 0 .5rem 0 1.25rem; border-color: rgb(var(--line)); background: rgb(var(--bg) / .8); backdrop-filter: saturate(1.6) blur(16px); }
+.pub_link { position: relative; display: block; padding: .5rem .875rem; font-size: .9375rem; font-weight: 500; color: rgb(var(--fg) / .85); transition: color .2s; }
+.pub_link:hover { color: rgb(var(--fg)); }
+.pub_link.active { color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); }
+.pub_link.active::after { content: ''; position: absolute; bottom: -.125rem; left: 50%; width: .375rem; height: .375rem; border-radius: 50%; background: rgb(var(--brand)); translate: -50% 0; }
+.tv_hero_card { background: linear-gradient(180deg, #150b13 0%, #180c16 50%, color-mix(in srgb, rgb(var(--brand_2)) 70%, #150b13) 84%, rgb(var(--brand)) 100%); }
+.tv_hero_sun { position: absolute; top: 22%; left: 42%; z-index: -1; width: 16rem; height: 16rem; border-radius: 50%; translate: -50% -50%;
+  background: radial-gradient(circle, rgb(255 255 255 / .95) 0 5%, rgb(255 200 236 / .35) 11%, rgb(224 31 173 / .14) 36%, transparent 70%); }
+.marquee_track { animation: marquee 42s linear infinite; } .marquee:hover .marquee_track { animation-play-state: paused; }
+.page_enter { animation: page .45s var(--ease) backwards; } .hero_in { animation: rise .9s var(--ease) both; animation-delay: var(--d, 0s); }
 .auth_bg { position: relative; isolation: isolate; display: flex; min-height: 100dvh; flex-direction: column; background: rgb(var(--brand)); }
 .auth_bg > .pattern_layer { --pc: 255 255 255; --pa: .13; }
 .auth_card { width: calc(100% - 1.5rem); max-width: 30rem; margin: 0 auto; padding: 2rem 1.5rem; border-radius: calc(var(--radius) * 1.5); background: rgb(var(--bg)); }

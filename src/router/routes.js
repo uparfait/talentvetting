@@ -4,7 +4,8 @@ import { lazy } from 'react';
 
 const L = f => lazy(f);
 export const PAGES = {
-  home: L(() => import('../pages/public/home.jsx')), sign_in: L(() => import('../pages/auth/sign_in.jsx')),
+  home: L(() => import('../pages/public/home.jsx')), about: L(() => import('../pages/public/about.jsx')),
+  jobs_public: L(() => import('../pages/public/jobs.jsx')), job_public: L(() => import('../pages/public/job.jsx')), sign_in: L(() => import('../pages/auth/sign_in.jsx')),
   register: L(() => import('../pages/auth/register.jsx')), register_recruiter: L(() => import('../pages/auth/register_recruiter.jsx')),
   register_seeker: L(() => import('../pages/auth/register_seeker.jsx')), dashboard: L(() => import('../pages/app/dashboard.jsx')),
   jobs: L(() => import('../pages/recruiter/jobs.jsx')), job_form: L(() => import('../pages/recruiter/job_form.jsx')),
@@ -15,7 +16,8 @@ export const PAGES = {
   exam_room: L(() => import('../pages/exam/exam_room.jsx')), notices: L(() => import('../pages/app/notices.jsx'))
 };
 export const ROUTES = [
-  ['/', 'home', 'public'], ['/sign-in', 'sign_in', 'guest'], ['/register', 'register', 'guest'],
+  ['/', 'home', 'public'], ['/about', 'about', 'public'], ['/jobs', 'jobs_public', 'public'], ['/jobs/:id', 'job_public', 'public'],
+  ['/sign-in', 'sign_in', 'guest'], ['/register', 'register', 'guest'],
   ['/register/recruiter', 'register_recruiter', 'guest'], ['/register/seeker', 'register_seeker', 'guest'],
   ['/app', 'dashboard', 'user'], ['/app/notices', 'notices', 'user'],
   ['/app/jobs', 'jobs', 'recruiter'], ['/app/jobs/new', 'job_form', 'recruiter'], ['/app/jobs/:id', 'job_page', 'recruiter'],

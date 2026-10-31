@@ -9,8 +9,8 @@ import { Auth_shell } from './auth_shell.jsx';
 const DEMO = [['Recruiter', 'recruiter@talentvetting.demo'], ['Job seeker', 'seeker@talentvetting.demo']];
 export default function Sign_in() {
   const [busy, set_busy] = useState(false), [err, set_err] = useState('');
-  const run = async (email, password) => { set_busy(true); set_err('');
-    try { const u = await sign_in(email, password); notify(`Signed in as ${u.name}.`, 'ok', 'Welcome back'); go(query().get('next') || '/app', true); }
+  const run = async (email, password) => { set_busy(true); set_err(''); const to = query().get('next') || '/app';   // read before signing in moves the page
+    try { const u = await sign_in(email, password); notify(`Signed in as ${u.name}.`, 'ok', 'Welcome back'); go(to.startsWith('/') && !to.startsWith('//') ? to : '/app', true); }
     catch (e) { set_err(e.message); } finally { set_busy(false); } };
   const submit = e => { e.preventDefault(); const v = form_values(e.currentTarget); run(v.email, v.password); };
   return <Auth_shell title="Sign in" text="Welcome back.">
