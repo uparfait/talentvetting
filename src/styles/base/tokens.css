@@ -6,8 +6,8 @@
    ===================================================================== */
   :root {
     /* Brand */
-    --brand:   224 102 27;   /* primary orange  #E0661B */
-    --brand_2: 150 62 14;    /* deep rust for gradients #963E0E */
+    --brand:   224 31 173;   /* primary magenta #E01FAD (TalentVetting) */
+    --brand_2: 143 20 111;   /* deep magenta for hovers and gradients #8F146F */
     --ink:     26 18 12;     /* brand black-brown #1A120C */
     /* Shape, rhythm, type, motion */
     --radius: 1rem;          /* corners of larger surfaces (fields, cards, menus, dialogs) scale from this */
