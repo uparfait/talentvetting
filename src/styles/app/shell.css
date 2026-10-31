@@ -16,9 +16,11 @@
 .help_tip { display: inline-grid; flex: none; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: var(--pill); color: rgb(var(--muted)); cursor: pointer; transition: background-color .2s, color .2s; }
 .help_tip:hover, .help_tip:focus-visible { background: rgb(var(--fg) / .06); color: rgb(var(--fg)); }
 
-.md { display: grid; gap: .625rem; line-height: 1.65; }
+.md { display: grid; align-content: start; gap: .625rem; line-height: 1.65; }   /* start: a tall card never spreads its lines apart */
+.md :is(h1, h2) { font-family: var(--font_display); font-size: 1.375rem; font-weight: 600; margin-top: .5rem; } .md > :first-child { margin-top: 0; }
 .md h3 { font-family: var(--font_display); font-size: 1.25rem; font-weight: 600; } .md h4, .md h5 { font-weight: 600; }
+.md blockquote { padding-left: 1rem; border-left: 3px solid rgb(var(--brand) / .4); color: rgb(var(--muted)); } .md hr { border: 0; border-top: 1px solid rgb(var(--line)); }
 .md ul { padding-left: 1.25rem; list-style: disc; } .md ol { padding-left: 1.25rem; list-style: decimal; }
 .md code { padding: .1rem .3rem; border-radius: .3rem; background: rgb(var(--fg) / .07); font-family: var(--font_mono); font-size: .875em; }
 .md pre { overflow-x: auto; padding: .875rem 1rem; border-radius: var(--radius); background: rgb(var(--fg) / .06); }
-.md pre code { padding: 0; background: none; } .md a { color: rgb(var(--brand)); text-decoration: underline; }
+.md pre code { padding: 0; background: none; } .md a { color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); text-decoration: underline; text-underline-offset: 4px; }

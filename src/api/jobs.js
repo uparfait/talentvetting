@@ -2,6 +2,7 @@
    suggested candidates who have not applied yet (a backend: Postgres, pgvector for the matching). */
 import { db, me } from '../store/index.js';
 import { uid } from '../lib/index.js';
+import { doc_text } from '../lib/doc.js';
 import { top_matches } from '../ai/index.js';
 import { call, fail } from './net.js';
 
@@ -11,7 +12,7 @@ export const get_job = id => db.find('jobs', id);
 export const apps_of = id => db.where('applications', a => a.job === id);
 export const save_job = d => call(() => {
   if (!d.title || d.title.length < 3) throw fail('warning', 'Give the job a title.');
-  if (!d.details || d.details.length < 20) throw fail('warning', 'Describe the job (at least a few lines).');
+  if (doc_text(d.details).length < 20) throw fail('warning', 'Describe the job (at least a few lines).');
   if (!(d.expected >= 1)) throw fail('warning', 'Expect at least 1 candidate.');
   if (d.psych.enabled && !(d.psych.weight > 0 && d.psych.weight <= 90)) throw fail('warning', 'Set the psychometric weight between 1 and 90 %.');
   return db.upsert('jobs', { status: 'open', owner: me().id, ...d, id: d.id || uid() });

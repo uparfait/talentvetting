@@ -1,0 +1,41 @@
+/* styles/app/doc_editor.css: the document editor (ui/doc), in the look of the template's editor (styles/editor: the pill
+   toolbar 03_toolbar.css, the grey workspace 01_layout.css, the paper page 04_pages.css, the page's own typography
+   05_doc_content.css), sized to sit inside a form. */
+.doc_ed { display: grid; overflow: hidden; border: 1px solid rgb(var(--line)); border-radius: var(--radius); background: rgb(var(--surface));
+  --active_fg: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); }
+.doc_ed:focus-within { border-color: rgb(var(--brand) / .55); }
+.doc_tb { display: flex; flex-wrap: nowrap; align-items: center; margin: .5rem .75rem; padding: .25rem .375rem; overflow-x: auto; overflow-y: hidden;
+  border: 1px solid rgb(var(--line)); border-radius: 1.25rem; background: rgb(var(--fg) / .03); user-select: none; overscroll-behavior-x: contain; scrollbar-width: none; }
+.doc_tb::-webkit-scrollbar { display: none; }
+@media (max-width: 639.98px) { .doc_tb { margin: .375rem .5rem; padding: .1875rem .25rem; } }
+.tb_btn, .tb_dd { position: relative; display: inline-flex; flex: none; align-items: center; height: 1.875rem; border-radius: var(--pill); color: rgb(var(--fg) / .78); transition: background-color .15s, color .15s; }
+.tb_btn { justify-content: center; min-width: 1.875rem; padding: 0 .25rem; }
+.tb_btn:hover, .tb_dd:hover { background: rgb(var(--fg) / .06); color: rgb(var(--fg)); }
+.tb_btn:active { background: rgb(var(--fg) / .1); }
+.tb_btn.open, .tb_dd.open { background: rgb(var(--fg) / .1); color: rgb(var(--fg)); }
+.tb_btn.active { background: rgb(var(--brand) / .15); color: var(--active_fg); }
+.tb_btn svg, .tb_dd svg { flex: none; width: 1.125rem; height: 1.125rem; }
+.tb_dd { justify-content: space-between; gap: .125rem; padding: 0 .1875rem 0 .625rem; overflow: hidden; font-size: .8125rem; font-weight: 500; white-space: nowrap; }
+.tb_dd .lbl { overflow: hidden; text-overflow: ellipsis; }
+.tb_sep { flex: none; width: 1px; height: 1.25rem; margin: 0 .3125rem; background: rgb(var(--line)); }
+.tb_fill { flex: 1; min-width: .75rem; }
+.ed_menu { padding: .375rem; border-radius: var(--radius); }
+.ed_menu .ed_mi { gap: .625rem; min-height: 2.125rem; padding: .3125rem .75rem .3125rem .5rem; border-radius: calc(var(--radius) * .625); }
+.doc_ws { max-height: 36rem; overflow: auto; padding: .75rem; border-top: 1px solid rgb(var(--line)); background: rgb(var(--surface_2)); overscroll-behavior: contain; }
+@media (min-width: 640px) { .doc_ws { padding: .75rem 1.5rem 1.5rem; } }
+.doc_page { width: min(100%, 8.27in); min-height: 24rem; margin: 0 auto; padding: 1.25rem; background: #fff; color: #000; color-scheme: light; outline: 1px solid rgb(var(--line)); }
+@media (min-width: 640px) { .doc_page { padding: .75in .85in; } }
+.pg_body { min-height: 20rem; outline: 0; caret-color: #000; }
+.pg_body::selection, .pg_body ::selection { background: rgb(var(--brand) / .28); color: currentColor; }
+.pg_body:empty::before { content: attr(data-placeholder); color: #9aa0a6; pointer-events: none; }
+.doc_content { font-family: Arial, sans-serif; font-size: 11pt; line-height: 1.15; color: #000; overflow-wrap: break-word; }
+.doc_content p, .doc_content div { margin: 0; }
+.doc_content :is(h1, h2, h3) { margin: 0; font-weight: 400; line-height: 1.15; font-family: inherit; letter-spacing: normal; }
+.doc_content h1 { font-size: 20pt; padding: 20pt 0 6pt; } .doc_content h2 { font-size: 16pt; padding: 18pt 0 6pt; } .doc_content h3 { font-size: 14pt; padding: 16pt 0 4pt; color: #434343; }
+.doc_content > :first-child { padding-top: 0; }
+.doc_content :is(ul, ol) { margin: 0; padding-left: .5in; } .doc_content li { padding-left: 2px; }
+.doc_content ul { list-style-type: disc; } .doc_content ul ul { list-style-type: circle; } .doc_content ol { list-style-type: decimal; }
+.doc_content blockquote { margin: 0 0 0 .5in; padding: 0; border: 0; background: none; color: #434343; }
+.doc_content hr { margin: 6pt 0; border: 0; border-top: 1px solid #9aa0a6; }
+.doc_content a { color: #1155cc; text-decoration: underline; }
+.doc_status { padding: .375rem 1rem; border-top: 1px solid rgb(var(--line)); font-size: .75rem; color: rgb(var(--muted)); text-align: right; }
