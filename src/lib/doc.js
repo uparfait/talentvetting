@@ -19,5 +19,6 @@ function clean(node) {
   return node;
 }
 export const sanitize = html => clean(new DOMParser().parseFromString(`<div>${html}</div>`, 'text/html').body.firstChild).innerHTML;
-export const doc_html = s => (is_html(s) ? sanitize(s) : md(s));
+/* older Markdown: its ## and ### headings become the editor's Heading 2 and Heading 3 */
+export const doc_html = s => (is_html(s) ? sanitize(s) : md(s).replace(/<(\/?)h([34])>/g, (m, c, n) => `<${c}h${n - 1}>`));
 export const doc_text = s => (is_html(s) ? new DOMParser().parseFromString(String(s), 'text/html').body.textContent || '' : String(s || '')).replace(/\s+/g, ' ').trim();
