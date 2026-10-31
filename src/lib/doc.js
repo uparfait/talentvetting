@@ -5,7 +5,7 @@ import { md } from './md.js';
 
 const TAGS = new Set(['P', 'DIV', 'BR', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'CODE', 'PRE', 'B', 'STRONG', 'I', 'EM', 'U', 'S', 'STRIKE', 'UL', 'OL', 'LI', 'A', 'BLOCKQUOTE', 'HR', 'SPAN']);
 /* HTML when it holds any of the editor's tags (older Markdown never does) */
-const is_html = s => /<\/?(p|div|br|h[1-6]|b|strong|i|em|u|s|ul|ol|li|a|blockquote|hr|span)[^>]*>/i.test(String(s || ''));
+const is_html = s => /<\/?(p|div|br|h[1-6]|b|strong|i|em|u|s|ul|ol|li|a|blockquote|hr|span)\b[^>]*>/i.test(String(s || ''));
 
 function clean(node) {
   for (const el of [...node.children]) {

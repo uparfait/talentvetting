@@ -33,6 +33,11 @@ export function restart_screening(job) {
   db.upsert('jobs', { id: job.id, shortlist_n: null, path: null, exam_md: '', message: '', best_done: false });
 }
 export const set_weight = (job, weight) => db.upsert('jobs', { id: job.id, psych: { ...job.psych, weight } });
+/* the psychometric part off (or on again): off, the final score is the profile score, and nobody waits for the test */
+export function set_psych_on(job, enabled) {
+  db.upsert('jobs', { id: job.id, psych: { ...job.psych, enabled, weight: job.psych.weight || 30 } });
+  if (!enabled) for (const a of db.where('applications', x => x.job === job.id && x.stage === 'psych')) db.upsert('applications', { id: a.id, stage: 'screening' });
+}
 export function shortlist(job, n) {
   ranked(job, db.where('applications', a => a.job === job.id && a.score)).forEach((a, i) => db.upsert('applications', { id: a.id, stage: i < n ? 'shortlisted' : 'not_shortlisted' }));
   db.upsert('jobs', { id: job.id, shortlist_n: n, path: null });
