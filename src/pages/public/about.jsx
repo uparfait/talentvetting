@@ -1,22 +1,22 @@
-/* pages/public/about.jsx: About us: one About section (the template's: a heading, three points, cartoons and a count)
+/* pages/public/about.jsx: About us, for job seekers: one About section (the template's: a heading, three points, cartoons and a count)
    and the footer. */
 import { open_jobs } from '../../api/index.js';
 import { ic } from '../../icons/index.js';
 import { Public_page, sec_head, go_btn } from '../../shell/public_page.jsx';
 
-const POINTS = [['users', 'Verified people', 'Every job seeker registers with an ID and a live photo; degrees come with their documents.'],
-  ['target', 'Scores with reasons', 'The AI scores each profile from 0 to 100 against the job, and says why, with evidence.'],
-  ['sparkle', 'You stay in charge', 'Set the weights, run proctored exams, pick the shortlist and publish the results yourself.']];
+const POINTS = [['shield', 'One verified profile', 'Register with your ID and a live photo, add your degrees with their documents: employers see proof, not claims.'],
+  ['target', 'Scores with reasons', 'The AI reads your profile against each job and explains its score, so every applicant is judged the same way.'],
+  ['tasks', 'Every step in view', 'Apply only where you qualify, take tests online and follow each application from screening to selection.']];
 
 export default function About() {
   const n = open_jobs().length;
   return <Public_page><section className="wrap section grid items-center gap-14 lg:grid-cols-2" aria-label="About us">
-    <div>{sec_head('About us', 'Fair hiring, from the first application to the final selection',
-      'TalentVetting verifies who applies, reads every profile, runs proctored exams and hands the recruiter a clear shortlist. The recruiter decides; the AI does the reading.')}
+    <div>{sec_head('About us', 'A fair chance at every job you apply for',
+      'TalentVetting reads every application, not just the first few. Your verified skills speak for you, and you always know where you stand.')}
       <ul className="mt-8 grid gap-5">{POINTS.map(([i, t, s]) => <li key={i} className="flex gap-4">
         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand/15 text-accent">{ic(i)}</span>
         <div><h3 className="text-lg">{t}</h3><p className="mt-1 text-sm text-muted">{s}</p></div></li>)}</ul>
-      <div className="mt-9">{go_btn('/jobs', 'Browse jobs')}</div></div>
+      <div className="mt-9 flex flex-wrap gap-3">{go_btn('/jobs', 'Browse jobs')}<a href="/register/seeker" className="btn btn_outline">Create my profile</a></div></div>
     <div className="grid grid-cols-2 gap-4">
       <img src="/cartoons/scene_office.svg" alt="A team at work in a bright office" width="900" height="650" loading="lazy" className="row-span-2 h-full w-full rounded-3xl object-cover" />
       <img src="/cartoons/scene_park.svg" alt="" width="900" height="650" loading="lazy" className="aspect-square w-full rounded-3xl object-cover" />

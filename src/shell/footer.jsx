@@ -12,7 +12,7 @@ export const Footer = () => { const y = new Date().getFullYear();
     <div className="wrap grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr]">
       <div>{logo()}<p className="mt-4 max-w-sm text-sm">Verified profiles, fair scoring and proctored exams, from the first application to the final selection.</p></div>
       {col('Explore', [['/', 'Home'], ['/about', 'About us'], ['/jobs', 'Jobs']])}
-      {col('Account', [['/sign-in', 'Sign in'], ['/register', 'Create an account'], ['/app', 'Dashboard']])}</div>
+      {col('Account', [['/sign-in', 'Sign in'], ['/register/seeker', 'Create my profile'], ['/app', 'Dashboard']])}</div>
     <div className="border-t border-line"><div className="wrap flex flex-wrap items-center justify-between gap-4 py-6 text-xs">
       <small>© <time dateTime={String(y)}>{y}</time> TalentVetting. A demo: data stays in this browser.</small>
       <button type="button" className="btn btn_outline btn_sm" onClick={() => scrollTo({ top: 0, behavior: 'smooth' })}>{ic('chev_u', 'h-4 w-4')}Back to top</button></div></div>

@@ -1,6 +1,6 @@
 /* styles/app/public.css: the public pages: the header (see-through at the top, a contained glass bar once scrolled; the
    current link in the brand colour with a dot), a contained width (public pages never stretch across a wide screen),
-   the dark brand hero card, the partners marquee and the sign in pages (the brand colour with the white pattern). */
+   the light brand hero card, the partners marquee and the sign in pages (the brand colour with the white pattern). */
 :root { --pub_h: 4.5rem; }
 .tv_pub .wrap { max-width: 92rem; }
 html { scroll-padding-top: calc(var(--pub_h) + 1rem); }
@@ -11,9 +11,10 @@ html { scroll-padding-top: calc(var(--pub_h) + 1rem); }
 .pub_link:hover { color: rgb(var(--fg)); }
 .pub_link.active { color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); }
 .pub_link.active::after { content: ''; position: absolute; bottom: -.125rem; left: 50%; width: .375rem; height: .375rem; border-radius: 50%; background: rgb(var(--brand)); translate: -50% 0; }
-.tv_hero_card { background: linear-gradient(180deg, #150b13 0%, #180c16 50%, color-mix(in srgb, rgb(var(--brand_2)) 70%, #150b13) 84%, rgb(var(--brand)) 100%); }
+.tv_hero_card { background: linear-gradient(180deg, rgb(var(--surface)) 0%, rgb(var(--surface)) 38%, color-mix(in srgb, rgb(var(--brand)) 12%, rgb(var(--surface))) 76%, color-mix(in srgb, rgb(var(--brand)) 34%, rgb(var(--surface))) 100%); }
+.tv_hero_card > .pattern_layer { --pc: var(--fg); --pa: .045; }
 .tv_hero_sun { position: absolute; top: 22%; left: 42%; z-index: -1; width: 16rem; height: 16rem; border-radius: 50%; translate: -50% -50%;
-  background: radial-gradient(circle, rgb(255 255 255 / .95) 0 5%, rgb(255 200 236 / .35) 11%, rgb(224 31 173 / .14) 36%, transparent 70%); }
+  background: radial-gradient(circle, rgb(var(--brand) / .16), transparent 68%); }
 .marquee_track { animation: marquee 42s linear infinite; } .marquee:hover .marquee_track { animation-play-state: paused; }
 .page_enter { animation: page .45s var(--ease) backwards; } .hero_in { animation: rise .9s var(--ease) both; animation-delay: var(--d, 0s); }
 .auth_bg { position: relative; isolation: isolate; display: flex; min-height: 100dvh; flex-direction: column; background: rgb(var(--brand)); }

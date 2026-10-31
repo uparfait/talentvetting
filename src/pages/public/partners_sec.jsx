@@ -13,7 +13,7 @@ const partner = (name, i) => <div key={name} className="flex shrink-0 items-cent
 
 export const Partners_sec = () => { const logos = NAMES.map(partner);
   return <section className="section" aria-label="Partners"><div className="wrap flex flex-wrap items-end justify-between gap-6">
-    {sec_head('Partners', 'Teams that hire with TalentVetting', 'Schools, clinics, banks and start ups find their people here, on evidence instead of guesses.')}
+    {sec_head('Partners', 'Employers hiring here', 'Schools, clinics, banks and start ups look for their people on TalentVetting, and judge them on evidence instead of guesses.')}
     <a href="/about" className="btn btn_outline">About us</a></div>
     <div className="marquee mt-12 overflow-hidden" style={{ WebkitMaskImage: MASK, maskImage: MASK }}><div className="marquee_track flex w-max py-2">
       {logos}<div className="flex" aria-hidden="true">{logos}</div></div></div></section>; };
