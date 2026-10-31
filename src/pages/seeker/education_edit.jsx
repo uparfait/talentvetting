@@ -19,8 +19,7 @@ export function Education_edit({ p }) {
   const remove = e => ask(`Remove ${e.degree}?`, () => save_profile({ education: p.education.filter(x => x.id !== e.id) }), 'Remove', true);
   return <section className="card grid gap-4 p-5"><div className="flex items-center justify-between"><h2 className="text-lg">Education</h2>
     {adding ? null : <button type="button" className="btn btn_outline btn_sm" onClick={() => set_adding(true)}>{ic('plus', 'h-4 w-4')}Add a degree</button>}</div>
-    {p.education.length ? <><Education_list p={p} /><div className="flex flex-wrap gap-2">{p.education.map(e => <button key={e.id} type="button" className="btn btn_ghost btn_sm" onClick={() => remove(e)}>
-      {ic('trash', 'h-4 w-4')}Remove {e.degree}</button>)}</div></> : null}
+    {p.education.length ? <Education_list p={p} on_remove={remove} /> : null}
     {adding ? <form className="grid gap-4 rounded-2xl border border-line p-4 sm:grid-cols-2" onSubmit={add} noValidate>
       <Field label="Level" name="level" as="select" options={LEVELS} defaultValue="bachelor" /><Field label="Year completed" name="year" type="number" min="1960" />
       <Field label="Degree (for example Computer Science)" name="degree" /><Field label="Field or option" name="field" />
