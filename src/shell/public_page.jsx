@@ -6,7 +6,7 @@ import { ic } from '../icons/index.js';
 
 export const Public_page = ({ children }) => <div className="tv_pub relative isolate">
   <div className="pattern_layer" style={{ '--pc': 'var(--fg)', '--pa': '.035' }} aria-hidden="true"></div>
-  <Public_header /><main id="main" className="page_enter">{children}</main><Footer /></div>;
+  <Public_header /><main id="main" className="tv_pub_main page_enter">{children}</main><Footer /></div>;
 
 /* trail: [[href, label], …], the last one is this page (no href) */
 export const Page_hero = ({ trail, title, lead, children }) => <section className="wrap pt-8 sm:pt-12"><div className="hero_in">

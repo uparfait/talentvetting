@@ -1,12 +1,13 @@
-/* styles/app/public.css: the public pages: the header (see-through at the top, a contained glass bar once scrolled; the
-   current link in the brand colour with a dot), a contained width (public pages never stretch across a wide screen),
+/* styles/app/public.css: the public pages: the header (fixed, the same on every page: glass behind contained content;
+   the current link in the brand colour with a dot), a contained width (public pages never stretch across a wide screen),
    the light brand hero card, the partners marquee and the sign in pages (the brand colour with the white pattern). */
 :root { --pub_h: 4.5rem; }
 .tv_pub .wrap { max-width: 92rem; }
 html { scroll-padding-top: calc(var(--pub_h) + 1rem); }
-.tv_pub_head { position: sticky; top: 0; z-index: 40; padding-top: .5rem; }
-.tv_pub_nav { display: flex; height: 4rem; align-items: center; gap: 1rem; border: 1px solid transparent; border-radius: var(--pill); transition: background-color .3s, border-color .3s, padding .3s var(--ease); }
-.tv_pub_head.stuck .tv_pub_nav { padding: 0 .5rem 0 1.25rem; border-color: rgb(var(--line)); background: rgb(var(--bg) / .8); backdrop-filter: saturate(1.6) blur(16px); }
+.tv_pub_head { position: fixed; inset: 0 0 auto; z-index: 40; height: var(--pub_h); padding-top: .25rem; }
+.tv_pub_head::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgb(var(--bg) / .78); backdrop-filter: saturate(1.6) blur(16px); pointer-events: none; }
+.tv_pub_main { padding-top: var(--pub_h); }
+.tv_pub_nav { display: flex; height: 4rem; align-items: center; gap: 1rem; }
 .pub_link { position: relative; display: block; padding: .5rem .875rem; font-size: .9375rem; font-weight: 500; color: rgb(var(--fg) / .85); transition: color .2s; }
 .pub_link:hover { color: rgb(var(--fg)); }
 .pub_link.active { color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); }

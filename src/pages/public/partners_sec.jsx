@@ -1,5 +1,5 @@
 /* pages/public/partners_sec.jsx: the template's partners section: logos (a shape and a word) in an endless marquee that
-   pauses on hover, fading out at both ends. The names are placeholders. */
+   pauses on hover, fading out at both ends, kept within the page width. The names are placeholders. */
 import { sec_head } from '../../shell/public_page.jsx';
 
 const NAMES = ['Northwind', 'Lakeside', 'Brightpath', 'Summit', 'Greenfield', 'Bluepeak', 'Riverstone', 'Horizon'];
@@ -15,5 +15,5 @@ export const Partners_sec = () => { const logos = NAMES.map(partner);
   return <section className="section" aria-label="Partners"><div className="wrap flex flex-wrap items-end justify-between gap-6">
     {sec_head('Partners', 'Employers hiring here', 'Schools, clinics, banks and start ups look for their people on TalentVetting, and judge them on evidence instead of guesses.')}
     <a href="/about" className="btn btn_outline">About us</a></div>
-    <div className="marquee mt-12 overflow-hidden" style={{ WebkitMaskImage: MASK, maskImage: MASK }}><div className="marquee_track flex w-max py-2">
-      {logos}<div className="flex" aria-hidden="true">{logos}</div></div></div></section>; };
+    <div className="wrap"><div className="marquee mt-12 overflow-hidden" style={{ WebkitMaskImage: MASK, maskImage: MASK }}><div className="marquee_track flex w-max py-2">
+      {logos}<div className="flex" aria-hidden="true">{logos}</div></div></div></div></section>; };

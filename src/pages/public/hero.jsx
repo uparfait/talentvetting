@@ -7,7 +7,7 @@ const wave = <svg className="pointer-events-none absolute inset-x-0 -bottom-px h
   <path d="M0 72 C 380 128 840 36 1440 62 V120 H0Z" style={{ fill: 'rgb(var(--bg))' }} />
   <path d="M0 72 C 380 128 840 36 1440 62" fill="none" style={{ stroke: 'rgb(var(--brand))' }} strokeWidth="4" vectorEffect="non-scaling-stroke" /></svg>;
 
-export const Hero = () => <section className="wrap pt-2" aria-label="Introduction"><div className="tv_hero_card relative isolate overflow-hidden rounded-4xl text-fg">
+export const Hero = () => <section className="wrap pt-2" aria-label="Introduction"><div className="tv_hero_card relative isolate overflow-hidden rounded-t-4xl text-fg">
   <div className="pattern_layer" aria-hidden="true"></div><span className="tv_hero_sun" aria-hidden="true"></span>
   <div className="relative grid items-end gap-6 px-6 pt-14 sm:px-12 sm:pt-20 lg:grid-cols-[1.1fr_1fr] xl:px-20">
     <div className="hero_in pb-6 lg:pb-28">
