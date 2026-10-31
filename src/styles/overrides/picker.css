@@ -1,0 +1,14 @@
+/* overrides/picker.css: the template's shared picker (overrides/21_shared_picker.css), the part for selects: the
+   searchable list every select opens instead of the browser's popup (ui/picker.js). */
+  /* H. Shared picker (#picker): Imberabyombi menus for selects + suggestions, Imberabyombi mini calendar for date/week/month, 15-minute time list */
+  #picker { position: fixed; z-index: 350; display: flex; flex-direction: column; min-width: 12rem; max-width: calc(100vw - 1rem); overflow: hidden;
+    color: rgb(var(--fg)); background: rgb(var(--surface)); border: 1px solid rgb(var(--line)); border-radius: var(--radius); animation: pop .15s var(--ease); }
+  #picker[hidden] { display: none; }
+  .pk_list { position: relative; min-height: 0; flex: 1; overflow-y: auto; overscroll-behavior: contain; max-height: 18rem; padding: .375rem 0; }
+  .pk_search { position: relative; display: block; border-bottom: 1px solid rgb(var(--line)); cursor: text; }
+  .pk_search input { padding-top: .75rem; padding-bottom: .75rem; font-size: .9rem; border: 0; outline: 0; background-color: transparent; }
+  .pk_none { padding: .75rem 1rem; font-size: .85rem; color: rgb(var(--muted)); }
+  .pk_item { display: flex; width: 100%; align-items: center; gap: .75rem; min-height: 2.5rem; padding: .5rem 1rem; text-align: left; font-size: .9rem; line-height: 1.3; transition: background-color .15s; }
+  .pk_item:hover, .pk_item:focus-visible { background: rgb(var(--fg) / .06); outline: 0; }
+  .pk_item[aria-selected=true] { background: rgb(var(--brand) / .14); color: color-mix(in srgb, rgb(var(--brand)) 80%, rgb(var(--fg))); font-weight: 500; }
+  .pk_group { padding: .6rem 1rem .25rem; font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: rgb(var(--muted)); }

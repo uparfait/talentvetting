@@ -8,7 +8,7 @@ import { best_cols, rank_rows } from './screen_cols.jsx';
 
 export function Tab_best({ job, apps }) {
   const list = ranked(job, apps.filter(a => ['shortlisted', 'selected', 'not_selected'].includes(a.stage)), combined_of);
-  if (!list.length) return <div className="card">{empty('Nothing to rank yet', 'Shortlist candidates first.', null, 'scene_stage')}</div>;
+  if (!list.length) return <div className="card">{empty('Nothing to rank yet', 'Shortlist candidates first.', null, 'star', 'amber')}</div>;
   const waiting = job.path === 'exam' ? list.filter(a => !a.exam).length : 0;
   const pub = () => ask(`Publish the results of "${job.title}"? Every candidate is told, and the job closes.`, () => { publish(job); notify('Every candidate has been told.', 'ok', 'Results published'); }, 'Publish');
   return <div className="grid gap-5"><section className="card flex flex-wrap items-center gap-3 p-5"><div className="min-w-0 flex-1"><h2 className="text-lg">Best performers</h2>

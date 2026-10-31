@@ -1,2 +1,3 @@
 /* icons: import { ic } from '../icons/index.js' */
 export { ic, PATHS } from './ic.jsx';
+export { i3, hue_at } from './i3.jsx';

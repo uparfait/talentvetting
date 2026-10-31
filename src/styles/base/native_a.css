@@ -19,3 +19,5 @@
   /* everything that reacts to a click shows the hand */
   :where(select, summary, [type=checkbox], [type=radio], [type=range], [type=color], [type=file], label:has(> input:is([type=checkbox], [type=radio])), [role=button], [role=tab], [role=menuitem], [data-tip][tabindex]) { cursor: pointer; }
   :where(select:disabled, input:disabled, button:disabled) { cursor: not-allowed; }
+  /* controls are never text: a tap on a select, button or label does not select its words (no touch selection handles) */
+  :where(select, button, label, summary, [role=button], [role=tab], [role=option], .btn, .tile_trigger, .pk_item, .side_link, .nav_link, .pub_link) { -webkit-user-select: none; user-select: none; }

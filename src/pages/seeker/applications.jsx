@@ -20,5 +20,5 @@ export default function Applications() {
         {a.psych || a.exam ? <p className="text-sm text-muted">{a.psych ? `Psychometric test done (${a.psych.report.verdict}). ` : ''}{a.exam ? 'Shortlist exam done.' : ''}</p> : null}
         <div className="flex flex-wrap gap-2">{next(a, j)}{!a.score && !j.published ? <button type="button" className="btn btn_ghost btn_sm"
           onClick={() => ask(`Withdraw from ${j.title}?`, () => withdraw(a.id), 'Withdraw', true)}>Withdraw</button> : null}</div></section>; })}</div>
-      : <div className="card">{empty('No applications yet', 'Find a job you qualify for.', <a href="/app/browse" className="btn btn_primary btn_sm">Find jobs</a>, 'scene_park')}</div>}</>;
+      : <div className="card">{empty('No applications yet', 'Find a job you qualify for.', <a href="/app/browse" className="btn btn_primary btn_sm">Find jobs</a>, 'tasks', 'blue')}</div>}</>;
 }

@@ -37,7 +37,7 @@ export function Data_table({ id, title, label, cols, rows, on_row, acts, tools =
           {with_acts ? <td className="table_acts"><div className="inline-flex items-center gap-1">{btns[i]}</div></td> : null}
           {shown_cols.map(c => <td key={c.k}><div className="trunc">{c.render ? c.render(r) : text(c, r)}</div></td>)}</tr>)
           : <tr className="hover:bg-transparent"><td colSpan={span} className="table_none border-0">{filtered
-            ? empty('No matches', '', <button type="button" className="btn btn_outline btn_sm" onClick={() => filter({})}>Clear filters</button>, false)
-            : empty(empty_title || `No ${name.toLowerCase()} yet`, empty_text, empty_action, false)}</td></tr>}</tbody></table></div>
+            ? empty('No matches', '', <button type="button" className="btn btn_outline btn_sm" onClick={() => filter({})}>Clear filters</button>, 'search', 'blue')
+            : empty(empty_title || `No ${name.toLowerCase()} yet`, empty_text, empty_action)}</td></tr>}</tbody></table></div>
       {hit.length ? <footer className="pager">{pager(p, n, set_pg)}</footer> : null}</section></>;
 }

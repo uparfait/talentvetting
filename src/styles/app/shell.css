@@ -13,11 +13,6 @@
 .tv_modal_body { min-height: 0; overflow-y: auto; padding: 1.25rem 1.5rem; }
 .tv_modal_foot { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; padding: 1rem 1.5rem; border-top: 1px solid rgb(var(--line)); }
 
-.tv_tabs { display: flex; width: fit-content; max-width: 100%; gap: .25rem; overflow-x: auto; padding: .25rem; border-radius: var(--pill); background: rgb(var(--surface_2)); }
-.tv_tab { display: inline-flex; flex: none; align-items: center; gap: .5rem; min-height: 2.25rem; padding: 0 1rem; border-radius: var(--pill);
-  color: rgb(var(--muted)); font-size: .875rem; font-weight: 500; transition: background-color .2s, color .2s; }
-.tv_tab:hover { color: rgb(var(--fg)); } .tv_tab.on { background: rgb(var(--surface)); color: rgb(var(--fg)); }
-.tv_tab_n { min-width: 1.25rem; padding: 0 .375rem; border-radius: var(--pill); background: rgb(var(--fg) / .08); font-size: .75rem; text-align: center; }
 .help_tip { display: inline-grid; width: 1.75rem; height: 1.75rem; place-items: center; border-radius: var(--pill); color: rgb(var(--muted)); }
 .help_tip:hover { background: rgb(var(--fg) / .06); color: rgb(var(--fg)); }
 

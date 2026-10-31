@@ -15,7 +15,7 @@ export const job_tools = (jobs, q, set_q, cat, set_cat) => { const n = {}; jobs.
     <label className="relative min-w-[14rem] max-w-xl flex-1"><span className="sr-only">Search jobs</span>
       <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted">{ic('search', 'h-4 w-4')}</span>
       <input type="search" className={`${FIELD} pl-10`} placeholder="Search by title or skill" value={q} onChange={e => set_q(e.target.value)} /></label>
-    <label className="w-full sm:w-64"><span className="sr-only">Category</span>
+    <label className="pick w-full sm:w-64"><span className="sr-only">Category</span>
       <select className={`${FIELD} !py-0 pl-4`} value={cat} onChange={e => set_cat(e.target.value)}><option value="">All categories ({jobs.length})</option>
         {Object.keys(n).sort().map(c => <option key={c} value={c}>{c} ({n[c]})</option>)}</select></label></div>; };
 

@@ -1,0 +1,17 @@
+/* overrides/tile_menu.css: the template's tile menus (overrides/19_account_pages.css, the "System 2 / System 3"
+   navigation): a button that drops a grid of 3D-icon tiles, the open one ringed; and the 3D icons' lift on hover. */
+  .tile_trigger { display: inline-flex; max-width: 16rem; align-items: center; gap: .5rem; height: 2.75rem; padding: 0 .75rem 0 .5rem; overflow: hidden; border: 0;
+    border-radius: var(--pill); background: rgb(var(--fg) / .05); font-size: .875rem; font-weight: 500; transition: background-color .2s, border-color .2s; }
+  .tile_trigger:not(.is_set) { padding-left: .875rem; }
+  .tile_trigger:hover { background: rgb(var(--fg) / .08); }
+  .tile_trigger > span { min-width: 0; }
+  .tile_link { display: grid; justify-items: center; gap: .5rem; padding: .625rem; border-radius: 1rem; text-align: center; font-size: .75rem; transition: background-color .2s; }
+  .tile_link:hover { background: rgb(var(--surface)); }
+  .tile_link.active { background: rgb(var(--surface)); outline: 2px solid rgb(var(--brand) / .45); outline-offset: -2px; font-weight: 600; }
+  .nav_row { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; }
+  .tile_pop { display: flex; flex-direction: column; max-height: min(30rem, calc(100dvh - 9rem)); overflow: hidden; }
+  .tile_pop > div { display: flex; min-height: 0; flex-direction: column; }
+  .tile_grid { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+  .i3 { transition: transform .5s var(--ease); }
+  .float { animation: float 6s ease-in-out infinite; }
+  .group:hover .i3, .i3:hover, .tile_link:hover .i3 { transform: translateY(-.25rem) rotate(-5deg) scale(1.04); }

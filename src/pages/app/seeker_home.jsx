@@ -22,7 +22,7 @@ export function Seeker_home() {
     <h2 className="mt-10 mb-4 text-xl">My applications</h2>
     {apps.length ? <div className="grid gap-3">{apps.map(a => { const j = get_job(a.job); return j ? <a key={a.id} href="/app/applications" className="card card_hover grid gap-3 p-5">
       <div className="flex items-center gap-3"><h3 className="min-w-0 flex-1 truncate text-lg">{j.title}</h3>{stage_chip(a)}</div><Track a={a} job={j} /></a> : null; })}</div>
-      : <div className="card">{empty('No applications yet', 'Jobs you qualify for are a click away.', <a href="/app/browse" className="btn btn_primary btn_sm">Find jobs</a>, 'scene_park')}</div>}
+      : <div className="card">{empty('No applications yet', 'Jobs you qualify for are a click away.', <a href="/app/browse" className="btn btn_primary btn_sm">Find jobs</a>, 'tasks', 'blue')}</div>}
     {fits.length ? <><h2 className="mt-10 mb-4 text-xl">Jobs that fit your profile</h2><div className="grid gap-3 md:grid-cols-3">{fits.map(({ j, s }) =>
       <a key={j.id} href={`/app/browse/${j.id}`} className="card card_hover grid gap-2 p-5"><h3 className="text-lg">{j.title}</h3>
         <p className="text-sm text-muted">{j.category}</p>{chip(`${Math.round(s * 100)} % match`, 'brand')}</a>)}</div></> : null}</>;
