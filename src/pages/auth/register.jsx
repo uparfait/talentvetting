@@ -2,7 +2,7 @@
 import { ic } from '../../icons/index.js';
 import { Auth_shell } from './auth_shell.jsx';
 
-const card = (href, i, t, d) => <a href={href} className="role_card"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-brand/12 text-brand">{ic(i)}</span>
+const card = (href, i, t, d) => <a href={href} className="role_card"><span className="grid h-11 w-11 place-items-center rounded-2xl bg-brand/15 text-brand">{ic(i)}</span>
   <span className="text-lg font-semibold">{t}</span><span className="text-sm text-muted">{d}</span></a>;
 export default function Register() {
   return <Auth_shell title="Create an account" text="Choose how you will use TalentVetting.">
