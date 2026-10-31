@@ -13,7 +13,7 @@ module.exports = {
   auth_secret: env('AUTH_SECRET'),
   token_days: 7,
   origins: list('ALLOWED_ORIGINS'),
-  body_limit: '4mb',
+  body_limit: '4.5mb',   /* Vercel's request cap: a 3 MB document is about 4 MB in base64 */
   ai: {
     primary: env('LLM_PROVIDER', 'gemini'), summary: env('SUMMARY_PROVIDER', 'groq'),
     gemini: { keys: list('GEMINI_API_KEY'), model: env('GEMINI_MODEL', 'gemma-4-26b-a4b-it') },
