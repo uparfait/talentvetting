@@ -15,7 +15,7 @@ export default function Candidate({ params }) {
   if (!u || !p) return <div className="card">{empty('Candidate not found', '', <a href="/app/jobs" className="btn btn_primary btn_sm">Jobs</a>)}</div>;
   return <><div className="page_head"><a href={job ? `/app/jobs/${job.id}?tab=applicants` : '/app'} className="icon_btn" aria-label="Back">{ic('chev_l')}</a>
     <h1 className="page_title">Candidate</h1></div>
-    <section className="card flex flex-wrap items-center gap-5 p-5">{avatar(u, 'h-20 w-20')}<div className="min-w-0 flex-1"><h2 className="text-2xl">{u.name}</h2>
+    <section className="card grid gap-4 p-5 sm:flex sm:flex-wrap sm:items-center sm:gap-5">{avatar(u, 'h-20 w-20')}<div className="min-w-0 flex-1"><h2 className="text-2xl">{u.name}</h2>
       <p className="text-muted">{p.headline}</p><p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm"><span>{ic('mail', 'inline h-4 w-4')} {u.email}</span>
         <span>{ic('phone', 'inline h-4 w-4')} {u.phone}</span>{u.dob ? <span>{age_of(u.dob)} years old</span> : null}{u.id_number ? <span>ID {u.id_number}</span> : null}</p></div>
       {chip(u.face_check === 'simulated' ? 'Photo, face check simulated' : 'Live photo checked', u.face_check === 'simulated' ? 'warn' : 'ok')}</section>
