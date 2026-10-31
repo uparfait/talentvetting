@@ -24,6 +24,6 @@ export function Data_table({ cols, rows, on_row, label = 'Rows', empty_text = 'N
           {st?.k === c.k ? ic(st.d > 0 ? 'chev_u' : 'chev_d', 'h-3.5 w-3.5') : null}</button>}</th>)}</tr></thead>
       <tbody>{shown.length ? shown.map(r => <tr key={r.id} className={on_row ? 'cursor-pointer' : undefined} tabIndex={on_row ? 0 : undefined}
         onClick={on_row ? () => on_row(r) : undefined} onKeyDown={on_row ? e => e.key === 'Enter' && on_row(r) : undefined}>
-        {cols.map(c => <td key={c.k}>{c.render ? c.render(r) : r[c.k]}</td>)}</tr>)
+        {cols.map(c => <td key={c.k}>{c.render ? c.render(r) : c.value ? c.value(r) : r[c.k]}</td>)}</tr>)
         : <tr><td colSpan={cols.length} className="py-10 text-center text-muted">{empty_text}</td></tr>}</tbody></table></div></section>;
 }

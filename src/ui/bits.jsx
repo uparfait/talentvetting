@@ -13,6 +13,8 @@ export const empty = (title, text, action = null, pic = 'scene_office') => <div 
   <img src={`/cartoons/${pic}.svg`} alt="" className="h-36 w-auto rounded-3xl" loading="lazy" decoding="async" />
   <h3 className="text-lg">{title}</h3>{text ? <p className="max-w-sm text-sm text-muted">{text}</p> : null}{action}</div>;
 export const logo = (cls = '') => <span className={`font-display text-lg font-extrabold tracking-wide ${cls}`}><span className="text-brand">TALENT</span>VETTING</span>;
+/* a range input's filled part (the template's sliders read --val) */
+export const fill = (v, min, max) => ({ '--val': `${(v - min) / (max - min) * 100}%` });
 export const face_src = n => `/cartoons/face_${((n - 1) % 24 + 24) % 24 + 1}.svg`;
 export const avatar = (u, size = 'h-10 w-10') => u?.photo
   ? <img src={u.photo} alt="" className={`${size} shrink-0 rounded-full object-cover`} />

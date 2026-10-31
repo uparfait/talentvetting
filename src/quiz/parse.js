@@ -19,9 +19,9 @@ export function parse(src) {
       return items.push({ id: `q${i + 1}`, kind: 'typed', text: strip(q), key, secs: own_secs(q) || secs_for(strip(q), 'application') + 60 });
     }
     if (type !== 'question') return errors.push(`Block ${i + 1}: unknown TYPE ${type}`);
-    const ch = [], c = between(b, /CHOICES\s*:/i, /ANSWER\s*[[(]?\s*S?\s*[\])]?\s*:/i);
+    const AN = /ANSWER\s*[[(]?\s*S?\s*[\])]?\s*:/i, ch = [], c = between(b, /CHOICES\s*:/i, AN), an = between(b, AN, null) || '';
     (c || '').split('\n').forEach(l => { const m = /^\s*([A-Za-z])[).]\s*(.*)$/.exec(l); if (m) ch.push(m[2]); else if (ch.length && l.trim()) ch[ch.length - 1] += ' ' + l.trim(); });
-    const idx = ((/IND(?:EX|ICES)\s*[[({]?\s*E?S?\s*[\])}]?\s*:?\s*([\d,\s]+)/i.exec(b) || [])[1] || '').split(/[\s,]+/).filter(Boolean).map(Number).filter(n => n < ch.length);
+    const idx = ((/IND(?:EX|ICES)\s*[[({]?\s*E?S?\s*[\])}]?\s*:?\s*(\d[\d,\s]*)/i.exec(an) || [])[1] || '').split(/[\s,]+/).filter(Boolean).map(Number).filter(n => n < ch.length);
     if (!ch.length) return errors.push(`Block ${i + 1}: no choices`);
     if (!idx.length) return errors.push(`Block ${i + 1}: INDEX[S]: is missing`);
     items.push({ id: `q${i + 1}`, kind: 'mcq', text: strip(q), choices: ch, correct: idx, secs: own_secs(q) || secs_for(strip(q) + ' ' + ch.join(' ')) });
