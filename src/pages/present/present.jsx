@@ -1,11 +1,11 @@
 /* pages/present/present.jsx: the presentation on the whole screen (the template's agenda on the whole screen): one slide at a
    time sliding in, its words left and its drawing right, each part rising in turn; the slide's own soft tint behind
-   (hue of its title); the logo and Close on top, a progress line, Back and Next, dots below. Arrow keys, Space and
+   (hue of its title); the cover's problems and how each is solved in a row below; the logo and Close on top, a progress line, Back and Next, dots below. Arrow keys, Space and
    swipes move; Esc or Close ends it. open_present() starts it from a click (the browser's full screen needs one). It is
    drawn straight into the page's body, above everything else. */
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
-import { ic } from '../../icons/index.js';
+import { ic, i3 } from '../../icons/index.js';
 import { logo } from '../../ui/index.js';
 import { SLIDES, hue } from './slides.js';
 import { art } from './art.jsx';
@@ -33,7 +33,9 @@ export function Present() {
     <div className="pr_view">{step(-1, 'Back', 'chev_l')}<div className="pr_clip"><ol className="pr_strip" style={{ transform: `translateX(${-i * 100}%)` }}>
       {SLIDES.map((s, k) => <li key={k} className={`pr_slide ${k === i ? 'on' : ''}`} aria-hidden={k !== i} aria-current={k === i ? 'step' : undefined}>
         <div className="pr_words"><p className="pr_kicker">{s.kicker}</p><h2 className="pr_title">{s.title}</h2>{s.text ? <p className="pr_text">{s.text}</p> : null}
-          {s.points ? <ul className="pr_points">{s.points.map(([icon, p], n) => <li key={p} style={{ '--i': n }}><span className="pr_icon">{ic(icon, 'h-5 w-5')}</span>{p}</li>)}</ul> : null}</div>
-        {art(s.art)}</li>)}</ol></div>{step(1, 'Next', 'chev_r')}</div>
+          {s.points ? <ul className="pr_points">{s.points.map(([icon, p, more], n) => <li key={p} style={{ '--i': n }}><span className="pr_icon">{ic(icon, 'h-5 w-5')}</span>
+            {more ? <span><b>{p}</b> <span className="pr_more">{more}</span></span> : p}</li>)}</ul> : null}</div>
+        {art(s.art)}{s.solves ? <div className="pr_solves"><p className="pr_kicker">What it solves</p><ul>{s.solves.map(([icon, color, p, fix], n) =>
+          <li key={p} style={{ '--i': n }}>{i3(icon, 'h-10 w-10', color)}<b>{p}</b><span>{ic('check', 'h-4 w-4')}{fix}</span></li>)}</ul></div> : null}</li>)}</ol></div>{step(1, 'Next', 'chev_r')}</div>
     <footer className="pr_dots">{SLIDES.map((s, k) => <button key={k} type="button" className={k === i ? 'on' : k < i ? 'done' : ''} aria-label={`Slide ${k + 1}: ${s.title}`} onClick={() => go(k)}></button>)}</footer></div>, document.body);
 }

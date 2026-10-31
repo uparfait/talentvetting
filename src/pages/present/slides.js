@@ -1,13 +1,22 @@
 /* pages/present/slides.js: the presentation of TalentVetting, five slides with few words: the cover, how it works, the
    tools and models behind it, who it is for, and how it earns (employers pay, job seekers never do). Each slide: a
-   kicker, the title, a line or points [icon, words], and its drawing (art.jsx). */
+   kicker, the title, a line or points [icon, words, what it does], and its drawing (art.jsx). The cover also lists the problems it
+   solves [icon, colour, problem, how it is solved]. */
 export const SLIDES = [
-  { kicker: 'AI powered recruitment', title: 'TalentVetting', text: 'Every applicant read fairly. The best ones found, with reasons.', art: 'mark' },
+  { kicker: 'AI powered recruitment', title: 'TalentVetting', text: 'Every applicant read fairly. The best ones found, with reasons.', art: 'mark',
+    solves: [['eye', 'teal', 'Cheating in exams', 'Face checked throughout, tabs watched, every question timed'],
+      ['star', 'amber', 'Talent left unseen', 'Every application read in full and scored on skills'],
+      ['file', 'blue', 'Forged certificates and claims', 'AI reads each document and link and checks it'],
+      ['users', 'violet', 'Too many applications', 'Screening runs the moment someone applies'],
+      ['shield', 'green', 'Unfair, unexplained choices', 'Same rules for all, reasons for each score, everyone hears back']] },
   { kicker: 'How it works', title: 'From application to selection.', art: 'steps',
     points: [['user', 'Build one verified profile'], ['check', 'Apply where you qualify'], ['sparkle', 'AI scores every application'], ['tasks', 'Shortlist, exam, select']] },
-  { kicker: 'Tools and models', title: 'Several models, one answer.', art: 'nodes',
-    points: [['file', 'Gemma 4 reads documents and scores'], ['layers', 'Gemini Flash Lite steps in when busy'], ['note', 'GPT-OSS on Groq writes summaries'],
-      ['eye', 'Face models on our own server'], ['shield', 'MongoDB Atlas and Vercel']] },
+  { kicker: 'Tools and models', title: 'Several tools, one answer.', art: 'nodes',
+    points: [['file', 'Gemma 4', 'reads each document with the file itself, checks it is real, scores applicants'],
+      ['globe', 'Link crawler', 'opens every link on a profile, AI sums up what it finds'],
+      ['copy', 'Document reader', 'pulls the text out of each upload for the AI'],
+      ['note', 'GPT-OSS on Groq', 'fast skills and summaries'], ['layers', 'Gemini Flash Lite', 'takes over when Gemma is busy'],
+      ['eye', 'Face models', 'liveness and identity, on our own server'], ['shield', 'MongoDB Atlas and Vercel', 'data and hosting']] },
   { kicker: 'Who it is for', title: 'Anyone who hires, anyone who seeks.', art: 'people',
     points: [['briefcase', 'Hiring companies'], ['users', 'Recruitment agencies'], ['cap', 'Schools and public institutions'], ['user', 'Job seekers and graduates']] },
   { kicker: 'Business model', title: 'Employers pay. Job seekers never do.', art: 'money',
